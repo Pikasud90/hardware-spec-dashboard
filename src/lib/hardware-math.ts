@@ -531,6 +531,7 @@ export const METRIC_POLARITY_MAP: Record<string, MetricPolarity> = {
   ramEfficiencyScore: "HIGHER_BETTER",
 
   /* storage */
+  rpm: "HIGHER_BETTER",
   seqReadMb: "HIGHER_BETTER",
   seqWriteMb: "HIGHER_BETTER",
   randomReadIops: "HIGHER_BETTER",

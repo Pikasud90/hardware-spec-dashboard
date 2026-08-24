@@ -12,6 +12,7 @@ import {
 import { SEARCH_INDEX } from "@/lib/catalog";
 import { search } from "@/lib/search";
 import { ComponentTable } from "@/components/catalog/component-table";
+import { CategoryPrimer } from "@/components/catalog/category-primer";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -212,6 +213,8 @@ export function CatalogView() {
             </p>
           )}
         </div>
+
+        <CategoryPrimer category={category} />
 
         {VOLATILE_CATEGORY_NOTES[category] && (
           <p className="flex items-start gap-2 rounded-lg border border-warning/40 bg-warning/10 px-4 py-2.5 text-xs leading-relaxed text-warning">

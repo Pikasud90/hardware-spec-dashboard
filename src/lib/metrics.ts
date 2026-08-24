@@ -1011,6 +1011,28 @@ const STORAGE_METRICS: MetricDef[] = [
     description: "Usable capacity as marketed.",
   },
   {
+    key: "driveType",
+    label: "Drive type",
+    short: "Type",
+    kind: "text",
+    group: "Overview",
+    headline: true,
+    description:
+      "Solid-state or mechanical. The gap between them in random access is roughly three orders of magnitude, which is why an SSD boot drive transforms a system and a faster SSD rarely does.",
+  },
+  {
+    key: "rpm",
+    label: "Spindle speed",
+    short: "RPM",
+    unit: "RPM",
+    kind: "number",
+    group: "Compute",
+    decimals: 0,
+    analytic: true,
+    description:
+      "Rotational speed of a mechanical drive. Higher means shorter rotational latency and more sustained throughput, at the cost of noise, heat and power. Null on solid-state drives.",
+  },
+  {
     key: "interface",
     label: "Interface",
     short: "Interface",

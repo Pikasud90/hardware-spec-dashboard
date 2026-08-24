@@ -168,11 +168,20 @@ export type RamSpecs = z.infer<typeof RamSpecsSchema>;
 /* --------------------------------------------------------------- Storage */
 
 export const StorageSpecsSchema = z.object({
+  /**
+   * Mechanical drives are still the cheapest way to hold bulk data in India,
+   * so they belong here — but they have no NAND, no controller worth naming,
+   * and rate endurance as an annual workload rather than total bytes written.
+   * Those fields are therefore nullable rather than forced.
+   */
+  driveType: z.enum(["SSD", "HDD"]).default("SSD"),
   formFactor: z.string(),
   interface: z.string(),
   capacityGb: z.number().positive(),
-  nandType: z.string(),
-  controller: z.string(),
+  nandType: z.string().nullable().default(null),
+  controller: z.string().nullable().default(null),
+  /** Spindle speed. Null on solid-state drives, which have none. */
+  rpm: z.number().positive().nullable().default(null),
   dramCacheMb: z.number().nonnegative().nullable().default(null),
   seqReadMb: z.number().positive(),
   seqWriteMb: z.number().positive(),

@@ -9,6 +9,7 @@ import { MEMORY } from "@/lib/data/memory";
 import { MOTHERBOARDS } from "@/lib/data/motherboards";
 import { PSUS } from "@/lib/data/psus";
 import { STORAGE } from "@/lib/data/storage";
+import { STORAGE_HDD } from "@/lib/data/storage-hdd";
 import { deriveMetrics } from "@/lib/hardware-math";
 import { indexAgainstBest } from "@/lib/stats";
 import { buildSearchIndex, type SearchDocument } from "@/lib/search";
@@ -152,7 +153,7 @@ export const ALL_COMPONENTS: ResolvedComponent[] = assemble({
   ],
   gpu: GPUS,
   ram: MEMORY,
-  storage: STORAGE,
+  storage: [...STORAGE, ...STORAGE_HDD],
   motherboard: MOTHERBOARDS,
   psu: PSUS,
 });
