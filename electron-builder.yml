@@ -1,0 +1,55 @@
+appId: dev.pikasud90.hardware-spec-dashboard
+productName: Hardware Spec Dashboard
+copyright: Copyright © 2026 Pikasud90
+
+directories:
+  output: release
+  buildResources: build
+
+# Only the exported renderer bundle and the main-process shell are packaged.
+# No node_modules are required at runtime because the app is fully static.
+files:
+  - "electron/**/*"
+  - "out/**/*"
+  - "package.json"
+  - "!**/*.map"
+
+asar: true
+
+mac:
+  category: public.app-category.utilities
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+    - target: zip
+      arch: [arm64, x64]
+  darkModeSupport: true
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+
+dmg:
+  artifactName: ${productName}-${version}-mac-${arch}.${ext}
+
+win:
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+    - target: portable
+      arch: [x64]
+  artifactName: ${productName}-${version}-win-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+
+linux:
+  target:
+    - AppImage
+  category: Utility
+
+publish: null
