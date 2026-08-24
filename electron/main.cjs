@@ -76,7 +76,8 @@ function resolveExportPath(pathname) {
     const absolute = path.resolve(OUT_DIR, candidate);
     // Path-traversal guard: the resolved file must stay under OUT_DIR.
     if (!absolute.startsWith(path.resolve(OUT_DIR) + path.sep)) continue;
-    if (fs.existsSync(absolute) && fs.statSync(absolute).isFile()) return absolute;
+    const stat = fs.statSync(absolute, { throwIfNoEntry: false });
+    if (stat && stat.isFile()) return absolute;
   }
   return null;
 }
@@ -181,6 +182,15 @@ function createWindow() {
 
   win.once("ready-to-show", () => win.show());
 
+  // Surface load failures instead of presenting a silent blank window — the
+  // usual cause is a missing `out/` directory (the renderer was never built).
+  win.webContents.on("did-fail-load", (_event, errorCode, errorDescription, validatedURL) => {
+    console.error(`[hsd] failed to load ${validatedURL}: ${errorDescription} (${errorCode})`);
+  });
+  win.webContents.on("did-finish-load", () => {
+    console.log(`[hsd] renderer ready: ${win.webContents.getURL()}`);
+  });
+
   // External links open in the user's real browser, never in-app.
   win.webContents.setWindowOpenHandler(({ url }) => {
     if (/^https?:\/\//i.test(url)) void shell.openExternal(url);
@@ -206,6 +216,14 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  if (!DEV_SERVER_URL && !fs.existsSync(path.join(OUT_DIR, "index.html"))) {
+    console.error(
+      "[hsd] no renderer bundle found at ./out — run `npm run build` before starting Electron.",
+    );
+    app.exit(1);
+    return;
+  }
+
   nativeTheme.themeSource = "dark";
   registerAppProtocol();
 

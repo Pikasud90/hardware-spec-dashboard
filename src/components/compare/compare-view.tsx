@@ -280,7 +280,9 @@ export function CompareView() {
           title="Replace this column"
           description={
             swapSlot !== null
-              ? `Replacing ${components[swapSlot]?.name}. The other ${components.length - 1} columns stay exactly as they are.`
+              ? components.length === 2
+                ? `Replacing ${components[swapSlot]?.name}. The other column stays exactly as it is.`
+                : `Replacing ${components[swapSlot]?.name}. The other ${components.length - 1} columns stay exactly as they are.`
               : undefined
           }
         />

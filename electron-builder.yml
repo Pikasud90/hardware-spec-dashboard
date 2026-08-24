@@ -13,11 +13,21 @@ files:
   - "out/**/*"
   - "package.json"
   - "!**/*.map"
+  # electron-builder bundles production dependencies by default. Nothing here
+  # needs them: the renderer is a prebuilt static bundle and the main process
+  # uses only Electron's own APIs. Excluding them takes the packaged app from
+  # ~537 MB to roughly the size of the Electron runtime itself.
+  - "!node_modules/**/*"
 
 asar: true
 
 mac:
   category: public.app-category.utilities
+  # This is an unsigned open-source build. Setting identity to null stops
+  # electron-builder from hunting for a signing certificate and failing on a
+  # CI runner that has none. Users will need to allow it past Gatekeeper on
+  # first launch; that is documented in the README.
+  identity: null
   target:
     - target: dmg
       arch: [arm64, x64]

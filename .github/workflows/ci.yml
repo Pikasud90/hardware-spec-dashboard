@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Type-check, lint, data checks, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      # Validates every record against its Zod schema, asserts no derived metric
+      # produces NaN or Infinity, checks the polarity rules, and confirms the
+      # trigram engine still resolves its known queries within budget.
+      - name: Data and model checks
+        run: npm run verify:data
+
+      - name: Build static export
+        run: npm run build
+
+      - name: Check export output
+        run: |
+          test -f out/index.html
+          test -f out/analytics/index.html
+          test -f out/compare/index.html
+          test -f out/methodology/index.html
+          test -f out/component/amd-ryzen-7-9800x3d/index.html
+          echo "Exported $(find out -name '*.html' | wc -l) HTML pages"
+
+      - name: Upload static site
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-site
+          path: out/
+          retention-days: 14

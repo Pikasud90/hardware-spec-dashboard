@@ -39,7 +39,8 @@
     "dist:win": "npm run build && electron-builder --win --publish never",
     "dist:all": "npm run build && electron-builder --mac --win --publish never",
     "clean": "rimraf .next out release",
-    "verify:data": "tsx --tsconfig tsconfig.json scripts/verify-data.ts"
+    "verify:data": "tsx --tsconfig tsconfig.json scripts/verify-data.ts",
+    "generate:icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.3.3",

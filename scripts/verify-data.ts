@@ -9,6 +9,7 @@
 import { ALL_COMPONENTS, COMPONENTS_BY_CATEGORY, SEARCH_INDEX, numericValue } from "@/lib/catalog";
 import { search } from "@/lib/search";
 import { getMetricHighlight } from "@/lib/hardware-math";
+import { formatMetricValue, metricFor } from "@/lib/metrics";
 
 let failures = 0;
 function check(label: string, condition: boolean, detail = "") {
@@ -102,6 +103,31 @@ const tie = getMetricHighlight("totalCores", [8, 8, 8]);
 check("all-equal is neutral", tie.every((h) => h === "neutral"));
 const withNull = getMetricHighlight("tdpWatts", [null, 65, 170]);
 check("null never wins or loses", withNull[0] === "neutral" && withNull[1] === "winner");
+
+// US8: display formatting must never leak into comparison arithmetic. A 4 TB
+// drive is stored, sorted and normalised as 4000; only its rendering says "4 TB".
+console.log("\n-- unit normalisation --");
+{
+  const bigDrive = g("samsung-870-qvo-4tb");
+  const smallDrive = g("samsung-980-pro-1tb");
+  const big = numericValue(bigDrive, "capacityGb");
+  const small = numericValue(smallDrive, "capacityGb");
+  check("4TB stored in base units as 4000", big === 4000, `got ${big}`);
+  check("1TB stored in base units as 1000", small === 1000, `got ${small}`);
+  check("base-unit ordering is numeric, not lexical", (big ?? 0) > (small ?? 0));
+  const metric = metricFor("storage", "capacityGb")!;
+  check(
+    "4000 GB renders as 4 TB",
+    formatMetricValue(metric, big) === "4 TB",
+    formatMetricValue(metric, big),
+  );
+  const clockMetric = metricFor("gpu", "boostClockMhz")!;
+  check(
+    "2520 MHz renders as 2.52 GHz",
+    formatMetricValue(clockMetric, 2520) === "2.52 GHz",
+    formatMetricValue(clockMetric, 2520),
+  );
+}
 
 console.log("\n-- trigram search --");
 const queries: Array<[string, string]> = [
