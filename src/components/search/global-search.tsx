@@ -99,7 +99,7 @@ export function GlobalSearch({
       // cmdk applies `className` to the inner Command element and the two
       // *ClassName props to the Radix overlay/content wrappers.
       className="flex flex-col"
-      overlayClassName="fixed inset-0 z-100 bg-black/70 backdrop-blur-sm"
+      overlayClassName="fixed inset-0 z-100 bg-ink/35 backdrop-blur-sm"
       contentClassName="fixed left-1/2 top-[12vh] z-100 w-[calc(100vw-2rem)] max-w-2xl -translate-x-1/2 overflow-hidden rounded-xl border border-edge-strong bg-surface-1 shadow-2xl shadow-black/70"
     >
       <div className="flex items-center gap-3 border-b border-edge px-4">

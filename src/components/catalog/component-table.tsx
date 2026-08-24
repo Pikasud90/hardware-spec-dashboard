@@ -243,11 +243,11 @@ export function ComponentTable({
                         "px-3 py-2.5 text-ink-secondary",
                         numeric ? "text-right" : "text-left",
                         index === 0 &&
-                          cn("sticky left-0 z-10", selected ? "bg-[#0d1526]" : "bg-surface-1"),
+                          cn("sticky left-0 z-10", selected ? "bg-surface-2" : "bg-surface-1"),
                         index === 1 &&
                           cn(
                             "sticky left-10 z-10 max-w-64",
-                            selected ? "bg-[#0d1526]" : "bg-surface-1",
+                            selected ? "bg-surface-2" : "bg-surface-1",
                           ),
                       )}
                     >

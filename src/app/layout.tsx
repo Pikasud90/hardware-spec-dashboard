@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { CompareProvider } from "@/components/compare/compare-provider";
 import { CompareDrawer } from "@/components/compare/compare-drawer";
+import { THEME_INIT_SCRIPT } from "@/components/layout/theme-toggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,15 +18,23 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05070d",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f6fa" },
+    { media: "(prefers-color-scheme: dark)", color: "#05070d" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Applies the stored theme before first paint, so switching pages
+            never flashes the wrong background. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="min-h-screen bg-surface-0 text-ink antialiased">
         <NuqsAdapter>
           <CompareProvider>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BarChart3, Cpu, FlaskConical, Search, Sigma, Store, Wrench } from "lucide-react";
 import { GlobalSearch, useGlobalSearch } from "@/components/search/global-search";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
@@ -76,7 +77,7 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="ml-auto flex h-9 items-center gap-2 rounded-md border border-edge bg-surface-1 px-3 text-sm text-ink-muted transition-colors hover:border-edge-strong hover:text-ink-secondary sm:w-72"
+            className="ml-auto flex h-9 items-center gap-2 rounded-md border border-edge bg-surface-1 px-3 text-sm text-ink-muted transition-colors hover:border-edge-strong hover:text-ink-secondary sm:w-56"
           >
             <Search className="size-4 shrink-0" aria-hidden />
             <span className="hidden flex-1 text-left sm:inline">Search hardware…</span>
@@ -84,6 +85,8 @@ export function SiteHeader() {
               {platformKey}K
             </kbd>
           </button>
+
+          <ThemeToggle />
         </div>
 
         {/* Compact nav for narrow screens (US4). */}

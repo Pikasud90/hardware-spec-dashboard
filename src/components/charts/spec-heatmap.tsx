@@ -187,17 +187,19 @@ export function SpecHeatmap({
                     tabIndex={0}
                     className={cn(
                       "tnum flex h-8 items-center justify-center rounded-[3px] px-1 text-center text-[11px] leading-none transition-transform",
-                      step === null
-                        ? "border border-dashed border-edge-strong bg-surface-2 text-ink-muted"
-                        : step >= 7
-                          ? "text-[#06152b]"
-                          : "text-white",
-                      "hover:z-20 hover:ring-2 hover:ring-accent-bright",
+                      step === null &&
+                        "border border-dashed border-edge-strong bg-surface-2 text-ink-muted",
+                      "hover:z-20 hover:ring-2 hover:ring-accent",
                     )}
                     style={
                       step === null
                         ? undefined
-                        : { backgroundColor: `var(--color-seq-${step})` }
+                        : {
+                            backgroundColor: `var(--color-seq-${step})`,
+                            // Each ramp step carries its own paired ink, so the
+                            // label stays readable whichever theme is active.
+                            color: `var(--color-seq-ink-${step})`,
+                          }
                     }
                   >
                     <span className="truncate">{display}</span>
