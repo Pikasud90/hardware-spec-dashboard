@@ -1,10 +1,10 @@
 {
   "name": "hardware-spec-dashboard",
   "productName": "Hardware Spec Dashboard",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": false,
   "license": "MIT",
-  "description": "An offline-first PC hardware build planner and comparison dashboard with Indian market pricing, compatibility checking and a quantitative visualisation suite.",
+  "description": "An offline-first PC hardware and laptop build planner, reference and comparison dashboard with Indian market pricing, compatibility checking and a quantitative visualisation suite.",
   "author": {
     "name": "Pikasud90"
   },
