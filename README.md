@@ -4,7 +4,12 @@ An offline-first specification and comparison dashboard for PC hardware — proc
 graphics cards, memory, storage and motherboards — with polarity-aware diffing, derived
 engineering metrics, and a quantitative visualisation suite.
 
+**[▶ Live demo](https://pikasud90.github.io/hardware-spec-dashboard/)** ·
+[Download desktop app](https://github.com/Pikasud90/hardware-spec-dashboard/releases) ·
+[Methodology](https://pikasud90.github.io/hardware-spec-dashboard/methodology/)
+
 [![CI](https://github.com/Pikasud90/hardware-spec-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/Pikasud90/hardware-spec-dashboard/actions/workflows/ci.yml)
+[![Pages](https://github.com/Pikasud90/hardware-spec-dashboard/actions/workflows/pages.yml/badge.svg)](https://github.com/Pikasud90/hardware-spec-dashboard/actions/workflows/pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **No server. No database. No network requests.** The entire catalogue is compiled into
@@ -54,7 +59,12 @@ reveals the underlying numbers as a table — so nothing is ever encoded by colo
 
 ## Running it
 
-### Desktop application (recommended)
+### In a browser, right now
+
+**[pikasud90.github.io/hardware-spec-dashboard](https://pikasud90.github.io/hardware-spec-dashboard/)** —
+the same static bundle the desktop apps ship, hosted on GitHub Pages.
+
+### Desktop application
 
 Download the installer for your platform from the
 [Releases page](https://github.com/Pikasud90/hardware-spec-dashboard/releases):
@@ -142,7 +152,7 @@ Specifications are manufacturer-published figures. **Performance indices are mod
 from those specifications — they are not measured benchmark results.** No software was
 run and nothing was timed.
 
-The [methodology page](https://github.com/Pikasud90/hardware-spec-dashboard) in the app
+The [methodology page](https://pikasud90.github.io/hardware-spec-dashboard/methodology/)
 states every formula, lists every calibration constant, and includes a limitations
 section that names specific known inaccuracies — for example, the graphics model places
 the RTX 4090 at roughly 66% of the RTX 5090 where measured raster results generally put
