@@ -60,6 +60,8 @@ export interface MetricDef {
   group: MetricGroup;
   decimals?: number;
   format?: (value: number) => string;
+  /** Presentation labels for text metrics whose stored values are enum-like. */
+  valueLabels?: Record<string, string>;
   /** True when the value is computed rather than read from a spec sheet. */
   derived?: boolean;
   /** Eligible for normalised analysis (heatmap, radar, correlation). */
@@ -136,6 +138,7 @@ const CPU_METRICS: MetricDef[] = [
     short: "Platform",
     kind: "text",
     group: "Overview",
+    valueLabels: { socketed: "Socketed", soc: "Soldered (system-on-chip)" },
     description:
       "Whether the processor is socketed and can be fitted to a motherboard, or soldered as part of a system-on-chip. Soldered parts cannot appear in a build.",
   },
@@ -1742,7 +1745,10 @@ export function formatMetricValue(
   if (value === null || value === undefined || value === "") return "—";
 
   if (metric.kind === "boolean") return value ? "Yes" : "No";
-  if (metric.kind === "text") return String(value);
+  if (metric.kind === "text") {
+    const raw = String(value);
+    return metric.valueLabels?.[raw] ?? raw;
+  }
 
   if (typeof value !== "number" || !Number.isFinite(value)) return "—";
   if (metric.format) return metric.format(value);
