@@ -27,11 +27,10 @@ export function DistributionStrip({
   metric: ResolvedMetric;
   bins?: number;
 }) {
-  const { values, value, percentile, summary, histogramBins } = React.useMemo(() => {
+  const { value, percentile, summary, histogramBins } = React.useMemo(() => {
     const population = peers.map((peer) => numericValue(peer, metric.key));
     const own = numericValue(component, metric.key);
     return {
-      values: population,
       value: own,
       percentile: percentileRank(own, population, metric.polarity),
       summary: fiveNumberSummary(population),

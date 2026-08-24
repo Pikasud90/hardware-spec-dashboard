@@ -20,7 +20,14 @@
  * always paired with an arrow glyph and a text label so meaning is never
  * carried by colour alone.
  */
-@theme {
+/*
+ * `static` rather than a bare `@theme`: Tailwind v4 only emits the custom
+ * properties it can see referenced in class names, and the chart layer
+ * references series/sequential/diverging tokens from inline `style` attributes
+ * and `color-mix()` — which the compiler cannot see. Without `static` those
+ * variables are tree-shaken and every chart colour resolves to transparent.
+ */
+@theme static {
   /* surfaces */
   --color-surface-0: #05070d;
   --color-surface-1: #0b111f;

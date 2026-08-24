@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   description:
     "An offline-first specification and comparison dashboard for PC hardware: processors, graphics cards, memory, storage and motherboards, with polarity-aware diffing and a quantitative visualisation suite.",
   applicationName: "Hardware Spec Dashboard",
-  icons: { icon: "/icon.png" },
 };
 
 export const viewport: Viewport = {
