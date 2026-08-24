@@ -77,6 +77,15 @@ export function CorrelationMatrix({
       title={title}
       description="Pearson correlation between every pair of metrics across the current selection. Blue means the pair rises together; red means one rises as the other falls."
       note="Correlation is not causation, and these are engineering trade-offs rather than experiments. A strong negative correlation between process node and efficiency reflects that newer nodes are used for newer parts, not that the number itself causes the efficiency."
+      readingGuide={[
+        { label: "Each cell", text: "How strongly two specifications move together across every component in this category, from −1 to +1." },
+        { label: "Blue", text: "Positive: as one rises, so does the other. Core count and power draw behave this way, because more cores need more power." },
+        { label: "Red", text: "Negative: as one rises the other falls. Process node against efficiency is the clearest example." },
+        { label: "Pale / grey", text: "Near zero — the two specifications vary independently, which is often the more interesting finding." },
+        { label: "Strength", text: "Above 0.7 is strong, 0.4 to 0.7 moderate, below 0.4 weak. Read the number, not just the shade." },
+        { label: "Caution", text: "This shows association, not cause. Two specifications can move together because both track a third thing — usually the release year." },
+      ]}
+      takeaway="Which specifications are effectively the same information, and which are genuinely independent axes worth trading off against each other."
       legend={
         <div className="flex items-center gap-2 text-[11px] text-ink-muted">
           <span>−1 inverse</span>

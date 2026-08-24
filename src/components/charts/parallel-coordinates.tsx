@@ -95,6 +95,15 @@ export function ParallelCoordinates({
       title={title}
       description={`${components.length} components across ${axes.length} normalised axes. Every axis is oriented so higher is better; a line near the top throughout is a well-rounded part.`}
       note="Axes are normalised independently within the current selection, so the top of an axis is the best value present here rather than an absolute ceiling."
+      readingGuide={[
+        { label: "Vertical axes", text: "One specification each, labelled below with its direction. Every axis is oriented so the top is the best value present in this selection." },
+        { label: "Each line", text: "One component, crossing every axis at its own value. Hover to raise a single line and see its name." },
+        { label: "Line colour", text: "The brand, capped at three distinct colours with the remainder in grey." },
+        { label: "Flat and high", text: "A well-rounded component — strong on everything plotted." },
+        { label: "Zig-zag", text: "A specialist. Where the line dips is what the design gave up to be strong elsewhere." },
+        { label: "Crossing lines", text: "Where many lines cross between two axes, those specifications trade off against each other across the category." },
+      ]}
+      takeaway="How designs differ across many specifications at once — which are balanced, which are specialised, and where the category's trade-offs lie."
       legend={
         <>
           {colorScale.domain.map((brand) => (

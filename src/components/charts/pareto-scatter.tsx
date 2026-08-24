@@ -117,6 +117,14 @@ export function ParetoScatter({
       title={heading}
       description={`${frontierPoints.length} of ${points.length} components sit on the efficient frontier — nothing in the catalogue beats them on both axes at once.`}
       note={`${xMetric.polarity === "LOWER_BETTER" ? "Lower" : "Higher"} ${xMetric.short} and ${yMetric.polarity === "LOWER_BETTER" ? "lower" : "higher"} ${yMetric.short} are better, which is the direction the frontier is computed in.`}
+      readingGuide={[
+        { label: "Each dot", text: "One component. Its horizontal position is its value on the first metric, its vertical position the second." },
+        { label: "Dot colour", text: "The brand. Only the three most represented brands get their own colour; the rest share a neutral grey, because a scatter shows every pair of colours at once and the palette cannot keep more than three reliably distinguishable." },
+        { label: "Green line", text: "The efficient frontier — the components that nothing else beats on both axes simultaneously." },
+        { label: "Below the line", text: "Dominated. Some other component on this chart is at least as good on both measures, so there is a straightforwardly better option at or below the price." },
+        { label: "Choosing", text: "Pick a point on the frontier, then decide how far along it your budget reaches. Anything off the frontier is only worth considering for a reason this chart cannot see — availability, size, or a feature not plotted." },
+      ]}
+      takeaway="Which components are genuinely worth considering on this trade-off, and which are beaten outright by something else in the catalogue."
       legend={
         <>
           {colorScale.domain.map((brand) => (

@@ -100,6 +100,14 @@ export function RadarCompare({
       title={title}
       description={`Each axis is normalised across the ${components.length} selected components — the outer edge is the best value in this group, not an absolute maximum.`}
       note="Axes are chosen automatically as the metrics on which this group differs most. Normalisation is polarity-aware, so lower-is-better metrics are inverted."
+      readingGuide={[
+        { label: "Each spoke", text: "One specification, labelled at the outer edge. The centre is the worst value among the selected components; the outer edge is the best." },
+        { label: "Each shape", text: "One component, in its legend colour. The shape is drawn by joining that component's position on every spoke." },
+        { label: "Larger area", text: "Better overall across the plotted specifications — but only against the others on screen, since the scale is relative to this selection." },
+        { label: "Shape matters", text: "A round, even shape means a balanced part. A spiky one means a specialist: strong on some axes, weak on others. Two components with similar area can be very different machines." },
+        { label: "Direction", text: "Every axis is oriented so outward is better, including lower-is-better ones like price and power — those are inverted before plotting." },
+      ]}
+      takeaway="Whether a component is well-rounded or specialised, and where its strengths and weaknesses sit relative to its rivals."
       legend={components.map((component) => (
         <LegendItem key={component.id} color={colorOf(component.id)} label={component.name} />
       ))}

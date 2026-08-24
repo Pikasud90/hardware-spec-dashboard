@@ -122,6 +122,15 @@ export function GenerationalTimeline({
           : "Not enough spread to fit a trend."
       }
       note="An ordinary-least-squares fit across release dates. R² states how much of the variation the date alone explains — a low value means the generation is a poor predictor of this metric."
+      readingGuide={[
+        { label: "Each dot", text: "One component, positioned horizontally by its release date and vertically by the selected specification." },
+        { label: "Dot colour", text: "The brand, capped at three distinct colours." },
+        { label: "Dashed line", text: "A least-squares trend through all the points — the average rate of improvement per year." },
+        { label: "Above the line", text: "The part beat its own generation: better than the trend predicted for its release date. These are usually the ones remembered as exceptional." },
+        { label: "Below the line", text: "Underperformed for its era, often because it was a cut-down variant or a refresh rather than a new design." },
+        { label: "R²", text: "How much of the spread the release date alone explains. Near 1 means steady generational progress; near 0 means the date tells you very little and tier matters far more." },
+      ]}
+      takeaway="How fast this specification has actually improved over time, and which parts beat the trend of their own generation."
       legend={
         <>
           {colorScale.domain.map((brand) => (

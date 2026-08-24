@@ -76,6 +76,14 @@ export function RankingBars({
       title={heading}
       description={`Ranked with ${metric.polarity === "LOWER_BETTER" ? "lower" : "higher"} treated as better, across ${components.length} components.`}
       note={metric.formula ? `Derived as: ${metric.formula}` : metric.description}
+      readingGuide={[
+        { label: "Order", text: "Best first, using the metric's own direction — for a lower-is-better metric like cost per watt or latency, the smallest value ranks first." },
+        { label: "Bar length", text: "Proportional to the value, measured from zero." },
+        { label: "Bar colour", text: "The brand, so concentrations at the top or bottom of a ranking are visible at a glance." },
+        { label: "Value", text: "Printed at the end of every bar in real units — the bar is for scanning, the number is the fact." },
+        { label: "Caution", text: "A ranking on one metric is not a ranking overall. A component can top the cost-per-watt table and be a poor choice for other reasons entirely." },
+      ]}
+      takeaway="Where each component places on a single specification across the whole category, and whether one brand dominates that measure."
       legend={
         <>
           {colorScale.domain.map((brand) => (

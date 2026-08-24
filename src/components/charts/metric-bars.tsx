@@ -64,6 +64,14 @@ export function MetricBars({
       title={title}
       description={`Bar length is proportional to the raw value. Percentages are measured against ${baseline.name} and are oriented so a positive figure always means better.`}
       note="A metric where fewer than two components have a value is omitted, and an exact tie is marked neutral rather than awarded to whichever column happens to come first."
+      readingGuide={[
+        { label: "Bar length", text: "Proportional to the raw value, measured from zero — so a bar twice as long really is twice the value." },
+        { label: "Bar colour", text: "Identifies the component, matching the legend. It carries no meaning beyond identity." },
+        { label: "Value", text: "The actual figure in real units, printed at the end of every bar so nothing has to be estimated from length." },
+        { label: "Percentage", text: "Change relative to the baseline component, oriented so a positive number always means better — a lower TDP shows as a positive, because less power is an improvement." },
+        { label: "Green / red", text: "Best and worst in each row, decided by that metric's own direction. An exact tie across all components is marked neutral rather than awarded arbitrarily." },
+      ]}
+      takeaway="How large each gap actually is, in real units and in percentage terms, one specification at a time."
       legend={components.map((component, index) => (
         <LegendItem key={component.id} color={colorOf(index)} label={component.name} />
       ))}

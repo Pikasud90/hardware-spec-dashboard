@@ -84,6 +84,14 @@ export function SpecHeatmap({
         "Each row is normalised independently and oriented so brighter always means better for that metric. Read along rows, not down columns."
       }
       note="Rows where every component shares the same value, or where fewer than two values exist, are omitted — they carry no comparative information."
+      readingGuide={[
+        { label: "Each row", text: "One specification. The arrow beside its name shows which direction counts as better — ↑ higher, ↓ lower." },
+        { label: "Each cell", text: "One component's actual value for that specification, printed in full so you never have to infer it from the colour." },
+        { label: "Colour", text: "Where that value sits between the worst and best in this row. Darker means better, always — for a lower-is-better row like price or latency, the cheapest or fastest cell is the darkest." },
+        { label: "Dashed cell", text: "The manufacturer does not publish this figure for that part. It is excluded from the row's scale rather than treated as zero." },
+        { label: "Reading it", text: "Scan along a row to compare the components on that one specification. Do not compare brightness between rows — each row is scaled independently, so a dark cell in one row and a dark cell in another mean nothing relative to each other." },
+      ]}
+      takeaway="Which component leads on which specification, and by how much, without reading a table of raw numbers."
       legend={
         <>
           <RampLegend

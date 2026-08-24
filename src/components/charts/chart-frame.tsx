@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Table2, Info } from "lucide-react";
+import { Table2, Info, HelpCircle } from "lucide-react";
 import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
@@ -21,11 +21,29 @@ export interface ChartTableColumn {
   numeric?: boolean;
 }
 
+/** One line of the "how to read this" guide: what an encoding means. */
+export interface ReadingNote {
+  /** The visual channel being explained — "Each dot", "Height", "Colour". */
+  label: string;
+  /** What it encodes and how to interpret it. */
+  text: string;
+}
+
 export interface ChartFrameProps {
   title: string;
   description?: string;
   /** Short caveat rendered under the title, e.g. a modelling disclaimer. */
   note?: string;
+  /**
+   * Explains every visual channel in the chart — what a dot is, what height
+   * means, what the colour encodes, and what conclusion the reader can
+   * legitimately draw. A chart that needs a legend to identify series but no
+   * explanation of what it is showing assumes a fluency most readers do not
+   * have, so this is offered on every chart rather than the complex ones.
+   */
+  readingGuide?: ReadingNote[];
+  /** The single sentence a reader should take away, if there is one. */
+  takeaway?: string;
   legend?: React.ReactNode;
   children: React.ReactNode;
   /** Enables the "Data" toggle. Rows are rendered verbatim. */
@@ -47,6 +65,8 @@ export function ChartFrame({
   note,
   legend,
   children,
+  readingGuide,
+  takeaway,
   table,
   empty,
   className,
@@ -54,6 +74,7 @@ export function ChartFrame({
   minWidth,
 }: ChartFrameProps) {
   const [showTable, setShowTable] = React.useState(false);
+  const [showGuide, setShowGuide] = React.useState(false);
 
   return (
     <figure className={cn("rounded-xl border border-edge bg-surface-1", className)}>
@@ -74,23 +95,60 @@ export function ChartFrame({
             <p className="text-xs leading-relaxed text-ink-muted">{description}</p>
           )}
         </div>
-        {table && (
-          <button
-            type="button"
-            onClick={() => setShowTable((value) => !value)}
-            aria-pressed={showTable}
-            className={cn(
-              "flex shrink-0 items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] transition-colors",
-              showTable
-                ? "border-accent/50 bg-accent/12 text-accent-bright"
-                : "border-edge bg-surface-2 text-ink-muted hover:text-ink",
-            )}
-          >
-            <Table2 className="size-3" aria-hidden />
-            {showTable ? "Chart" : "Data"}
-          </button>
-        )}
+        <div className="flex shrink-0 items-center gap-1.5">
+          {readingGuide && readingGuide.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowGuide((value) => !value)}
+              aria-pressed={showGuide}
+              className={cn(
+                "flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] transition-colors",
+                showGuide
+                  ? "border-accent/50 bg-accent/12 text-accent"
+                  : "border-edge bg-surface-2 text-ink-muted hover:text-ink",
+              )}
+            >
+              <HelpCircle className="size-3" aria-hidden />
+              How to read
+            </button>
+          )}
+          {table && (
+            <button
+              type="button"
+              onClick={() => setShowTable((value) => !value)}
+              aria-pressed={showTable}
+              className={cn(
+                "flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] transition-colors",
+                showTable
+                  ? "border-accent/50 bg-accent/12 text-accent"
+                  : "border-edge bg-surface-2 text-ink-muted hover:text-ink",
+              )}
+            >
+              <Table2 className="size-3" aria-hidden />
+              {showTable ? "Chart" : "Data"}
+            </button>
+          )}
+        </div>
       </figcaption>
+
+      {showGuide && readingGuide && (
+        <div className="border-b border-edge bg-surface-2/40 px-4 py-3">
+          <dl className="space-y-1.5">
+            {readingGuide.map((note) => (
+              <div key={note.label} className="flex gap-2 text-[11px] leading-relaxed">
+                <dt className="w-24 shrink-0 font-medium text-ink">{note.label}</dt>
+                <dd className="min-w-0 flex-1 text-ink-secondary">{note.text}</dd>
+              </div>
+            ))}
+          </dl>
+          {takeaway && (
+            <p className="mt-2.5 flex gap-2 border-t border-edge pt-2.5 text-[11px] leading-relaxed">
+              <span className="w-24 shrink-0 font-medium text-ink">What it shows</span>
+              <span className="min-w-0 flex-1 text-ink-secondary">{takeaway}</span>
+            </p>
+          )}
+        </div>
+      )}
 
       {legend && (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-edge px-4 py-2.5">
