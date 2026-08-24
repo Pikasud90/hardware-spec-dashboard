@@ -11,8 +11,17 @@ import type { NextConfig } from "next";
  * `trailingSlash` makes every route resolve to `<route>/index.html`, which lets
  * the Electron custom protocol handler map URLs to files with a trivial rule.
  */
+/**
+ * GitHub Pages serves project sites from a subpath. The Pages workflow sets
+ * NEXT_PUBLIC_BASE_PATH; every other build (local, Electron, any static host
+ * rooted at "/") leaves it empty and serves from the root.
+ */
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const nextConfig: NextConfig = {
   output: "export",
+  basePath,
+  assetPrefix: basePath || undefined,
   trailingSlash: true,
   reactStrictMode: true,
   images: {
