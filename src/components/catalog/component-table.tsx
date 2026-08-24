@@ -76,7 +76,7 @@ export function ComponentTable({
                 "grid size-6 place-items-center rounded border transition-colors",
                 selected
                   ? "border-accent bg-accent text-white"
-                  : "border-edge-strong text-ink-muted hover:border-accent hover:text-accent-bright",
+                  : "border-edge-strong text-ink-muted hover:border-accent hover:text-accent-strong",
                 blocked && "cursor-not-allowed opacity-35 hover:border-edge-strong",
               )}
             >
@@ -98,7 +98,7 @@ export function ComponentTable({
       cell: ({ row }) => (
         <Link
           href={`/component/${row.original.slug}/`}
-          className="block min-w-0 font-medium text-ink transition-colors hover:text-accent-bright"
+          className="block min-w-0 font-medium text-ink transition-colors hover:text-accent-strong"
         >
           <span className="block truncate">{row.original.name}</span>
           <span className="block truncate text-[11px] font-normal text-ink-muted">

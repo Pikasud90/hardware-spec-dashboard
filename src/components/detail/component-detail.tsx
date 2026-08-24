@@ -94,7 +94,7 @@ export function ComponentDetail({ component }: { component: ResolvedComponent })
           <div className="flex flex-wrap items-center gap-2 text-xs">
             <Link
               href={`/?category=${component.category}`}
-              className="text-ink-muted transition-colors hover:text-accent-bright"
+              className="text-ink-muted transition-colors hover:text-accent-strong"
             >
               {CATEGORY_LABELS[component.category]}
             </Link>
@@ -224,7 +224,7 @@ export function ComponentDetail({ component }: { component: ResolvedComponent })
                             <span>
                               <span className="block">{metric.description}</span>
                               {metric.formula && (
-                                <span className="mt-1 block font-mono text-[10px] text-accent-bright">
+                                <span className="mt-1 block font-mono text-[10px] text-accent-strong">
                                   {metric.formula}
                                 </span>
                               )}
@@ -234,7 +234,7 @@ export function ComponentDetail({ component }: { component: ResolvedComponent })
                           <dt className="flex cursor-help items-center gap-1.5 text-xs text-ink-muted">
                             {metric.label}
                             {metric.derived && (
-                              <span className="rounded bg-accent/12 px-1 text-[9px] font-medium text-accent-bright">
+                              <span className="rounded bg-accent/12 px-1 text-[9px] font-medium text-accent-strong">
                                 fx
                               </span>
                             )}
@@ -270,7 +270,7 @@ export function ComponentDetail({ component }: { component: ResolvedComponent })
                 href={`/component/${peer.slug}/`}
                 className="group rounded-xl border border-edge bg-surface-1 p-4 transition-colors hover:border-accent/50"
               >
-                <p className="text-xs font-medium text-ink group-hover:text-accent-bright">
+                <p className="text-xs font-medium text-ink group-hover:text-accent-strong">
                   {peer.name}
                 </p>
                 <p className="mt-1 text-[11px] text-ink-muted">{peer.brand}</p>

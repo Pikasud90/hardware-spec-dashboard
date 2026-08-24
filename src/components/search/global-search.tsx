@@ -19,7 +19,7 @@ function Highlighted({ text, query }: { text: string; query: string }) {
       {highlightMatch(text, query).map((segment, index) => (
         <span
           key={index}
-          className={segment.matched ? "font-semibold text-accent-bright" : undefined}
+          className={segment.matched ? "font-semibold text-accent-strong" : undefined}
         >
           {segment.text}
         </span>

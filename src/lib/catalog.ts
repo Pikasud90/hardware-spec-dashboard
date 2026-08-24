@@ -184,32 +184,52 @@ export function brandsIn(category: Category): string[] {
   ].sort((a, b) => a.localeCompare(b));
 }
 
+export interface Grouping {
+  key: string;
+  label: string;
+}
+
 /**
- * A category-specific secondary grouping used by the filter bar — socket for
- * processors and boards, memory generation for kits, interface for drives.
+ * The categorical axes worth filtering a category on.
+ *
+ * More than one, because a single axis stopped being enough: with 112
+ * processors spanning fifteen years, socket alone leaves far too many rows,
+ * and market tier alone mixes incompatible platforms. Both together is how
+ * people actually narrow the list.
  */
-export function groupingKeyFor(category: Category): { key: string; label: string } | null {
+export function groupingsFor(category: Category): Grouping[] {
   switch (category) {
     case "cpu":
-      return { key: "socket", label: "Socket" };
+      return [
+        { key: "socket", label: "Socket" },
+        { key: "segment", label: "Tier" },
+      ];
     case "motherboard":
-      return { key: "chipset", label: "Chipset" };
+      return [
+        { key: "socket", label: "Socket" },
+        { key: "chipset", label: "Chipset" },
+      ];
     case "ram":
-      return { key: "generation", label: "Generation" };
+      return [{ key: "generation", label: "Generation" }];
     case "storage":
-      return { key: "interface", label: "Interface" };
+      return [
+        { key: "driveType", label: "Type" },
+        { key: "interface", label: "Interface" },
+      ];
     case "gpu":
-      return { key: "architecture", label: "Architecture" };
+      return [{ key: "architecture", label: "Architecture" }];
     case "psu":
-      return { key: "efficiencyRating", label: "80 PLUS tier" };
+      return [
+        { key: "efficiencyRating", label: "80 PLUS tier" },
+        { key: "formFactor", label: "Form factor" },
+      ];
   }
 }
 
-export function groupValuesIn(category: Category): string[] {
-  const grouping = groupingKeyFor(category);
-  if (!grouping) return [];
+/** Distinct values present for one grouping key within a category. */
+export function groupValuesFor(category: Category, key: string): string[] {
   const values = COMPONENTS_BY_CATEGORY[category]
-    .map((component) => component.values[grouping.key])
+    .map((component) => component.values[key])
     .filter((value): value is string => typeof value === "string");
   return [...new Set(values)].sort((a, b) => a.localeCompare(b));
 }

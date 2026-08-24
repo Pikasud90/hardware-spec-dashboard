@@ -8,7 +8,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         neutral: "border-edge-strong bg-surface-2 text-ink-secondary",
-        accent: "border-accent/40 bg-accent/12 text-accent-bright",
+        accent: "border-accent/40 bg-accent/12 text-accent-strong",
         good: "border-good/45 bg-good/12 text-good",
         critical: "border-critical/45 bg-critical/12 text-critical",
         warning: "border-warning/45 bg-warning/12 text-warning",

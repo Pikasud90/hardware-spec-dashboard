@@ -74,7 +74,7 @@ export default function MethodologyPage() {
       {/* Provenance */}
       <section className="space-y-3">
         <h2 className="flex items-center gap-2 text-lg font-semibold tracking-tight text-ink">
-          <Ruler className="size-4 text-accent-bright" aria-hidden />
+          <Ruler className="size-4 text-accent-strong" aria-hidden />
           Data provenance
         </h2>
         <dl className="space-y-2 text-sm leading-relaxed text-ink-secondary">
@@ -144,7 +144,7 @@ export default function MethodologyPage() {
       {/* Polarity */}
       <section className="space-y-3">
         <h2 className="flex items-center gap-2 text-lg font-semibold tracking-tight text-ink">
-          <Scale className="size-4 text-accent-bright" aria-hidden />
+          <Scale className="size-4 text-accent-strong" aria-hidden />
           Polarity
         </h2>
         <p className="text-sm leading-relaxed text-ink-secondary">
@@ -171,7 +171,7 @@ export default function MethodologyPage() {
           screen</strong>, then inverted for lower-is-better metrics so that 1 always
           means best:
         </p>
-        <pre className="overflow-x-auto rounded-lg border border-edge bg-surface-1 p-4 font-mono text-xs text-accent-bright">
+        <pre className="overflow-x-auto rounded-lg border border-edge bg-surface-1 p-4 font-mono text-xs text-accent-strong">
 {`unit = (value − min) / (max − min)
 if polarity is LOWER_BETTER:  unit = 1 − unit
 if max == min:                unit = 0.5   (no spread, no winner)`}
@@ -191,7 +191,7 @@ if max == min:                unit = 0.5   (no spread, no winner)`}
       {/* Exact identities */}
       <section className="space-y-3">
         <h2 className="flex items-center gap-2 text-lg font-semibold tracking-tight text-ink">
-          <FunctionSquare className="size-4 text-accent-bright" aria-hidden />
+          <FunctionSquare className="size-4 text-accent-strong" aria-hidden />
           Derived values
         </h2>
         <p className="text-sm leading-relaxed text-ink-secondary">
@@ -224,7 +224,7 @@ if max == min:                unit = 0.5   (no spread, no winner)`}
                   <td className="px-3 py-2 align-top text-ink-muted">
                     {CATEGORY_SHORT_LABELS[category]}
                   </td>
-                  <td className="px-3 py-2 align-top font-mono text-[11px] text-accent-bright">
+                  <td className="px-3 py-2 align-top font-mono text-[11px] text-accent-strong">
                     {metric.formula ?? "—"}
                   </td>
                 </tr>
@@ -243,7 +243,7 @@ if max == min:                unit = 0.5   (no spread, no winner)`}
           Three indices are produced, each a function of clock, core topology and cache.
           All are then scaled so the highest-scoring processor in the catalogue reads 100.
         </p>
-        <pre className="overflow-x-auto rounded-lg border border-edge bg-surface-1 p-4 font-mono text-xs text-accent-bright">
+        <pre className="overflow-x-auto rounded-lg border border-edge bg-surface-1 p-4 font-mono text-xs text-accent-strong">
 {`ST    = IPC_pcore × boost_GHz
 
 cores = P × (1 + ${SMT_SCALING_GAIN} × SMT_active)
@@ -316,7 +316,7 @@ GAME  = ST × (1 + ${CACHE_GAMING_WEIGHT} × ln(1 + L3_MB / ${CACHE_REFERENCE_MB
           doubled FP32 datapaths advertise throughput that games cannot fully consume, so
           a per-architecture efficiency factor is applied before anything is compared.
         </p>
-        <pre className="overflow-x-auto rounded-lg border border-edge bg-surface-1 p-4 font-mono text-xs text-accent-bright">
+        <pre className="overflow-x-auto rounded-lg border border-edge bg-surface-1 p-4 font-mono text-xs text-accent-strong">
 {`TFLOPS  = (2 × shaders × boost_MHz) / 1e6
 BW_raw  = (Gbps × bus_bits) / 8
 BW_eff  = BW_raw × (1 + ${GPU_CACHE_MAX_UPLIFT} × LLC / (LLC + ${GPU_CACHE_HALF_SATURATION_MB}))
@@ -432,14 +432,14 @@ recommended PSU = draw × 1.4, rounded up to 50 W`}
       {/* Search */}
       <section className="space-y-3">
         <h2 className="flex items-center gap-2 text-lg font-semibold tracking-tight text-ink">
-          <Search className="size-4 text-accent-bright" aria-hidden />
+          <Search className="size-4 text-accent-strong" aria-hidden />
           Search
         </h2>
         <p className="text-sm leading-relaxed text-ink-secondary">
-          Search is a TypeScript port of PostgreSQL&rsquo;s <code className="rounded bg-surface-2 px-1 font-mono text-[11px] text-accent-bright">pg_trgm</code>{" "}
+          Search is a TypeScript port of PostgreSQL&rsquo;s <code className="rounded bg-surface-2 px-1 font-mono text-[11px] text-accent-strong">pg_trgm</code>{" "}
           extension, running entirely in the browser. Strings are lowercased,
           non-alphanumeric runs become breaks, each word is padded to{" "}
-          <code className="rounded bg-surface-2 px-1 font-mono text-[11px] text-accent-bright">{'"  word "'}</code>,
+          <code className="rounded bg-surface-2 px-1 font-mono text-[11px] text-accent-strong">{'"  word "'}</code>,
           and similarity is the Jaccard index over the resulting trigram sets — the same
           definition Postgres uses, with the same {SIMILARITY_THRESHOLD} default threshold.
         </p>
@@ -523,7 +523,7 @@ recommended PSU = draw × 1.4, rounded up to 50 W`}
           models can be recalibrated in one place and the whole application follows. See{" "}
           <Link
             href="https://github.com/Pikasud90/hardware-spec-dashboard"
-            className="text-accent-bright underline underline-offset-2"
+            className="text-accent-strong underline underline-offset-2"
           >
             the source
           </Link>

@@ -37,9 +37,12 @@
   --color-ink-secondary: #47536b;
   --color-ink-muted: #6a7691;
 
-  /* ---- interactive accent ---- */
+  /* ---- interactive accent ----
+     `accent-strong` is the emphasis/hover step, not a lighter one: in light
+     mode it is darker than the base accent, in dark mode lighter. Both read as
+     "pressed" against their own surface, which is what the name should convey. */
   --color-accent: #2a78d6;
-  --color-accent-bright: #1c5cab;
+  --color-accent-strong: #1c5cab;
   --color-accent-dim: #9ec5f4;
 
   /* ---- categorical series: fixed order, never cycled ---- */
@@ -125,7 +128,7 @@
     --color-ink-muted: #64708a;
 
     --color-accent: #3987e5;
-    --color-accent-bright: #6da7ec;
+    --color-accent-strong: #6da7ec;
     --color-accent-dim: #1c5cab;
 
     --color-series-1: #3987e5;
@@ -187,7 +190,7 @@
   --color-ink-muted: #64708a;
 
   --color-accent: #3987e5;
-  --color-accent-bright: #6da7ec;
+  --color-accent-strong: #6da7ec;
   --color-accent-dim: #1c5cab;
 
   --color-series-1: #3987e5;

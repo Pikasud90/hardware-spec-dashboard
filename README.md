@@ -1,9 +1,9 @@
 # Hardware Spec Dashboard
 
-An offline-first build planner and comparison dashboard for PC hardware — processors,
-graphics cards, memory, storage, motherboards and power supplies — with **Indian market
-pricing**, compatibility checking, polarity-aware diffing and a quantitative
-visualisation suite.
+An offline-first build planner, reference and comparison dashboard for PC hardware —
+237 processors, graphics cards, memory kits, drives, motherboards and power supplies —
+with **Indian market pricing**, compatibility checking, polarity-aware diffing and a
+quantitative visualisation suite.
 
 **[▶ Live demo](https://pikasud90.github.io/hardware-spec-dashboard/)** ·
 [Download desktop app](https://github.com/Pikasud90/hardware-spec-dashboard/releases) ·
@@ -20,6 +20,21 @@ a native desktop application on macOS and Windows.
 ---
 
 ## What it does
+
+**Fifteen years of processors, not just this year's.** Intel Celeron through Core Ultra
+across every generation from 2011 Sandy Bridge onward, AMD FX through Zen 5 plus
+Threadripper, and Apple M1–M4. Knowing that a 2600K sits at roughly a fifth of a modern
+part's throughput is the number that makes an upgrade decision, and it is impossible to
+see if the old chip is missing.
+
+**Reference documentation in every category.** A specification table is only useful to
+someone who can already decode it. Each category opens with an orientation, then
+terminology (what CAS latency, TFLOPS, TBW, VRM phases and the 12 V rail actually mean),
+standards tables, buying guidance, and the mistakes that cost money.
+
+**Charts that explain themselves.** Every chart has a reading guide: what a dot is, what
+height and colour encode, what the trend line means, and what conclusion you can
+legitimately draw.
 
 **A build planner that only offers parts that work.** Pick a processor and every later
 slot filters itself — socket, memory generation, slot count, connectors and power headroom
@@ -68,6 +83,9 @@ resolve correctly, in about 1.2 ms across the full catalogue.
 | Generational timeline | How fast is this metric improving, and who beat their generation |
 | Radial gauges | Where does this value sit in the category range |
 | Power breakdown | Where does this build's draw actually go |
+
+Each one carries a **How to read** panel explaining its encodings, and a **Data** toggle
+revealing the underlying numbers as a table — so nothing is ever encoded by colour alone.
 
 Every chart ships with a legend, a plain-language caveat, and a **Data** toggle that
 reveals the underlying numbers as a table — so nothing is ever encoded by colour alone.
@@ -129,7 +147,8 @@ npm run dev       # http://localhost:3000
 src/
   lib/
     validations/component.ts   Zod discriminated unions — one schema per category
-    data/                      The catalogue: 148 components as typed literals
+    data/                      The catalogue: 237 components as typed literals
+                               (+ primers.ts — the per-category documentation)
     compatibility.ts           Build rules, power estimation, costed insights
     pricing.ts                 Indian price provenance, confidence, GST
     catalog.ts                 Validates, derives, normalises, indexes for search

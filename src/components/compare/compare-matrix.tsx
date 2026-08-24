@@ -114,7 +114,7 @@ export function CompareMatrix({
                       <span>
                         <span className="block">{row.metric.description}</span>
                         {row.metric.formula && (
-                          <span className="mt-1 block font-mono text-[10px] text-accent-bright">
+                          <span className="mt-1 block font-mono text-[10px] text-accent-strong">
                             {row.metric.formula}
                           </span>
                         )}
@@ -128,7 +128,7 @@ export function CompareMatrix({
                   {row.metric.derived && (
                     <span
                       title="Derived value"
-                      className="shrink-0 rounded bg-accent/12 px-1 text-[9px] font-medium text-accent-bright"
+                      className="shrink-0 rounded bg-accent/12 px-1 text-[9px] font-medium text-accent-strong"
                     >
                       fx
                     </span>

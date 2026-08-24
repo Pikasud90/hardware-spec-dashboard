@@ -92,7 +92,7 @@ export function BuildSummary({
       {power.totalWatts > 0 && (
         <section className="rounded-xl border border-edge bg-surface-1 p-4">
           <h2 className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-ink-muted">
-            <Zap className="size-3.5 text-accent-bright" aria-hidden />
+            <Zap className="size-3.5 text-accent-strong" aria-hidden />
             Power
           </h2>
           <div className="mt-2 flex items-baseline gap-2">
@@ -206,7 +206,7 @@ export function BuildSummary({
       {insights.length > 0 && (
         <section className="rounded-xl border border-edge bg-surface-1 p-4">
           <h2 className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-ink-muted">
-            <Lightbulb className="size-3.5 text-accent-bright" aria-hidden />
+            <Lightbulb className="size-3.5 text-accent-strong" aria-hidden />
             Worth considering
           </h2>
           <ul className="mt-3 space-y-2">
@@ -224,7 +224,7 @@ export function BuildSummary({
                       <Icon
                         className={cn(
                           "mt-0.5 size-3.5 shrink-0",
-                          insight.kind === "saving" ? "text-good" : "text-accent-bright",
+                          insight.kind === "saving" ? "text-good" : "text-accent-strong",
                         )}
                         aria-hidden
                       />

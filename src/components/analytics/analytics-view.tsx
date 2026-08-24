@@ -116,7 +116,7 @@ export function AnalyticsView() {
               className={cn(
                 "flex shrink-0 items-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium transition-colors",
                 entry === category
-                  ? "bg-accent/15 text-accent-bright"
+                  ? "bg-accent/15 text-accent-strong"
                   : "text-ink-secondary hover:bg-surface-2 hover:text-ink",
               )}
             >

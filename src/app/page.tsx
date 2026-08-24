@@ -42,7 +42,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/build/"
-            className="shrink-0 rounded-md bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-bright"
+            className="shrink-0 rounded-md bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-strong"
           >
             Open the build planner
           </Link>
@@ -80,7 +80,7 @@ export default function HomePage() {
             <Link
               key={category}
               href={`/analytics/?category=${category}`}
-              className="rounded-full border border-edge bg-surface-1 px-3 py-1.5 text-xs text-ink-secondary transition-colors hover:border-accent/50 hover:text-accent-bright"
+              className="rounded-full border border-edge bg-surface-1 px-3 py-1.5 text-xs text-ink-secondary transition-colors hover:border-accent/50 hover:text-accent-strong"
             >
               {CATEGORY_LABELS[category]} analytics
               <span className="tnum ml-1.5 text-ink-muted">
@@ -113,7 +113,7 @@ function StatTile({
   return (
     <div className="rounded-xl border border-edge bg-surface-1 p-4">
       <dt className="flex items-center gap-2 text-xs text-ink-muted">
-        <span className="text-accent-bright">{icon}</span>
+        <span className="text-accent-strong">{icon}</span>
         {label}
       </dt>
       <dd className="mt-2">

@@ -92,7 +92,7 @@ export function DistributionStrip({
                 ? "bg-good"
                 : tier === "critical"
                   ? "bg-critical"
-                  : "bg-accent-bright",
+                  : "bg-accent-strong",
             )}
           />
           <div
@@ -102,7 +102,7 @@ export function DistributionStrip({
                 ? "bg-good"
                 : tier === "critical"
                   ? "bg-critical"
-                  : "bg-accent-bright",
+                  : "bg-accent-strong",
             )}
           />
         </div>

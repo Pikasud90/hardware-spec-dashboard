@@ -6,8 +6,8 @@ import { Filter, RotateCcw, Search, TriangleAlert, X } from "lucide-react";
 import {
   COMPONENTS_BY_CATEGORY,
   brandsIn,
-  groupValuesIn,
-  groupingKeyFor,
+  groupValuesFor,
+  groupingsFor,
 } from "@/lib/catalog";
 import { SEARCH_INDEX } from "@/lib/catalog";
 import { search } from "@/lib/search";
@@ -44,9 +44,21 @@ export function CatalogView() {
     parseAsArrayOf(parseAsString).withDefault([]),
   );
 
-  const grouping = groupingKeyFor(category);
+  const groupings = React.useMemo(() => groupingsFor(category), [category]);
   const availableBrands = React.useMemo(() => brandsIn(category), [category]);
-  const availableGroups = React.useMemo(() => groupValuesIn(category), [category]);
+  /** Every selectable value across all grouping axes, for URL validation. */
+  const groupOptions = React.useMemo(
+    () =>
+      groupings.map((grouping) => ({
+        ...grouping,
+        values: groupValuesFor(category, grouping.key),
+      })),
+    [groupings, category],
+  );
+  const availableGroups = React.useMemo(
+    () => groupOptions.flatMap((entry) => entry.values),
+    [groupOptions],
+  );
 
   // Any brand or group value that does not exist in this category is dropped
   // rather than silently filtering everything out (US5).
@@ -76,13 +88,17 @@ export function CatalogView() {
     if (activeBrands.length > 0) {
       candidates = candidates.filter((component) => activeBrands.includes(component.brand));
     }
-    if (activeGroups.length > 0 && grouping) {
+    // Selections within one axis are OR'd; across axes they are AND'd, which
+    // is what "AM5 processors in the Ryzen 7 tier" naturally means.
+    for (const entry of groupOptions) {
+      const selected = activeGroups.filter((value) => entry.values.includes(value));
+      if (selected.length === 0) continue;
       candidates = candidates.filter((component) =>
-        activeGroups.includes(String(component.values[grouping.key] ?? "")),
+        selected.includes(String(component.values[entry.key] ?? "")),
       );
     }
     return candidates;
-  }, [category, query, activeBrands, activeGroups, grouping]);
+  }, [category, query, activeBrands, activeGroups, groupOptions]);
 
   const filtersActive =
     query.trim().length > 0 || activeBrands.length > 0 || activeGroups.length > 0;
@@ -138,7 +154,7 @@ export function CatalogView() {
                 className={cn(
                   "flex shrink-0 items-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium transition-colors",
                   active
-                    ? "bg-accent/15 text-accent-bright"
+                    ? "bg-accent/15 text-accent-strong"
                     : "text-ink-secondary hover:bg-surface-2 hover:text-ink",
                 )}
               >
@@ -193,13 +209,18 @@ export function CatalogView() {
               selected={activeBrands}
               onToggle={(value) => toggleIn(value, activeBrands, (next) => void setBrands(next))}
             />
-            {grouping && availableGroups.length > 1 && (
-              <FilterChips
-                label={grouping.label}
-                options={availableGroups}
-                selected={activeGroups}
-                onToggle={(value) => toggleIn(value, activeGroups, (next) => void setGroups(next))}
-              />
+            {groupOptions.map((entry) =>
+              entry.values.length > 1 ? (
+                <FilterChips
+                  key={entry.key}
+                  label={entry.label}
+                  options={entry.values}
+                  selected={activeGroups}
+                  onToggle={(value) =>
+                    toggleIn(value, activeGroups, (next) => void setGroups(next))
+                  }
+                />
+              ) : null,
             )}
           </div>
 
@@ -231,8 +252,8 @@ export function CatalogView() {
             title="No components match these filters"
             description={
               query.trim().length > 0
-                ? `Nothing in ${CATEGORY_LABELS[category]} matches “${query}” with the current brand and ${grouping?.label.toLowerCase() ?? "group"} filters applied.`
-                : `The selected brand and ${grouping?.label.toLowerCase() ?? "group"} filters have no overlap in ${CATEGORY_LABELS[category]}.`
+                ? `Nothing in ${CATEGORY_LABELS[category]} matches “${query}” with the current filters applied.`
+                : `The selected filters have no overlap in ${CATEGORY_LABELS[category]}.`
             }
             action={
               <Button variant="secondary" size="sm" onClick={resetFilters}>
@@ -278,7 +299,7 @@ function FilterChips({
               className={cn(
                 "inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors",
                 active
-                  ? "border-accent bg-accent/15 text-accent-bright"
+                  ? "border-accent bg-accent/15 text-accent-strong"
                   : "border-edge bg-surface-2 text-ink-secondary hover:border-edge-strong hover:text-ink",
               )}
             >

@@ -183,7 +183,7 @@ export function BuilderView() {
         {filled === 0 && (
           <section className="rounded-xl border border-edge bg-surface-1 p-4">
             <h2 className="flex items-center gap-1.5 text-sm font-semibold text-ink">
-              <Sparkles className="size-4 text-accent-bright" aria-hidden />
+              <Sparkles className="size-4 text-accent-strong" aria-hidden />
               Start from a proven build
             </h2>
             <p className="mt-1 text-xs text-ink-muted">
@@ -198,7 +198,7 @@ export function BuilderView() {
                   onClick={() => applyPreset(preset.parts)}
                   className="group rounded-lg border border-edge bg-surface-2/50 p-3 text-left transition-colors hover:border-accent/50 hover:bg-surface-2"
                 >
-                  <p className="text-xs font-semibold text-ink group-hover:text-accent-bright">
+                  <p className="text-xs font-semibold text-ink group-hover:text-accent-strong">
                     {preset.name}
                   </p>
                   <p className="tnum mt-0.5 text-[11px] text-ink-secondary">{preset.budget}</p>
@@ -293,7 +293,7 @@ export function BuilderView() {
                         <div className="mt-0.5 flex flex-wrap items-center gap-2">
                           <Link
                             href={`/component/${component.slug}/`}
-                            className="truncate text-sm font-medium text-ink transition-colors hover:text-accent-bright"
+                            className="truncate text-sm font-medium text-ink transition-colors hover:text-accent-strong"
                           >
                             {component.name}
                           </Link>

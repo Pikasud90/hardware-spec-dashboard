@@ -119,7 +119,7 @@ export function RankingBars({
               <Link
                 href={`/component/${entry.component.slug}/`}
                 className={cn(
-                  "w-40 shrink-0 truncate transition-colors hover:text-accent-bright sm:w-56",
+                  "w-40 shrink-0 truncate transition-colors hover:text-accent-strong sm:w-56",
                   emphasised ? "font-semibold text-ink" : "text-ink-secondary",
                 )}
               >

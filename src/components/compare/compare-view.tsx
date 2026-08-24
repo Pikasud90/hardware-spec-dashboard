@@ -326,7 +326,7 @@ function ColumnHeader({
         />
         <Link
           href={`/component/${component.slug}/`}
-          className="min-w-0 flex-1 text-xs font-semibold leading-tight text-ink transition-colors hover:text-accent-bright"
+          className="min-w-0 flex-1 text-xs font-semibold leading-tight text-ink transition-colors hover:text-accent-strong"
         >
           {component.name}
         </Link>
@@ -343,7 +343,7 @@ function ColumnHeader({
           <button
             type="button"
             onClick={onMakeBaseline}
-            className="ml-auto rounded px-1 text-[10px] text-ink-muted transition-colors hover:text-accent-bright"
+            className="ml-auto rounded px-1 text-[10px] text-ink-muted transition-colors hover:text-accent-strong"
           >
             set baseline
           </button>
@@ -390,7 +390,7 @@ function CategoryPicker({
           className={cn(
             "shrink-0 rounded-md px-3.5 py-2 text-sm font-medium transition-colors",
             entry === category
-              ? "bg-accent/15 text-accent-bright"
+              ? "bg-accent/15 text-accent-strong"
               : "text-ink-secondary hover:bg-surface-2 hover:text-ink",
           )}
         >

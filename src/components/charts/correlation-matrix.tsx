@@ -179,7 +179,7 @@ export function CorrelationMatrix({
                 >
                   <div
                     tabIndex={0}
-                    className="tnum flex h-9 items-center justify-center rounded-[3px] text-[10px] text-ink hover:ring-2 hover:ring-accent-bright"
+                    className="tnum flex h-9 items-center justify-center rounded-[3px] text-[10px] text-ink hover:ring-2 hover:ring-accent-strong"
                     style={{
                       backgroundColor: diagonal
                         ? "var(--color-surface-3)"

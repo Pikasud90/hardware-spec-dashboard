@@ -43,7 +43,7 @@ export function SiteHeader() {
           >
             <span
               aria-hidden
-              className="grid size-7 place-items-center rounded-md border border-accent/40 bg-accent/12 text-accent-bright"
+              className="grid size-7 place-items-center rounded-md border border-accent/40 bg-accent/12 text-accent-strong"
             >
               <Cpu className="size-4" />
             </span>
