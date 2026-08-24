@@ -248,7 +248,8 @@ if max == min:                unit = 0.5   (no spread, no winner)`}
 
 cores = P × (1 + ${SMT_SCALING_GAIN} × SMT_active)
       + E × (IPC_ecore / IPC_pcore) × ${E_CORE_CLOCK_RATIO}
-MT    = IPC_pcore × boost_GHz × ${ALL_CORE_CLOCK_RATIO} × cores
+allCore = clamp(0.70, 0.95, 1.00 − ${ALL_CORE_CLOCK_DECAY} × ln(cores))
+MT    = IPC_pcore × boost_GHz × allCore × cores
 
 GAME  = ST × (1 + ${CACHE_GAMING_WEIGHT} × ln(1 + L3_MB / ${CACHE_REFERENCE_MB}))`}
         </pre>
@@ -478,7 +479,7 @@ recommended PSU = draw × 1.4, rounded up to 50 W`}
           </li>
           <li>
             <strong className="text-ink">Apple indices are cross-ISA estimates.</strong>{" "}
-            Apple's cores are much wider than contemporary x86 and run at lower clocks, so
+            Apple&rsquo;s cores are much wider than contemporary x86 and run at lower clocks, so
             placing them on a shared per-clock axis is an approximation in a way that
             comparing two x86 designs is not. The tier is meaningful; the precise number is
             less so. Apple parts are also soldered SoCs, so they never appear in the build
