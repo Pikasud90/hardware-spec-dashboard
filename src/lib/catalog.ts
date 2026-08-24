@@ -36,6 +36,9 @@ export interface ResolvedComponent {
   series: string;
   category: Category;
   msrp: number | null;
+  inrPrice: number | null;
+  priceConfidence: "high" | "medium" | "low";
+  availability: "available" | "limited" | "discontinued";
   releaseDate: string | null;
   summary: string;
   entity: ComponentEntity;
@@ -64,7 +67,7 @@ const NORMALISED_INDEX_KEYS: Record<string, string> = {
   gamingIndexRaw: "gamingIndex",
   rasterIndexRaw: "rasterIndex",
   perfPerWattRaw: "perfPerWatt",
-  perfPerDollarRaw: "perfPerDollar",
+  perfPerRupeeRaw: "perfPerRupee",
 };
 
 function flattenSpecs(entity: ComponentEntity): Record<string, MetricValue> {
@@ -116,6 +119,9 @@ function assemble(rawByCategory: Record<Category, unknown[]>): ResolvedComponent
         series: entity.series,
         category: entity.category,
         msrp: entity.msrp,
+        inrPrice: entity.inrPrice,
+        priceConfidence: entity.priceConfidence,
+        availability: entity.availability,
         releaseDate: entity.releaseDate,
         summary: entity.summary,
         entity,

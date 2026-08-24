@@ -17,6 +17,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 9000",
     category: "cpu",
     msrp: 699,
+    inrPrice: 73990,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-03-11",
     summary:
       "Sixteen Zen 5 cores with second-generation stacked cache placed beneath the compute die, which lifts the clock ceiling that constrained the previous X3D generation.",
@@ -54,6 +57,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 9000",
     category: "cpu",
     msrp: 599,
+    inrPrice: 48000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-03-11",
     summary:
       "Twelve-core X3D part splitting duties across one cache-stacked die and one frequency-optimised die.",
@@ -91,6 +97,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 9000",
     category: "cpu",
     msrp: 479,
+    inrPrice: 59999,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2024-11-07",
     summary:
       "The single-die gaming reference point: 96 MB of L3 with an unlocked multiplier, because the cache now sits under the cores rather than on top of them.",
@@ -128,6 +137,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 9000",
     category: "cpu",
     msrp: 649,
+    inrPrice: 55000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-08-15",
     summary:
       "Flagship non-X3D Zen 5, aimed at sustained all-core throughput with a 230 W package power ceiling.",
@@ -165,6 +177,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 9000",
     category: "cpu",
     msrp: 499,
+    inrPrice: 42000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-08-15",
     summary:
       "Twelve Zen 5 cores at a 120 W default, trading peak throughput for markedly better efficiency than the 9950X.",
@@ -202,6 +217,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 9000",
     category: "cpu",
     msrp: 359,
+    inrPrice: 28999,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-08-08",
     summary:
       "Eight Zen 5 cores inside a 65 W envelope — the efficiency standout of the stack rather than the performance one.",
@@ -239,6 +257,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 9000",
     category: "cpu",
     msrp: 279,
+    inrPrice: 23490,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-08-08",
     summary:
       "Six-core Zen 5 entry point with the full 5.4 GHz boost, well suited to a mid-range gaming build.",
@@ -278,6 +299,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 7000",
     category: "cpu",
     msrp: 699,
+    inrPrice: 58500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-02-28",
     summary:
       "First-generation dual-die X3D: one cache-stacked CCD for games, one high-clock CCD for everything else, arbitrated in the driver.",
@@ -315,6 +339,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 7000",
     category: "cpu",
     msrp: 449,
+    inrPrice: 39999,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-04-06",
     summary:
       "The part that made stacked cache mainstream — a locked 5.0 GHz ceiling offset by 96 MB of L3 and a modest 120 W package.",
@@ -352,6 +379,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 7000",
     category: "cpu",
     msrp: 699,
+    inrPrice: 61500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-09-27",
     summary:
       "Zen 4 flagship that introduced the AM5 platform, running to 230 W package power under all-core load.",
@@ -389,6 +419,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 7000",
     category: "cpu",
     msrp: 549,
+    inrPrice: 45000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-09-27",
     summary: "Twelve Zen 4 cores at the same 170 W class rating as the 7950X.",
     specs: {
@@ -425,6 +458,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 7000",
     category: "cpu",
     msrp: 399,
+    inrPrice: 32500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-09-27",
     summary:
       "Eight-core Zen 4 at 105 W — the direct clock-for-clock counterpart to the 7800X3D without the cache stack.",
@@ -462,6 +498,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 7000",
     category: "cpu",
     msrp: 299,
+    inrPrice: 21250,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-09-27",
     summary: "Six-core Zen 4 with a 5.3 GHz boost and a 105 W class rating.",
     specs: {
@@ -498,6 +537,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 7000",
     category: "cpu",
     msrp: 229,
+    inrPrice: 23309,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-01-10",
     summary:
       "The 65 W six-core, shipped with a Wraith Stealth cooler and within roughly 5% of the 7600X in most workloads.",
@@ -537,6 +579,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 5000",
     category: "cpu",
     msrp: 449,
+    inrPrice: 22500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-04-20",
     summary:
       "The first stacked-cache desktop part, and the reason AM4 stayed relevant years past its replacement.",
@@ -574,6 +619,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 5000",
     category: "cpu",
     msrp: 249,
+    inrPrice: 23999,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-01-31",
     summary:
       "A late, cheaper stacked-cache AM4 part — lower clocks than the 5800X3D but the same 96 MB of L3.",
@@ -611,6 +659,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 5000",
     category: "cpu",
     msrp: 799,
+    inrPrice: 34000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2020-11-05",
     summary:
       "Sixteen Zen 3 cores inside 105 W — for its generation, an unusually efficient throughput part.",
@@ -648,6 +699,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 5000",
     category: "cpu",
     msrp: 549,
+    inrPrice: 25000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2020-11-05",
     summary: "Twelve Zen 3 cores across two CCDs at a 105 W rating.",
     specs: {
@@ -684,6 +738,9 @@ export const CPUS: ComponentInput[] = [
     series: "Ryzen 5000",
     category: "cpu",
     msrp: 299,
+    inrPrice: 15100,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2020-11-05",
     summary:
       "The mainstream Zen 3 six-core, bundled with a Wraith Stealth and still a common budget-build target.",
@@ -723,6 +780,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core Ultra 200S",
     category: "cpu",
     msrp: 589,
+    inrPrice: 59500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-10-24",
     summary:
       "Arrow Lake flagship: 24 cores, no hyper-threading, and a tile-based package built on TSMC N3B.",
@@ -760,6 +820,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core Ultra 200S",
     category: "cpu",
     msrp: 394,
+    inrPrice: 38000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-10-24",
     summary: "Twenty Arrow Lake cores with the same 250 W turbo ceiling as the 285K.",
     specs: {
@@ -796,6 +859,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core Ultra 200S",
     category: "cpu",
     msrp: 309,
+    inrPrice: 30500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-10-24",
     summary: "Fourteen-core Arrow Lake entry point at a 159 W turbo ceiling.",
     specs: {
@@ -834,6 +900,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core 14th Gen",
     category: "cpu",
     msrp: 689,
+    inrPrice: 63139,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-03-14",
     summary:
       "The highest-clocked desktop part shipped on LGA1700, reaching 6.2 GHz on a favoured core.",
@@ -871,6 +940,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core 14th Gen",
     category: "cpu",
     msrp: 589,
+    inrPrice: 65000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-10-17",
     summary:
       "Twenty-four hybrid cores with a 6.0 GHz peak, at the cost of a 253 W sustained turbo budget.",
@@ -908,6 +980,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core 14th Gen",
     category: "cpu",
     msrp: 409,
+    inrPrice: 35000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-10-17",
     summary:
       "The refresh's one genuine change: four extra E-cores over the 13700K for the same money.",
@@ -945,6 +1020,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core 14th Gen",
     category: "cpu",
     msrp: 319,
+    inrPrice: 28500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-10-17",
     summary: "Fourteen cores at a 181 W ceiling — the volume gaming chip of the generation.",
     specs: {
@@ -981,6 +1059,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core 13th Gen",
     category: "cpu",
     msrp: 589,
+    inrPrice: 42000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-10-20",
     summary:
       "Raptor Lake's launch flagship, doubling Alder Lake's E-core count and enlarging L2 substantially.",
@@ -1018,6 +1099,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core 13th Gen",
     category: "cpu",
     msrp: 409,
+    inrPrice: 41000,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2022-10-20",
     summary: "Sixteen cores and 24 threads, a common price-performance pick for mixed workloads.",
     specs: {
@@ -1054,6 +1138,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core 13th Gen",
     category: "cpu",
     msrp: 319,
+    inrPrice: 25500,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2022-10-20",
     summary: "Fourteen cores at $319 — widely regarded as the value high point of the 13th generation.",
     specs: {
@@ -1090,6 +1177,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core 12th Gen",
     category: "cpu",
     msrp: 589,
+    inrPrice: 32000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2021-11-04",
     summary:
       "The first hybrid desktop x86 design, introducing the P-core/E-core split and the Thread Director scheduler.",
@@ -1127,6 +1217,9 @@ export const CPUS: ComponentInput[] = [
     series: "Core 12th Gen",
     category: "cpu",
     msrp: 289,
+    inrPrice: 17000,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2021-11-04",
     summary: "Ten hybrid cores that reset mid-range expectations when Alder Lake launched.",
     specs: {

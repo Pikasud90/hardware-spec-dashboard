@@ -7,7 +7,7 @@ import { Search, CornerDownLeft, ArrowUp, ArrowDown } from "lucide-react";
 import { COMPONENT_BY_ID, SEARCH_INDEX, type ResolvedComponent } from "@/lib/catalog";
 import { highlightMatch, search } from "@/lib/search";
 import { CATEGORY_SHORT_LABELS, type Category } from "@/lib/validations/component";
-import { formatCurrency } from "@/lib/format";
+import { formatInr } from "@/lib/format";
 import { useHotkey } from "@/hooks/use-hotkey";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -151,7 +151,7 @@ export function GlobalSearch({
               {component.brand}
             </span>
             <span className="tnum shrink-0 text-xs text-ink-secondary">
-              {formatCurrency(component.msrp)}
+              {formatInr(component.inrPrice)}
             </span>
           </Command.Item>
         ))}

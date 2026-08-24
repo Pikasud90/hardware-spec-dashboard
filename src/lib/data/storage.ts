@@ -17,6 +17,9 @@ export const STORAGE: ComponentInput[] = [
     series: "Black SN8100",
     category: "storage",
     msrp: 279,
+    inrPrice: 42000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-06-01",
     summary:
       "Among the fastest PCIe 5.0 drives available, and notably more power-efficient than the Phison E26 generation it replaced.",
@@ -44,6 +47,9 @@ export const STORAGE: ComponentInput[] = [
     series: "9100 PRO",
     category: "storage",
     msrp: 299,
+    inrPrice: 52000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-03-01",
     summary: "Samsung's first PCIe 5.0 consumer drive, using an in-house controller rather than a Phison design.",
     specs: {
@@ -70,6 +76,9 @@ export const STORAGE: ComponentInput[] = [
     series: "T705",
     category: "storage",
     msrp: 339,
+    inrPrice: 38000,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2024-03-12",
     summary: "Phison E26 at its highest clocks; sustained performance depends heavily on the heatsink fitted.",
     specs: {
@@ -96,6 +105,9 @@ export const STORAGE: ComponentInput[] = [
     series: "FireCuda 540",
     category: "storage",
     msrp: 289,
+    inrPrice: 34000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2023-06-01",
     summary:
       "Rated for 2400 TBW — double most 2 TB drives here, which puts it at the top of the endurance ranking.",
@@ -123,6 +135,9 @@ export const STORAGE: ComponentInput[] = [
     series: "990 PRO",
     category: "storage",
     msrp: 169,
+    inrPrice: 59690,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-10-01",
     summary: "The reference PCIe 4.0 drive — effectively saturates the interface at 7450 MB/s.",
     specs: {
@@ -149,6 +164,9 @@ export const STORAGE: ComponentInput[] = [
     series: "990 PRO",
     category: "storage",
     msrp: 299,
+    inrPrice: 95000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-10-01",
     summary: "Same controller and speeds at double the capacity, with endurance scaling proportionally to 2400 TBW.",
     specs: {
@@ -175,6 +193,9 @@ export const STORAGE: ComponentInput[] = [
     series: "Black SN850X",
     category: "storage",
     msrp: 149,
+    inrPrice: 45500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-07-01",
     summary: "A long-standing price-performance benchmark for PCIe 4.0 gaming storage.",
     specs: {
@@ -201,6 +222,9 @@ export const STORAGE: ComponentInput[] = [
     series: "Platinum P41",
     category: "storage",
     msrp: 159,
+    inrPrice: 30000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2022-06-01",
     summary: "Consistently among the most power-efficient PCIe 4.0 drives, using SK hynix's own NAND and controller.",
     specs: {
@@ -227,6 +251,9 @@ export const STORAGE: ComponentInput[] = [
     series: "P44 Pro",
     category: "storage",
     msrp: 139,
+    inrPrice: 28000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2022-09-01",
     summary: "Effectively the Platinum P41 hardware under a different brand, usually priced slightly lower.",
     specs: {
@@ -253,6 +280,9 @@ export const STORAGE: ComponentInput[] = [
     series: "KC3000",
     category: "storage",
     msrp: 139,
+    inrPrice: 26000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2021-09-01",
     summary: "Phison E18 with a 1600 TBW rating — higher endurance than most drives at this capacity.",
     specs: {
@@ -279,6 +309,9 @@ export const STORAGE: ComponentInput[] = [
     series: "MP600 PRO LPX",
     category: "storage",
     msrp: 159,
+    inrPrice: 28000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2022-03-01",
     summary: "A low-profile heatsink design intended to fit under a PlayStation 5 expansion cover.",
     specs: {
@@ -305,6 +338,9 @@ export const STORAGE: ComponentInput[] = [
     series: "990 EVO Plus",
     category: "storage",
     msrp: 129,
+    inrPrice: 40365,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-08-01",
     summary:
       "Unusual dual-mode interface — PCIe 4.0 x4 or PCIe 5.0 x2 — reaching the same throughput over half the lanes.",
@@ -332,6 +368,9 @@ export const STORAGE: ComponentInput[] = [
     series: "T500",
     category: "storage",
     msrp: 159,
+    inrPrice: 31000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-11-01",
     summary: "Micron NAND with a Phison E25 controller — a compact, efficient PCIe 4.0 option.",
     specs: {
@@ -358,6 +397,9 @@ export const STORAGE: ComponentInput[] = [
     series: "MP44L",
     category: "storage",
     msrp: 99,
+    inrPrice: 16000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2022-11-01",
     summary:
       "DRAM-less, relying on host memory buffer; sequential figures hold up but random performance does not.",
@@ -385,6 +427,9 @@ export const STORAGE: ComponentInput[] = [
     series: "P3 Plus",
     category: "storage",
     msrp: 99,
+    inrPrice: 29000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-06-01",
     summary:
       "QLC and DRAM-less: the cheapest path to 2 TB of NVMe, at 440 TBW — roughly a third of the TLC drives here.",
@@ -412,6 +457,9 @@ export const STORAGE: ComponentInput[] = [
     series: "980 PRO",
     category: "storage",
     msrp: 99,
+    inrPrice: 15000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2020-09-01",
     summary: "The first mainstream PCIe 4.0 drive; 600 TBW reflects the smaller 1 TB capacity.",
     specs: {
@@ -438,6 +486,9 @@ export const STORAGE: ComponentInput[] = [
     series: "970 EVO Plus",
     category: "storage",
     msrp: 79,
+    inrPrice: 11000,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2019-01-01",
     summary: "PCIe 3.0 x4 and saturating it — a good reference for how little sequential speed most workloads need.",
     specs: {
@@ -464,6 +515,9 @@ export const STORAGE: ComponentInput[] = [
     series: "Blue SN570",
     category: "storage",
     msrp: 59,
+    inrPrice: 9500,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2021-11-01",
     summary: "A DRAM-less PCIe 3.0 drive that still reaches the interface ceiling on sequential reads.",
     specs: {
@@ -490,6 +544,9 @@ export const STORAGE: ComponentInput[] = [
     series: "P3",
     category: "storage",
     msrp: 49,
+    inrPrice: 7750,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-06-01",
     summary: "The lowest endurance rating in the catalogue at 220 TBW — QLC on a PCIe 3.0 link.",
     specs: {
@@ -516,6 +573,9 @@ export const STORAGE: ComponentInput[] = [
     series: "870 EVO",
     category: "storage",
     msrp: 79,
+    inrPrice: 9000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2021-01-01",
     summary: "SATA III, and completely interface-bound at 560 MB/s — the floor case for the utilisation metric.",
     specs: {
@@ -542,6 +602,9 @@ export const STORAGE: ComponentInput[] = [
     series: "MX500",
     category: "storage",
     msrp: 69,
+    inrPrice: 10500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2018-01-01",
     summary: "The oldest drive here, and still a common choice for secondary SATA storage.",
     specs: {
@@ -568,6 +631,9 @@ export const STORAGE: ComponentInput[] = [
     series: "870 QVO",
     category: "storage",
     msrp: 199,
+    inrPrice: 26000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2020-06-01",
     summary:
       "Bulk QLC SATA capacity with a three-year warranty — the only sub-five-year warranty in the catalogue.",

@@ -2,10 +2,11 @@ import {
   formatCacheMb,
   formatCapacityGb,
   formatCompact,
-  formatCurrency,
+  formatInr,
   formatMhz,
   formatThroughputMbs,
   formatTrimmed,
+  formatUsd,
 } from "@/lib/format";
 import { getPolarity, type MetricPolarity } from "@/lib/hardware-math";
 import type { Category } from "@/lib/validations/component";
@@ -73,17 +74,33 @@ export interface ResolvedMetric extends MetricDef {
   polarity: MetricPolarity;
 }
 
-const MSRP: MetricDef = {
-  key: "msrp",
-  label: "Launch price (MSRP)",
-  short: "MSRP",
+/**
+ * The headline price everywhere: a researched Indian street price in rupees.
+ * Every cost and value ratio in the application is computed from this.
+ */
+const INR_PRICE: MetricDef = {
+  key: "inrPrice",
+  label: "Price (India)",
+  short: "Price",
   kind: "number",
   group: "Value",
-  format: (value) => formatCurrency(value),
+  format: (value) => formatInr(value),
   analytic: true,
   headline: true,
   description:
-    "Manufacturer recommended price at launch, in USD. Used as a fixed reference axis for value charts — it is not live retail pricing.",
+    "Street price from Indian retailers and price aggregators. Prices move constantly — check the confidence badge, and override any price in the build planner to match a quote you have been given.",
+};
+
+/** Launch MSRP in USD, kept only as generational context. */
+const USD_MSRP: MetricDef = {
+  key: "msrp",
+  label: "Launch MSRP (USD)",
+  short: "MSRP $",
+  kind: "number",
+  group: "Value",
+  format: (value) => formatUsd(value),
+  description:
+    "Manufacturer recommended price at launch, in USD. Historical context only — it never feeds a value ratio, because a US launch price says nothing about what a part costs in India today.",
 };
 
 const RELEASE_YEAR: MetricDef = {
@@ -100,7 +117,8 @@ const RELEASE_YEAR: MetricDef = {
 /* ------------------------------------------------------------------- CPU */
 
 const CPU_METRICS: MetricDef[] = [
-  MSRP,
+  INR_PRICE,
+  USD_MSRP,
   RELEASE_YEAR,
   {
     key: "socket",
@@ -338,16 +356,16 @@ const CPU_METRICS: MetricDef[] = [
     formula: "MT index / PL2, indexed to best",
   },
   {
-    key: "perfPerDollar",
-    label: "Performance per dollar",
-    short: "Perf/$",
+    key: "perfPerRupee",
+    label: "Performance per rupee",
+    short: "Perf/₹",
     kind: "number",
     group: "Value",
     decimals: 1,
     derived: true,
     analytic: true,
-    description: "Multi-thread index divided by launch price, indexed to 100.",
-    formula: "MT index / MSRP, indexed to best",
+    description: "Multi-thread index divided by Indian street price, indexed to 100.",
+    formula: "MT index / ₹price, indexed to best",
   },
   {
     key: "costPerCore",
@@ -355,11 +373,11 @@ const CPU_METRICS: MetricDef[] = [
     short: "$/core",
     kind: "number",
     group: "Value",
-    format: (value) => formatCurrency(value),
+    format: (value) => formatInr(value),
     derived: true,
     analytic: true,
-    description: "Launch price divided by physical core count.",
-    formula: "MSRP / cores",
+    description: "Indian street price divided by physical core count.",
+    formula: "₹price / cores",
   },
   {
     key: "memoryType",
@@ -457,7 +475,8 @@ const CPU_METRICS: MetricDef[] = [
 /* ------------------------------------------------------------------- GPU */
 
 const GPU_METRICS: MetricDef[] = [
-  MSRP,
+  INR_PRICE,
+  USD_MSRP,
   RELEASE_YEAR,
   {
     key: "architecture",
@@ -684,16 +703,16 @@ const GPU_METRICS: MetricDef[] = [
     formula: "raster index / TGP, indexed to best",
   },
   {
-    key: "perfPerDollar",
-    label: "Performance per dollar",
-    short: "Perf/$",
+    key: "perfPerRupee",
+    label: "Performance per rupee",
+    short: "Perf/₹",
     kind: "number",
     group: "Value",
     decimals: 1,
     derived: true,
     analytic: true,
-    description: "Raster index divided by launch price, indexed to 100.",
-    formula: "raster index / MSRP, indexed to best",
+    description: "Raster index divided by Indian street price, indexed to 100.",
+    formula: "raster index / ₹price, indexed to best",
   },
   {
     key: "costPerGb",
@@ -701,11 +720,11 @@ const GPU_METRICS: MetricDef[] = [
     short: "$/GB",
     kind: "number",
     group: "Value",
-    format: (value) => `$${formatTrimmed(value, 2)}`,
+    format: (value) => formatInr(value),
     derived: true,
     analytic: true,
-    description: "Launch price divided by memory capacity.",
-    formula: "MSRP / VRAM",
+    description: "Indian street price divided by memory capacity.",
+    formula: "₹price / VRAM",
   },
   {
     key: "lengthMm",
@@ -750,7 +769,8 @@ const GPU_METRICS: MetricDef[] = [
 /* ------------------------------------------------------------------- RAM */
 
 const RAM_METRICS: MetricDef[] = [
-  MSRP,
+  INR_PRICE,
+  USD_MSRP,
   RELEASE_YEAR,
   {
     key: "generation",
@@ -911,14 +931,14 @@ const RAM_METRICS: MetricDef[] = [
     short: "$/GB",
     kind: "number",
     group: "Value",
-    format: (value) => `$${formatTrimmed(value, 2)}`,
+    format: (value) => formatInr(value),
     derived: true,
     analytic: true,
-    description: "Launch price divided by total capacity.",
-    formula: "MSRP / capacity",
+    description: "Indian street price divided by total capacity.",
+    formula: "₹price / capacity",
   },
   {
-    key: "perfPerDollar",
+    key: "perfPerRupee",
     label: "Value index",
     short: "Value",
     kind: "number",
@@ -926,8 +946,8 @@ const RAM_METRICS: MetricDef[] = [
     decimals: 1,
     derived: true,
     analytic: true,
-    description: "Bandwidth-latency score per dollar, indexed to 100.",
-    formula: "BW-latency score / MSRP, indexed to best",
+    description: "Bandwidth-latency score per rupee, indexed to 100.",
+    formula: "BW-latency score / ₹price, indexed to best",
   },
   { key: "ecc", label: "ECC", short: "ECC", kind: "boolean", group: "Overview", description: "On-die error correction support." },
   { key: "rgb", label: "RGB lighting", short: "RGB", kind: "boolean", group: "Physical", description: "Addressable lighting on the heatspreader." },
@@ -936,7 +956,8 @@ const RAM_METRICS: MetricDef[] = [
 /* --------------------------------------------------------------- Storage */
 
 const STORAGE_METRICS: MetricDef[] = [
-  MSRP,
+  INR_PRICE,
+  USD_MSRP,
   RELEASE_YEAR,
   {
     key: "capacityGb",
@@ -1095,12 +1116,12 @@ const STORAGE_METRICS: MetricDef[] = [
     short: "$/TB",
     kind: "number",
     group: "Value",
-    format: (value) => formatCurrency(value),
+    format: (value) => formatInr(value),
     derived: true,
     analytic: true,
     headline: true,
     description: "The standard basis for comparing drives of different capacities.",
-    formula: "MSRP / (capacity / 1000)",
+    formula: "₹price / (capacity / 1000)",
   },
   {
     key: "costPerGb",
@@ -1108,23 +1129,23 @@ const STORAGE_METRICS: MetricDef[] = [
     short: "$/GB",
     kind: "number",
     group: "Value",
-    format: (value) => `$${formatTrimmed(value, 3)}`,
+    format: (value) => formatInr(value, 2),
     derived: true,
     analytic: true,
-    description: "Launch price divided by capacity in gigabytes.",
-    formula: "MSRP / capacity",
+    description: "Indian street price divided by capacity in gigabytes.",
+    formula: "₹price / capacity",
   },
   {
-    key: "perfPerDollar",
-    label: "Throughput per dollar",
-    short: "MB/s per $",
+    key: "perfPerRupee",
+    label: "Throughput per rupee",
+    short: "MB/s per ₹",
     kind: "number",
     group: "Value",
     decimals: 1,
     derived: true,
     analytic: true,
-    description: "Sequential read throughput per dollar, indexed to 100.",
-    formula: "seq read / MSRP, indexed to best",
+    description: "Sequential read throughput per rupee, indexed to 100.",
+    formula: "seq read / ₹price, indexed to best",
   },
   { key: "heatsink", label: "Heatsink included", short: "Heatsink", kind: "boolean", group: "Physical", description: "Whether a heatsink ships with the drive." },
 ];
@@ -1132,7 +1153,8 @@ const STORAGE_METRICS: MetricDef[] = [
 /* ----------------------------------------------------------- Motherboard */
 
 const MOTHERBOARD_METRICS: MetricDef[] = [
-  MSRP,
+  INR_PRICE,
+  USD_MSRP,
   RELEASE_YEAR,
   {
     key: "socket",
@@ -1312,6 +1334,19 @@ const MOTHERBOARD_METRICS: MetricDef[] = [
     kind: "text",
     group: "Connectivity",
     description: "Integrated audio codec.",
+  },
+  {
+    key: "perfPerRupee",
+    label: "Expansion per rupee",
+    short: "Expansion/₹",
+    kind: "number",
+    group: "Value",
+    decimals: 1,
+    derived: true,
+    analytic: true,
+    description:
+      "Expansion score per rupee, indexed to 100. Surfaces the boards that give away the least connectivity for the money.",
+    formula: "expansion score / ₹price, indexed to best",
   },
   {
     key: "expansionScore",

@@ -10,6 +10,7 @@ import { ALL_COMPONENTS, COMPONENTS_BY_CATEGORY, SEARCH_INDEX, numericValue } fr
 import { search } from "@/lib/search";
 import { getMetricHighlight } from "@/lib/hardware-math";
 import { formatMetricValue, metricFor } from "@/lib/metrics";
+import { formatInr, formatInrCompact } from "@/lib/format";
 
 let failures = 0;
 function check(label: string, condition: boolean, detail = "") {
@@ -106,6 +107,30 @@ check("null never wins or loses", withNull[0] === "neutral" && withNull[1] === "
 
 // US8: display formatting must never leak into comparison arithmetic. A 4 TB
 // drive is stored, sorted and normalised as 4000; only its rendering says "4 TB".
+console.log("\n-- Indian pricing --");
+{
+  const priced = ALL_COMPONENTS.filter((c) => c.inrPrice !== null);
+  const unpriced = ALL_COMPONENTS.filter((c) => c.inrPrice === null);
+  check(
+    "every component still sold in India carries a price",
+    ALL_COMPONENTS.every((c) => c.availability === "discontinued" || c.inrPrice !== null),
+    ALL_COMPONENTS.filter((c) => c.availability !== "discontinued" && c.inrPrice === null)
+      .map((c) => c.slug)
+      .join(", "),
+  );
+  check(
+    "discontinued parts carry no price",
+    ALL_COMPONENTS.every((c) => c.availability !== "discontinued" || c.inrPrice === null),
+  );
+  check("prices are positive", priced.every((c) => (c.inrPrice ?? 0) > 0));
+  check("Indian digit grouping (1,77,500 not 177,500)", formatInr(177500) === "₹1,77,500", formatInr(177500));
+  check("lakh compaction", formatInrCompact(450000) === "₹4.5L", formatInrCompact(450000));
+  console.log(`    priced: ${priced.length}, unpriced (discontinued): ${unpriced.length}`);
+  const byConfidence = { high: 0, medium: 0, low: 0 };
+  for (const c of ALL_COMPONENTS) byConfidence[c.priceConfidence] += 1;
+  console.log(`    confidence — high ${byConfidence.high}, medium ${byConfidence.medium}, low ${byConfidence.low}`);
+}
+
 console.log("\n-- unit normalisation --");
 {
   const bigDrive = g("samsung-870-qvo-4tb");

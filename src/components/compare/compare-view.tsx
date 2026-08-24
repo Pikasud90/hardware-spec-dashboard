@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { TooltipProvider, Tooltip } from "@/components/ui/tooltip";
-import { formatCurrency } from "@/lib/format";
+import { formatInr } from "@/lib/format";
 import { MAX_COMPARE_SLOTS, useCompare } from "@/components/compare/compare-provider";
 import { CATEGORIES, CATEGORY_LABELS, type Category } from "@/lib/validations/component";
 import { cn, SERIES_COLORS } from "@/lib/utils";
@@ -333,7 +333,7 @@ function ColumnHeader({
       </div>
       <div className="flex items-center gap-1 pl-3.5">
         <span className="tnum text-[11px] text-ink-muted">
-          {formatCurrency(component.msrp)}
+          {formatInr(component.inrPrice)}
         </span>
         {isBaseline ? (
           <Badge variant="outline" className="ml-auto">

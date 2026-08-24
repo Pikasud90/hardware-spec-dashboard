@@ -365,6 +365,7 @@ export type MetricPolarity = "HIGHER_BETTER" | "LOWER_BETTER" | "NEUTRAL";
 export const METRIC_POLARITY_MAP: Record<string, MetricPolarity> = {
   /* shared */
   msrp: "LOWER_BETTER",
+  inrPrice: "LOWER_BETTER",
   releaseYear: "HIGHER_BETTER",
   processNodeNm: "LOWER_BETTER",
 
@@ -446,7 +447,7 @@ export const METRIC_POLARITY_MAP: Record<string, MetricPolarity> = {
 
   /* value + efficiency (shared shape, per-category meaning) */
   perfPerWatt: "HIGHER_BETTER",
-  perfPerDollar: "HIGHER_BETTER",
+  perfPerRupee: "HIGHER_BETTER",
   costPerGb: "LOWER_BETTER",
   costPerCore: "LOWER_BETTER",
 };
@@ -519,23 +520,28 @@ export function deriveMetrics(component: ComponentEntity): DerivedValues {
   const releaseYear = component.releaseDate
     ? Number(component.releaseDate.slice(0, 4))
     : null;
-  const base: DerivedValues = { msrp: component.msrp, releaseYear };
+  // All value and cost metrics are computed from the researched Indian street
+  // price. `msrp` is retained purely as historical launch context and never
+  // feeds a ratio, because a 2020 US launch price says nothing about what a
+  // part costs in India today.
+  const price = component.inrPrice;
+  const base: DerivedValues = { msrp: component.msrp, inrPrice: price, releaseYear };
 
   switch (component.category) {
     case "cpu":
-      return { ...base, ...deriveCpu(component.specs, component.msrp) };
+      return { ...base, ...deriveCpu(component.specs, price) };
     case "gpu":
-      return { ...base, ...deriveGpu(component.specs, component.msrp) };
+      return { ...base, ...deriveGpu(component.specs, price) };
     case "ram":
-      return { ...base, ...deriveRam(component.specs, component.msrp) };
+      return { ...base, ...deriveRam(component.specs, price) };
     case "storage":
-      return { ...base, ...deriveStorage(component.specs, component.msrp) };
+      return { ...base, ...deriveStorage(component.specs, price) };
     case "motherboard":
-      return { ...base, ...deriveMotherboard(component.specs) };
+      return { ...base, ...deriveMotherboard(component.specs, price) };
   }
 }
 
-function deriveCpu(specs: CpuSpecs, msrp: number | null): DerivedValues {
+function deriveCpu(specs: CpuSpecs, price: number | null): DerivedValues {
   const totalCacheMb = specs.l2CacheMb + specs.l3CacheMb;
   const mt = calcCpuMultiThreadRaw(specs);
   return {
@@ -550,12 +556,12 @@ function deriveCpu(specs: CpuSpecs, msrp: number | null): DerivedValues {
     multiThreadIndexRaw: mt,
     gamingIndexRaw: calcCpuGamingRaw(specs),
     perfPerWattRaw: safeDivide(mt, specs.pl2Watts ?? specs.tdpWatts),
-    perfPerDollarRaw: safeDivide(mt, msrp),
-    costPerCore: safeDivide(msrp, specs.totalCores),
+    perfPerRupeeRaw: safeDivide(mt, price),
+    costPerCore: safeDivide(price, specs.totalCores),
   };
 }
 
-function deriveGpu(specs: GpuSpecs, msrp: number | null): DerivedValues {
+function deriveGpu(specs: GpuSpecs, price: number | null): DerivedValues {
   const raster = calcGpuRasterRaw(specs);
   return {
     theoreticalTflops: calcGpuTflops(specs.cudaCoresOrShaders, specs.boostClockMhz),
@@ -564,35 +570,39 @@ function deriveGpu(specs: GpuSpecs, msrp: number | null): DerivedValues {
     bandwidthPerTflop: calcGpuBandwidthPerTflop(specs),
     rasterIndexRaw: raster,
     perfPerWattRaw: safeDivide(raster, specs.tgpWatts),
-    perfPerDollarRaw: safeDivide(raster, msrp),
-    costPerGb: safeDivide(msrp, specs.vramGb),
+    perfPerRupeeRaw: safeDivide(raster, price),
+    costPerGb: safeDivide(price, specs.vramGb),
   };
 }
 
-function deriveRam(specs: RamSpecs, msrp: number | null): DerivedValues {
+function deriveRam(specs: RamSpecs, price: number | null): DerivedValues {
   const bandwidth = calcSystemMemoryBandwidth(specs.speedMts, 2);
   return {
     trueLatencyNs: calcTrueRamLatency(specs.speedMts, specs.casLatency),
     memoryBandwidthDualGbs: bandwidth,
     ramEfficiencyScore: calcRamEfficiencyScore(specs),
-    perfPerDollarRaw: safeDivide(calcRamEfficiencyScore(specs), msrp),
-    costPerGb: safeDivide(msrp, specs.capacityGb),
+    perfPerRupeeRaw: safeDivide(calcRamEfficiencyScore(specs), price),
+    costPerGb: safeDivide(price, specs.capacityGb),
   };
 }
 
-function deriveStorage(specs: StorageSpecs, msrp: number | null): DerivedValues {
+function deriveStorage(specs: StorageSpecs, price: number | null): DerivedValues {
   return {
     dwpd: calcDwpd(specs.tbw, specs.capacityGb, specs.warrantyYears),
     interfaceUtilisationPct: calcInterfaceUtilisation(specs.seqReadMb, specs.interface),
-    costPerTb: safeDivide(msrp, specs.capacityGb / 1000),
-    costPerGb: safeDivide(msrp, specs.capacityGb),
-    perfPerDollarRaw: safeDivide(specs.seqReadMb, msrp),
+    costPerTb: safeDivide(price, specs.capacityGb / 1000),
+    costPerGb: safeDivide(price, specs.capacityGb),
+    perfPerRupeeRaw: safeDivide(specs.seqReadMb, price),
   };
 }
 
-function deriveMotherboard(specs: MotherboardSpecs): DerivedValues {
+function deriveMotherboard(
+  specs: MotherboardSpecs,
+  price: number | null,
+): DerivedValues {
   return {
     vrmTotalCurrentA: calcVrmTotalCurrent(specs),
     expansionScore: calcMotherboardExpansionScore(specs),
+    perfPerRupeeRaw: safeDivide(calcMotherboardExpansionScore(specs), price),
   };
 }

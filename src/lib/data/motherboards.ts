@@ -16,6 +16,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "ROG Crosshair",
     category: "motherboard",
     msrp: 699,
+    inrPrice: 66999,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-09-30",
     summary:
       "The most capable AM5 board here: dual PCIe 5.0 M.2, Wi-Fi 7, and a 110 A VRM with headroom well beyond any AM5 processor.",
@@ -47,6 +50,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "ROG Strix",
     category: "motherboard",
     msrp: 499,
+    inrPrice: 44000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-09-27",
     summary: "AM5's launch high-end: dual chipsets, four M.2 slots and an 18-phase 110 A VRM.",
     specs: {
@@ -77,6 +83,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "MAG Tomahawk",
     category: "motherboard",
     msrp: 349,
+    inrPrice: 34085,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-10-15",
     summary: "X670E connectivity at a mid-range price, with a 14-phase 80 A VRM that is ample for a 7950X.",
     specs: {
@@ -107,6 +116,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "TUF Gaming",
     category: "motherboard",
     msrp: 219,
+    inrPrice: 22500,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2025-01-15",
     summary: "B850 brings a PCIe 5.0 M.2 slot and Wi-Fi 7 down to the mid-range price bracket.",
     specs: {
@@ -137,6 +149,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "AORUS Elite",
     category: "motherboard",
     msrp: 199,
+    inrPrice: 21000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-10-10",
     summary: "A long-standing mid-range AM5 recommendation: three M.2 slots and a 12-phase 60 A VRM.",
     specs: {
@@ -167,6 +182,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "MPG Edge",
     category: "motherboard",
     msrp: 259,
+    inrPrice: 25000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2022-11-20",
     summary: "Mini-ITX, so two DIMM slots — which in practice means higher achievable memory clocks, not lower.",
     specs: {
@@ -197,6 +215,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "Pro RS",
     category: "motherboard",
     msrp: 129,
+    inrPrice: 11500,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2023-01-20",
     summary: "The AM5 entry point — no wireless, an 8-phase 50 A VRM, but the full DDR5 and PCIe feature set.",
     specs: {
@@ -227,6 +248,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "ROG Strix",
     category: "motherboard",
     msrp: 329,
+    inrPrice: 37500,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2019-07-07",
     summary: "AM4's high-end reference, and the board with the most SATA ports in this catalogue at eight.",
     specs: {
@@ -257,6 +281,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "MAG Tomahawk",
     category: "motherboard",
     msrp: 179,
+    inrPrice: 13500,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2020-06-16",
     summary: "The definitive B550 value board, with a VRM sized well past what any AM4 chip demands.",
     specs: {
@@ -287,6 +314,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "AORUS Elite",
     category: "motherboard",
     msrp: 109,
+    inrPrice: 8500,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2018-08-01",
     summary:
       "The oldest board here — PCIe 3.0, one M.2 slot, gigabit LAN. A useful floor for the expansion-score axis.",
@@ -318,6 +348,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "ROG Maximus",
     category: "motherboard",
     msrp: 699,
+    inrPrice: 64094,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-10-24",
     summary:
       "The highest expansion score in the catalogue: five M.2 slots, two of them PCIe 5.0, plus 5 GbE and Wi-Fi 7.",
@@ -349,6 +382,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "MAG Tomahawk",
     category: "motherboard",
     msrp: 349,
+    inrPrice: 35000,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2024-10-24",
     summary: "An 18-phase 105 A VRM at half the Hero's price, sized for the 250 W Core Ultra 9 285K.",
     specs: {
@@ -379,6 +415,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "AORUS Pro",
     category: "motherboard",
     msrp: 349,
+    inrPrice: 35000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-10-24",
     summary: "White-themed Z890 with a 16-phase 105 A VRM and four M.2 slots.",
     specs: {
@@ -409,6 +448,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "Pro RS",
     category: "motherboard",
     msrp: 159,
+    inrPrice: 15500,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2025-01-10",
     summary: "The budget LGA1851 option: three M.2 slots, 8-phase VRM, no wireless.",
     specs: {
@@ -439,6 +481,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "ROG Maximus",
     category: "motherboard",
     msrp: 629,
+    inrPrice: 55000,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2022-10-20",
     summary: "LGA1700's flagship: a 20-phase 90 A VRM built for the 253 W i9-14900K.",
     specs: {
@@ -469,6 +514,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "MPG Carbon",
     category: "motherboard",
     msrp: 429,
+    inrPrice: 34500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-10-20",
     summary: "A 19-phase 105 A VRM — the highest total Vcore current of any LGA1700 board here.",
     specs: {
@@ -499,6 +547,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "AORUS Elite",
     category: "motherboard",
     msrp: 279,
+    inrPrice: 26000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-10-20",
     summary: "The mid-range Z790 default: four M.2 slots and a 16-phase 60 A VRM.",
     specs: {
@@ -529,6 +580,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "ROG Strix",
     category: "motherboard",
     msrp: 319,
+    inrPrice: 30000,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2021-11-04",
     summary:
       "A DDR4 Z690 board — the transitional option that let Alder Lake builders keep existing memory.",
@@ -560,6 +614,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "TUF Gaming",
     category: "motherboard",
     msrp: 169,
+    inrPrice: 19000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-01-03",
     summary: "B760 with DDR4 — the cheapest route onto LGA1700 if you already own DDR4 memory.",
     specs: {
@@ -590,6 +647,9 @@ export const MOTHERBOARDS: ComponentInput[] = [
     series: "PRO",
     category: "motherboard",
     msrp: 139,
+    inrPrice: 16750,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-01-03",
     summary: "A compact DDR5 Micro-ATX board — the least expensive LGA1700 entry in the catalogue.",
     specs: {

@@ -22,6 +22,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 50",
     category: "gpu",
     msrp: 1999,
+    inrPrice: 450000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-01-30",
     summary:
       "A 512-bit GDDR7 bus and 32 GB of memory, at the cost of a 575 W board power that reshapes the rest of the build around it.",
@@ -54,6 +57,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 50",
     category: "gpu",
     msrp: 999,
+    inrPrice: 150000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-01-30",
     summary:
       "Half the 5090's shader count on the same architecture, with 30 Gbps GDDR7 partly offsetting the narrower 256-bit bus.",
@@ -86,6 +92,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 50",
     category: "gpu",
     msrp: 749,
+    inrPrice: 105000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-02-20",
     summary: "16 GB of GDDR7 on a 256-bit bus at 300 W — the volume high-end Blackwell part.",
     specs: {
@@ -117,6 +126,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 50",
     category: "gpu",
     msrp: 549,
+    inrPrice: 88819,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-03-05",
     summary:
       "A 192-bit bus and 12 GB of VRAM make this the card where Blackwell's cache hierarchy has to work hardest.",
@@ -149,6 +161,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 50",
     category: "gpu",
     msrp: 429,
+    inrPrice: 65000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-04-16",
     summary:
       "128-bit bus paired with 16 GB — generous capacity on a narrow interface, so bandwidth per TFLOP is the metric to watch here.",
@@ -183,6 +198,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 40",
     category: "gpu",
     msrp: 1599,
+    inrPrice: 177500,
+    priceConfidence: "high",
+    availability: "limited",
     releaseDate: "2022-10-12",
     summary:
       "The generational outlier: 16384 shaders and 72 MB of L2, so far ahead of its stack that CPU limits often bound it before the GPU does.",
@@ -215,6 +233,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 40",
     category: "gpu",
     msrp: 999,
+    inrPrice: 108500,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2024-01-31",
     summary: "A fully enabled AD103 with faster 23 Gbps memory, launched $200 below the original 4080.",
     specs: {
@@ -246,6 +267,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 40",
     category: "gpu",
     msrp: 1199,
+    inrPrice: 82000,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2022-11-16",
     summary: "Superseded by the SUPER refresh; useful here as a price-per-frame reference point.",
     specs: {
@@ -277,6 +301,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 40",
     category: "gpu",
     msrp: 799,
+    inrPrice: 77500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-01-24",
     summary:
       "The refresh that widened the 4070 Ti to a 256-bit bus and 16 GB, fixing the original's main weakness.",
@@ -309,6 +336,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 40",
     category: "gpu",
     msrp: 599,
+    inrPrice: 66000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-01-17",
     summary: "Twenty-two percent more shaders than the 4070 at the same price and a 220 W board power.",
     specs: {
@@ -340,6 +370,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 40",
     category: "gpu",
     msrp: 599,
+    inrPrice: 60000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-04-13",
     summary: "A 200 W card that matched the previous generation's 3080 while drawing a third less power.",
     specs: {
@@ -371,6 +404,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 40",
     category: "gpu",
     msrp: 399,
+    inrPrice: 44500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-05-24",
     summary:
       "A 128-bit bus on a x8 link — the clearest case in the dataset of cache substituting for bandwidth, with mixed results.",
@@ -403,6 +439,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 40",
     category: "gpu",
     msrp: 299,
+    inrPrice: 34000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-06-29",
     summary: "115 W, so it needs no auxiliary power headroom worth planning for — the efficiency leader of its tier.",
     specs: {
@@ -436,6 +475,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 30",
     category: "gpu",
     msrp: 1999,
+    inrPrice: null,
+    priceConfidence: "low",
+    availability: "discontinued",
     releaseDate: "2022-03-29",
     summary:
       "Ampere pushed to 450 W on Samsung 8 nm — a useful illustration of what a node disadvantage costs in efficiency.",
@@ -468,6 +510,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 30",
     category: "gpu",
     msrp: 1499,
+    inrPrice: null,
+    priceConfidence: "low",
+    availability: "discontinued",
     releaseDate: "2020-09-24",
     summary: "24 GB on a 384-bit bus; still a capable workstation card for memory-bound workloads.",
     specs: {
@@ -499,6 +544,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 30",
     category: "gpu",
     msrp: 699,
+    inrPrice: null,
+    priceConfidence: "low",
+    availability: "discontinued",
     releaseDate: "2020-09-17",
     summary: "A 320-bit bus gave it real bandwidth, but 10 GB has aged into the binding constraint.",
     specs: {
@@ -530,6 +578,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 30",
     category: "gpu",
     msrp: 499,
+    inrPrice: null,
+    priceConfidence: "low",
+    availability: "discontinued",
     releaseDate: "2020-10-29",
     summary: "Plain 14 Gbps GDDR6 on 256 bits — the weakest bandwidth-per-TFLOP ratio of the Ampere stack.",
     specs: {
@@ -561,6 +612,9 @@ export const GPUS: ComponentInput[] = [
     series: "GeForce RTX 30",
     category: "gpu",
     msrp: 329,
+    inrPrice: 29000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2021-02-25",
     summary: "Twelve gigabytes on a 192-bit bus, unusually generous for its tier and still widely deployed.",
     specs: {
@@ -594,6 +648,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 9000",
     category: "gpu",
     msrp: 599,
+    inrPrice: 68500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-03-06",
     summary:
       "RDNA 4 clocks aggressively — a 2970 MHz boost from only 4096 stream processors, backed by 64 MB of Infinity Cache.",
@@ -626,6 +683,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 9000",
     category: "gpu",
     msrp: 549,
+    inrPrice: 58500,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2025-03-06",
     summary: "Same 16 GB and cache as the XT at 220 W, making it the efficiency pick of the RDNA 4 pair.",
     specs: {
@@ -659,6 +719,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 7000",
     category: "gpu",
     msrp: 999,
+    inrPrice: 94000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-12-13",
     summary:
       "AMD's chiplet flagship: 24 GB on a 384-bit bus plus 96 MB of Infinity Cache, the highest raw bandwidth in the Radeon stack.",
@@ -691,6 +754,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 7000",
     category: "gpu",
     msrp: 899,
+    inrPrice: 81000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2022-12-13",
     summary: "20 GB on a 320-bit bus — an awkward launch price that street pricing later corrected.",
     specs: {
@@ -722,6 +788,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 7000",
     category: "gpu",
     msrp: 549,
+    inrPrice: 58000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2024-02-27",
     summary: "A cut Navi 31 on a 256-bit bus; memory overclocking headroom is unusually influential here.",
     specs: {
@@ -753,6 +822,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 7000",
     category: "gpu",
     msrp: 499,
+    inrPrice: 48000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-09-06",
     summary: "16 GB at $499 with 624 GB/s of raw bandwidth — the memory-capacity value pick of RDNA 3.",
     specs: {
@@ -784,6 +856,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 7000",
     category: "gpu",
     msrp: 449,
+    inrPrice: 42000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-09-06",
     summary: "12 GB on a 192-bit bus at 245 W, launched close enough to the 7800 XT to be awkward.",
     specs: {
@@ -815,6 +890,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 7000",
     category: "gpu",
     msrp: 269,
+    inrPrice: 25000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2023-05-25",
     summary: "A 165 W 1080p card; 8 GB and a 128-bit bus set a firm ceiling on texture settings.",
     specs: {
@@ -848,6 +926,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 6000",
     category: "gpu",
     msrp: 1099,
+    inrPrice: null,
+    priceConfidence: "low",
+    availability: "discontinued",
     releaseDate: "2022-05-10",
     summary:
       "128 MB of Infinity Cache — the largest in the dataset — compensating for a narrow 256-bit bus.",
@@ -880,6 +961,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 6000",
     category: "gpu",
     msrp: 649,
+    inrPrice: 57000,
+    priceConfidence: "medium",
+    availability: "limited",
     releaseDate: "2020-11-18",
     summary: "RDNA 2's high-water mark for perf-per-watt in its generation, at 300 W and 16 GB.",
     specs: {
@@ -911,6 +995,9 @@ export const GPUS: ComponentInput[] = [
     series: "Radeon RX 6000",
     category: "gpu",
     msrp: 479,
+    inrPrice: 27000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2021-03-18",
     summary: "High clocks for RDNA 2 at 2581 MHz, with 12 GB and 96 MB of Infinity Cache.",
     specs: {
@@ -944,6 +1031,9 @@ export const GPUS: ComponentInput[] = [
     series: "Arc B-Series",
     category: "gpu",
     msrp: 249,
+    inrPrice: 40000,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2024-12-13",
     summary:
       "12 GB on a 192-bit bus for $249 — the most VRAM per dollar in the dataset, and Battlemage's headline argument.",
@@ -976,6 +1066,9 @@ export const GPUS: ComponentInput[] = [
     series: "Arc A-Series",
     category: "gpu",
     msrp: 349,
+    inrPrice: 22000,
+    priceConfidence: "high",
+    availability: "limited",
     releaseDate: "2022-10-12",
     summary:
       "Alchemist's flagship: strong on paper at 4096 shaders and 512 GB/s, held back by per-TFLOP utilisation.",

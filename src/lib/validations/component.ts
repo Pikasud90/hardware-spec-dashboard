@@ -154,13 +154,37 @@ export type MotherboardSpecs = z.infer<typeof MotherboardSpecsSchema>;
 
 /* ---------------------------------------------------------- Discriminated */
 
+/**
+ * How much to trust an Indian street price.
+ *
+ *  high    — a current listing was found on an Indian retailer or aggregator
+ *  medium  — found, but observed listings disagree materially
+ *  low     — the category is repricing fast (DDR5 through the 2026 DRAM
+ *            shortage), or the part is scarce enough that listings are thin
+ */
+export const PriceConfidence = z.enum(["high", "medium", "low"]);
+export type PriceConfidenceLevel = z.infer<typeof PriceConfidence>;
+
+/** Whether the part can still be bought new in India. */
+export const Availability = z.enum(["available", "limited", "discontinued"]);
+export type AvailabilityLevel = z.infer<typeof Availability>;
+
 const BaseFields = {
   id: z.string().min(1),
   slug: z.string().min(1),
   name: z.string().min(1),
   brand: z.string().min(1),
   series: z.string(),
+  /** Launch recommended price in USD. Historical reference only. */
   msrp: z.number().positive().nullable(),
+  /**
+   * Researched Indian street price in rupees. This is the figure the whole
+   * application costs against; `msrp` is kept only for generational context.
+   * Null when the part is no longer sold new in India.
+   */
+  inrPrice: z.number().positive().nullable().default(null),
+  priceConfidence: PriceConfidence.default("medium"),
+  availability: Availability.default("available"),
   releaseDate: IsoDate.nullable(),
   /** Free-form editorial note surfaced on the detail page. */
   summary: z.string().default(""),

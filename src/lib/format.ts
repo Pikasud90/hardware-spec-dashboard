@@ -23,9 +23,41 @@ export function formatTrimmed(value: number, maxDecimals = 2): string {
   return rounded.toLocaleString("en-US", { maximumFractionDigits: maxDecimals });
 }
 
-export function formatCurrency(value: number | null): string {
+/** US dollars — retained only for launch-MSRP reference. */
+export function formatUsd(value: number | null): string {
   if (value === null || !Number.isFinite(value)) return EMPTY_VALUE;
   return `$${formatNumber(value, 0)}`;
+}
+
+/**
+ * Indian rupees using the Indian digit grouping convention: the last three
+ * digits are grouped, then every two after that — so 177500 renders as
+ * "₹1,77,500", not "₹177,500". `en-IN` implements this correctly.
+ */
+export function formatInr(value: number | null, decimals = 0): string {
+  if (value === null || !Number.isFinite(value)) return EMPTY_VALUE;
+  return `₹${value.toLocaleString("en-IN", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  })}`;
+}
+
+/**
+ * Compact rupees for dense chart axes, using Indian scale words.
+ * 450000 becomes "₹4.5L"; 12500000 becomes "₹1.25Cr".
+ */
+export function formatInrCompact(value: number | null): string {
+  if (value === null || !Number.isFinite(value)) return EMPTY_VALUE;
+  const abs = Math.abs(value);
+  if (abs >= 10_000_000) return `₹${formatTrimmed(value / 10_000_000, 2)}Cr`;
+  if (abs >= 100_000) return `₹${formatTrimmed(value / 100_000, 2)}L`;
+  if (abs >= 1_000) return `₹${formatTrimmed(value / 1_000, 1)}K`;
+  return `₹${formatTrimmed(value, 0)}`;
+}
+
+/** @deprecated Prefer `formatInr`. Kept so USD reference fields still render. */
+export function formatCurrency(value: number | null): string {
+  return formatUsd(value);
 }
 
 /** Large counts: 1_550_000 becomes "1.55M". */

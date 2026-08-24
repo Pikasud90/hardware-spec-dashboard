@@ -16,6 +16,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Trident Z5 Neo",
     category: "ram",
     msrp: 109,
+    inrPrice: 47000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-01-10",
     summary:
       "The AM5 reference kit: 6000 MT/s at CL30 sits exactly on the 1:1 memory-controller ratio Zen 4 and Zen 5 prefer.",
@@ -43,6 +46,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Flare X5",
     category: "ram",
     msrp: 95,
+    inrPrice: 44000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-03-01",
     summary: "Identical silicon to the Trident Z5 Neo without RGB or the tall heatspreader — 33 mm clears most air coolers.",
     specs: {
@@ -69,6 +75,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Trident Z5",
     category: "ram",
     msrp: 189,
+    inrPrice: 55000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2022-06-15",
     summary:
       "High-bandwidth Intel binning, and a useful counter-example: at 9.44 ns its true latency is actually lower than a 6000 CL30 kit, because the extra 1200 MT/s more than pays for the looser CAS.",
@@ -96,6 +105,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Trident Z5",
     category: "ram",
     msrp: 229,
+    inrPrice: 62000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-08-01",
     summary: "Dual-rank 32 GB modules — more capacity for content work, at some cost to overclocking headroom.",
     specs: {
@@ -122,6 +134,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Trident Z5 CK",
     category: "ram",
     msrp: 299,
+    inrPrice: 58000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2024-01-01",
     summary:
       "The fastest kit here at 8000 MT/s, using 24 GB modules and a clock-driver design that needs a capable board to reach spec.",
@@ -149,6 +164,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Vengeance",
     category: "ram",
     msrp: 99,
+    inrPrice: 48529,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-05-01",
     summary: "A 34 mm low-profile 6000 CL30 kit — the pragmatic default for an air-cooled AM5 build.",
     specs: {
@@ -175,6 +193,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Dominator Titanium",
     category: "ram",
     msrp: 199,
+    inrPrice: 51000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-11-01",
     summary: "Premium binning in a 55 mm heatspreader — the tallest kit here, and a genuine clearance risk.",
     specs: {
@@ -201,6 +222,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Vengeance",
     category: "ram",
     msrp: 349,
+    inrPrice: 27000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2024-02-01",
     summary: "Two 48 GB modules for workstation capacity while staying on a two-DIMM topology.",
     specs: {
@@ -227,6 +251,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Fury Beast",
     category: "ram",
     msrp: 89,
+    inrPrice: 36000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-02-01",
     summary: "Same 6000 MT/s as the CL30 kits but 2 ns slower in absolute terms — the clearest CL-matters example in the set.",
     specs: {
@@ -253,6 +280,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Fury Renegade",
     category: "ram",
     msrp: 179,
+    inrPrice: 35000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-04-01",
     summary: "1.45 V for 7200 MT/s — the highest voltage in the DDR5 group.",
     specs: {
@@ -279,6 +309,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Fury Beast",
     category: "ram",
     msrp: 199,
+    inrPrice: 38000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-07-01",
     summary: "A four-module kit — worth noting that populating all four slots usually costs achievable frequency.",
     specs: {
@@ -305,6 +338,9 @@ export const MEMORY: ComponentInput[] = [
     series: "T-Force Delta",
     category: "ram",
     msrp: 119,
+    inrPrice: 42000,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-06-01",
     summary: "6400 CL32 at 1.35 V, a slightly more efficient operating point than most kits at this grade.",
     specs: {
@@ -331,6 +367,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Pro",
     category: "ram",
     msrp: 79,
+    inrPrice: 48499,
+    priceConfidence: "low",
+    availability: "available",
     releaseDate: "2023-09-01",
     summary:
       "JEDEC-spec 1.1 V memory: by far the lowest voltage here, and by far the highest true latency at 16.4 ns.",
@@ -358,6 +397,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Trident Z Neo",
     category: "ram",
     msrp: 109,
+    inrPrice: 28000,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2019-07-01",
     summary:
       "The AM4 sweet spot at 3600 CL16 — 8.9 ns true latency, still lower than most DDR5 kits in this dataset.",
@@ -385,6 +427,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Vengeance LPX",
     category: "ram",
     msrp: 69,
+    inrPrice: 28000,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2019-01-01",
     summary: "The default DDR4 workhorse: 34 mm tall, JEDEC-adjacent timings, universally compatible.",
     specs: {
@@ -411,6 +456,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Vengeance RGB Pro",
     category: "ram",
     msrp: 115,
+    inrPrice: 28000,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2019-05-01",
     summary: "51 mm tall — a frequent cause of air-cooler interference in DDR4 builds.",
     specs: {
@@ -437,6 +485,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Ballistix",
     category: "ram",
     msrp: 99,
+    inrPrice: 27000,
+    priceConfidence: "low",
+    availability: "limited",
     releaseDate: "2020-03-01",
     summary: "Micron E-die, long favoured for manual subtiming tuning on Zen 3.",
     specs: {
@@ -463,6 +514,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Ripjaws V",
     category: "ram",
     msrp: 45,
+    inrPrice: 10000,
+    priceConfidence: "high",
+    availability: "available",
     releaseDate: "2018-06-01",
     summary: "The budget DDR4 baseline, and the smallest capacity in the catalogue at 16 GB.",
     specs: {
@@ -489,6 +543,9 @@ export const MEMORY: ComponentInput[] = [
     series: "Fury Beast",
     category: "ram",
     msrp: 52,
+    inrPrice: 10000,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2021-06-01",
     summary: "A 34 mm low-profile DDR4 kit at 9.4 ns true latency.",
     specs: {
@@ -515,6 +572,9 @@ export const MEMORY: ComponentInput[] = [
     series: "T-Force Vulcan Z",
     category: "ram",
     msrp: 36,
+    inrPrice: 10000,
+    priceConfidence: "medium",
+    availability: "available",
     releaseDate: "2020-09-01",
     summary: "The cheapest kit here and the shortest at 32 mm — no clearance concerns whatsoever.",
     specs: {

@@ -15,7 +15,8 @@ import { useCompare } from "@/components/compare/compare-provider";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipProvider } from "@/components/ui/tooltip";
-import { formatCurrency, formatIsoDate } from "@/lib/format";
+import { PriceConfidenceBadge } from "@/components/ui/price-badge";
+import { formatInr, formatIsoDate, formatUsd } from "@/lib/format";
 import { CATEGORY_LABELS, type Category } from "@/lib/validations/component";
 import { clean } from "@/lib/stats";
 import { cn } from "@/lib/utils";
@@ -64,13 +65,16 @@ export function ComponentDetail({ component }: { component: ResolvedComponent })
 
   /** Nearest peers by MSRP — the realistic alternatives at this price. */
   const alternatives = React.useMemo(() => {
-    if (component.msrp === null) return peers.filter((p) => p.id !== component.id).slice(0, 4);
+    if (component.inrPrice === null) {
+      return peers.filter((p) => p.id !== component.id).slice(0, 4);
+    }
+    const own = component.inrPrice;
     return peers
-      .filter((peer) => peer.id !== component.id && peer.msrp !== null)
+      .filter((peer) => peer.id !== component.id && peer.inrPrice !== null)
       .sort(
         (a, b) =>
-          Math.abs((a.msrp as number) - (component.msrp as number)) -
-          Math.abs((b.msrp as number) - (component.msrp as number)),
+          Math.abs((a.inrPrice as number) - own) -
+          Math.abs((b.inrPrice as number) - own),
       )
       .slice(0, 4);
   }, [peers, component]);
@@ -104,10 +108,15 @@ export function ComponentDetail({ component }: { component: ResolvedComponent })
                 {component.name}
               </h1>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-                <span className="tnum font-medium text-ink">
-                  {formatCurrency(component.msrp)}
-                  <span className="ml-1 text-xs font-normal text-ink-muted">at launch</span>
+                <span className="tnum text-lg font-semibold text-ink">
+                  {formatInr(component.inrPrice)}
                 </span>
+                <PriceConfidenceBadge component={component} />
+                {component.msrp !== null && (
+                  <span className="text-xs text-ink-muted">
+                    {formatUsd(component.msrp)} at launch
+                  </span>
+                )}
                 <span className="text-xs text-ink-muted">
                   Released {formatIsoDate(component.releaseDate)}
                 </span>
@@ -265,7 +274,7 @@ export function ComponentDetail({ component }: { component: ResolvedComponent })
                 </p>
                 <p className="mt-1 text-[11px] text-ink-muted">{peer.brand}</p>
                 <p className="tnum mt-2 text-sm text-ink-secondary">
-                  {formatCurrency(peer.msrp)}
+                  {formatInr(peer.inrPrice)}
                 </p>
               </Link>
             ))}
