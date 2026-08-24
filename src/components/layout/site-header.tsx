@@ -3,15 +3,17 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, Cpu, FlaskConical, Search, Sigma } from "lucide-react";
+import { BarChart3, Cpu, FlaskConical, Search, Sigma, Store, Wrench } from "lucide-react";
 import { GlobalSearch, useGlobalSearch } from "@/components/search/global-search";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/", label: "Catalogue", icon: Cpu, exact: true },
+  { href: "/build/", label: "Build planner", icon: Wrench },
   { href: "/compare/", label: "Compare", icon: BarChart3 },
   { href: "/analytics/", label: "Analytics", icon: FlaskConical },
+  { href: "/where-to-buy/", label: "Where to buy", icon: Store },
   { href: "/methodology/", label: "Methodology", icon: Sigma },
 ];
 

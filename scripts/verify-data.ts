@@ -11,7 +11,7 @@ import { search } from "@/lib/search";
 import { getMetricHighlight } from "@/lib/hardware-math";
 import { formatMetricValue, metricFor } from "@/lib/metrics";
 import { formatInr, formatInrCompact } from "@/lib/format";
-import { auditBuild, buildTotal, estimatePower, filterCompatible, generateInsights } from "@/lib/compatibility";
+import { auditBuild, buildTotal, estimatePower, filterCompatible, generateInsights, revalidateDownstream, upstreamOf } from "@/lib/compatibility";
 
 let failures = 0;
 function check(label: string, condition: boolean, detail = "") {
@@ -201,6 +201,32 @@ console.log("\n-- build compatibility --");
   const modest = { cpu: g("amd-ryzen-5-9600x"), gpu: g("nvidia-geforce-rtx-4060") };
   const modestPower = estimatePower(modest);
   check("mid-range build estimates under 300 W", modestPower.totalWatts < 300, `${Math.round(modestPower.totalWatts)} W`);
+
+  // Directional dependency: the processor is the root and must never be
+  // constrained by a part chosen after it, or switching platform is impossible.
+  const amdBuild = { cpu: cpu9800, motherboard: g("gigabyte-b650-aorus-elite-ax"), ram: g("gskill-flare-x5-32gb-6000c30") };
+  const cpuChoices = filterCompatible(
+    COMPONENTS_BY_CATEGORY.cpu, "cpu", upstreamOf("cpu", amdBuild),
+  );
+  check(
+    "CPU choice is not constrained by an already-selected board",
+    cpuChoices.compatible.length === COMPONENTS_BY_CATEGORY.cpu.length,
+    `${cpuChoices.compatible.length} of ${COMPONENTS_BY_CATEGORY.cpu.length} offered`,
+  );
+  check(
+    "an Intel CPU remains selectable from an AMD build",
+    cpuChoices.compatible.some((c) => c.id === cpu14900.id),
+  );
+
+  // ...and switching to it must clear the parts that no longer fit.
+  const switched = revalidateDownstream("cpu", { ...amdBuild, cpu: cpu14900 });
+  check(
+    "switching platform clears the incompatible board",
+    switched.cleared.includes("motherboard") && switched.build.motherboard === undefined,
+    `cleared: ${switched.cleared.join(", ") || "nothing"}`,
+  );
+  check("the DDR5 kit survives the switch (both platforms take DDR5)",
+    switched.build.ram !== undefined);
 
   // Insights must produce concrete, costed suggestions.
   const built = { ...heavy, psu: g("msi-meg-ai1300p") };

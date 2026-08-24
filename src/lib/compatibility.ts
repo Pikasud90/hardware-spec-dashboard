@@ -162,7 +162,7 @@ export function checkSlotCandidate(
   slot: BuildSlot,
   build: BuildSelection,
 ): { ok: boolean; reason?: string } {
-  const { cpu, motherboard, ram, gpu, psu } = build;
+  const { cpu, motherboard, ram, psu } = build;
 
   if (slot === "motherboard" && cpu) {
     const cpuSocket = text(cpu, "socket");
@@ -258,6 +258,52 @@ export function checkSlotCandidate(
   return { ok: true };
 }
 
+/**
+ * The subset of a build that constrains `slot`.
+ *
+ * Compatibility here is directional, not symmetric. The processor sits at the
+ * root of the dependency tree — it fixes the socket, which fixes the chipset,
+ * which fixes the memory generation — so it must never be constrained by a
+ * part chosen after it. Otherwise picking a board first would quietly make it
+ * impossible to switch platforms, which is precisely the trap this planner is
+ * meant to remove.
+ */
+export function upstreamOf(slot: BuildSlot, build: BuildSelection): BuildSelection {
+  const index = SLOT_ORDER.indexOf(slot);
+  const upstream: BuildSelection = {};
+  for (let i = 0; i < index; i++) {
+    const earlier = SLOT_ORDER[i];
+    const component = build[earlier];
+    if (component) upstream[earlier] = component;
+  }
+  return upstream;
+}
+
+/**
+ * After a slot changes, drop every later part that no longer fits.
+ * Returns the slots that were cleared so the UI can say what happened.
+ */
+export function revalidateDownstream(
+  changed: BuildSlot,
+  build: BuildSelection,
+): { build: BuildSelection; cleared: BuildSlot[] } {
+  const next: BuildSelection = {};
+  const cleared: BuildSlot[] = [];
+  const changedIndex = SLOT_ORDER.indexOf(changed);
+
+  for (const slot of SLOT_ORDER) {
+    const component = build[slot];
+    if (!component) continue;
+    if (SLOT_ORDER.indexOf(slot) <= changedIndex) {
+      next[slot] = component;
+      continue;
+    }
+    if (checkSlotCandidate(component, slot, next).ok) next[slot] = component;
+    else cleared.push(slot);
+  }
+  return { build: next, cleared };
+}
+
 /** Filter a candidate list down to the parts that can actually join the build. */
 export function filterCompatible(
   candidates: readonly ResolvedComponent[],
@@ -301,7 +347,7 @@ export function auditBuild(build: BuildSelection): CompatibilityIssue[] {
         slots: ["cpu", "motherboard"],
         title: "Socket mismatch",
         detail: `${cpu.name} is ${cpuSocket}; ${motherboard.name} is ${boardSocket}. The processor physically will not seat.`,
-        fix: `Choose a ${cpuSocket} motherboard, or a ${boardSocket} processor.`,
+        fix: `Choose ${/^[AEIOULMNSX]/.test(cpuSocket) ? "an" : "a"} ${cpuSocket} motherboard, or ${/^[AEIOULMNSX]/.test(boardSocket) ? "an" : "a"} ${boardSocket} processor.`,
       });
     }
 
