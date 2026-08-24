@@ -1,4 +1,9 @@
 import { CPUS } from "@/lib/data/cpus";
+import { CPUS_AMD_LEGACY } from "@/lib/data/cpus-amd-legacy";
+import { CPUS_AMD_MODERN } from "@/lib/data/cpus-amd-modern";
+import { CPUS_APPLE } from "@/lib/data/cpus-apple";
+import { CPUS_INTEL_LEGACY } from "@/lib/data/cpus-intel-legacy";
+import { CPUS_INTEL_MODERN } from "@/lib/data/cpus-intel-modern";
 import { GPUS } from "@/lib/data/gpus";
 import { MEMORY } from "@/lib/data/memory";
 import { MOTHERBOARDS } from "@/lib/data/motherboards";
@@ -135,7 +140,16 @@ function assemble(rawByCategory: Record<Category, unknown[]>): ResolvedComponent
 }
 
 export const ALL_COMPONENTS: ResolvedComponent[] = assemble({
-  cpu: CPUS,
+  // Split across files by vendor and era purely for editability; the catalogue
+  // treats them as one list.
+  cpu: [
+    ...CPUS,
+    ...CPUS_INTEL_LEGACY,
+    ...CPUS_INTEL_MODERN,
+    ...CPUS_AMD_LEGACY,
+    ...CPUS_AMD_MODERN,
+    ...CPUS_APPLE,
+  ],
   gpu: GPUS,
   ram: MEMORY,
   storage: STORAGE,

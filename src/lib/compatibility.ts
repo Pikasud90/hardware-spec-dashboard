@@ -172,6 +172,13 @@ export function checkSlotCandidate(
     }
   }
 
+  if (slot === "cpu" && text(candidate, "platform") === "soc") {
+    return {
+      ok: false,
+      reason: "Soldered system-on-chip — cannot be bought separately or fitted to a board",
+    };
+  }
+
   if (slot === "cpu" && motherboard) {
     const boardSocket = text(motherboard, "socket");
     const cpuSocket = text(candidate, "socket");
@@ -336,6 +343,31 @@ export function auditBuild(build: BuildSelection): CompatibilityIssue[] {
   const issues: CompatibilityIssue[] = [];
   const { cpu, motherboard, ram, gpu, storage, psu } = build;
   const power = estimatePower(build);
+
+  /* ---- can this processor be built with at all? ---- */
+  if (cpu && text(cpu, "platform") === "soc") {
+    issues.push({
+      level: "blocker",
+      slots: ["cpu"],
+      title: "This processor cannot be built with",
+      detail: `${cpu.name} is a system-on-chip soldered to its logic board, with memory on the same package. It is not sold separately and cannot be fitted to a motherboard.`,
+      fix: "It is listed for comparison against parts you could buy. Choose a socketed processor to continue planning a build.",
+    });
+  }
+
+  if (cpu && text(cpu, "platform") !== "soc") {
+    const socket = text(cpu, "socket") ?? "";
+    // A socketed part whose platform this catalogue does not stock boards for.
+    if (/^(sTR|sWRX|LGA4677)/.test(socket)) {
+      issues.push({
+        level: "warning",
+        slots: ["cpu", "motherboard"],
+        title: `No ${socket} motherboards in this catalogue`,
+        detail: `${cpu.name} is a workstation part on the ${socket} platform. It is socketed and buildable, but this catalogue only carries mainstream consumer boards, so there is nothing here to pair it with.`,
+        fix: "Source a compatible workstation board separately — the rest of the build (memory, storage, graphics, power) can still be planned here.",
+      });
+    }
+  }
 
   /* ---- socket ---- */
   if (cpu && motherboard) {

@@ -1,0 +1,406 @@
+import type { ComponentInput } from "@/lib/validations/component";
+
+/**
+ * Intel desktop processors, 2nd generation Sandy Bridge through 11th
+ * generation Rocket Lake.
+ *
+ * Almost none of these are sold new in India any more, so they carry no price
+ * rather than a fabricated one. They are here because they are what most
+ * people are actually upgrading *from* — knowing that a 2600K sits at roughly
+ * a fifth of a modern part's multi-threaded throughput is the number that
+ * makes an upgrade decision, and that comparison is impossible if the old
+ * chip is missing.
+ */
+export const CPUS_INTEL_LEGACY: ComponentInput[] = [
+  /* ------------------------------ 2nd Gen · Sandy Bridge · LGA1155 · 2011 */
+  {
+    id: "intel-celeron-g530", slug: "intel-celeron-g530", name: "Intel Celeron G530",
+    brand: "Intel", series: "Celeron", category: "cpu", msrp: 42,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2011-09-04",
+    summary: "Entry-level Sandy Bridge with no turbo, no hyper-threading and half the L3 of a Pentium — the floor of the 2011 desktop range.",
+    specs: {
+      segment: "Celeron", socket: "LGA1155", architecture: "Sandy Bridge", codename: "Sandy Bridge",
+      processNodeNm: 32, totalCores: 2, threads: 2, baseClockGhz: 2.4, boostClockGhz: 2.4,
+      l2CacheMb: 0.5, l3CacheMb: 2, tdpWatts: 65, integratedGraphics: "Intel HD Graphics",
+      pcieVersion: "PCIe 2.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1066, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-pentium-g620", slug: "intel-pentium-g620", name: "Intel Pentium G620",
+    brand: "Intel", series: "Pentium", category: "cpu", msrp: 64,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2011-05-22",
+    summary: "Dual-core Sandy Bridge Pentium — the budget office chip of its era, still adequate for light desktop work.",
+    specs: {
+      segment: "Pentium", socket: "LGA1155", architecture: "Sandy Bridge", codename: "Sandy Bridge",
+      processNodeNm: 32, totalCores: 2, threads: 2, baseClockGhz: 2.6, boostClockGhz: 2.6,
+      l2CacheMb: 0.5, l3CacheMb: 3, tdpWatts: 65, integratedGraphics: "Intel HD Graphics",
+      pcieVersion: "PCIe 2.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1066, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i3-2100", slug: "intel-core-i3-2100", name: "Intel Core i3-2100",
+    brand: "Intel", series: "Core 2nd Gen", category: "cpu", msrp: 117,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2011-01-09",
+    summary: "Two cores with hyper-threading at a fixed 3.1 GHz. No turbo — i3 parts of this era ran at one speed.",
+    specs: {
+      segment: "Core i3", socket: "LGA1155", architecture: "Sandy Bridge", codename: "Sandy Bridge",
+      processNodeNm: 32, totalCores: 2, threads: 4, baseClockGhz: 3.1, boostClockGhz: 3.1,
+      l2CacheMb: 0.5, l3CacheMb: 3, tdpWatts: 65, integratedGraphics: "Intel HD Graphics 2000",
+      pcieVersion: "PCIe 2.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1333, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i5-2400", slug: "intel-core-i5-2400", name: "Intel Core i5-2400",
+    brand: "Intel", series: "Core 2nd Gen", category: "cpu", msrp: 184,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2011-01-09",
+    summary: "Locked quad-core Sandy Bridge, the mainstream desktop chip of 2011 and the baseline most upgrade comparisons start from.",
+    specs: {
+      segment: "Core i5", socket: "LGA1155", architecture: "Sandy Bridge", codename: "Sandy Bridge",
+      processNodeNm: 32, totalCores: 4, threads: 4, baseClockGhz: 3.1, boostClockGhz: 3.4,
+      l2CacheMb: 1, l3CacheMb: 6, tdpWatts: 95, integratedGraphics: "Intel HD Graphics 2000",
+      pcieVersion: "PCIe 2.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1333, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i5-2500k", slug: "intel-core-i5-2500k", name: "Intel Core i5-2500K",
+    brand: "Intel", series: "Core 2nd Gen", category: "cpu", msrp: 216,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2011-01-09",
+    summary: "One of the most celebrated processors ever sold — an unlocked quad that routinely reached 4.5 GHz on air and stayed usable for the better part of a decade.",
+    specs: {
+      segment: "Core i5", socket: "LGA1155", architecture: "Sandy Bridge", codename: "Sandy Bridge",
+      processNodeNm: 32, totalCores: 4, threads: 4, baseClockGhz: 3.3, boostClockGhz: 3.7,
+      l2CacheMb: 1, l3CacheMb: 6, tdpWatts: 95, integratedGraphics: "Intel HD Graphics 3000",
+      pcieVersion: "PCIe 2.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1333, unlocked: true, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i7-2600k", slug: "intel-core-i7-2600k", name: "Intel Core i7-2600K",
+    brand: "Intel", series: "Core 2nd Gen", category: "cpu", msrp: 317,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2011-01-09",
+    summary: "The 2011 flagship: four cores, eight threads and an unlocked multiplier. Its longevity is the reason Intel's quad-core era lasted as long as it did.",
+    specs: {
+      segment: "Core i7", socket: "LGA1155", architecture: "Sandy Bridge", codename: "Sandy Bridge",
+      processNodeNm: 32, totalCores: 4, threads: 8, baseClockGhz: 3.4, boostClockGhz: 3.8,
+      l2CacheMb: 1, l3CacheMb: 8, tdpWatts: 95, integratedGraphics: "Intel HD Graphics 3000",
+      pcieVersion: "PCIe 2.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1333, unlocked: true, coolerIncluded: true,
+    },
+  },
+
+  /* -------------------------------- 3rd Gen · Ivy Bridge · LGA1155 · 2012 */
+  {
+    id: "intel-pentium-g2020", slug: "intel-pentium-g2020", name: "Intel Pentium G2020",
+    brand: "Intel", series: "Pentium", category: "cpu", msrp: 64,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2013-01-20",
+    summary: "Ivy Bridge Pentium on the 22 nm process — the same two-core formula at lower power than Sandy Bridge.",
+    specs: {
+      segment: "Pentium", socket: "LGA1155", architecture: "Ivy Bridge", codename: "Ivy Bridge",
+      processNodeNm: 22, totalCores: 2, threads: 2, baseClockGhz: 2.9, boostClockGhz: 2.9,
+      l2CacheMb: 0.5, l3CacheMb: 3, tdpWatts: 55, integratedGraphics: "Intel HD Graphics",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1600, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i3-3220", slug: "intel-core-i3-3220", name: "Intel Core i3-3220",
+    brand: "Intel", series: "Core 3rd Gen", category: "cpu", msrp: 117,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2012-09-02",
+    summary: "Ivy Bridge dual-core with hyper-threading, and the first i3 generation to bring PCIe 3.0 to the mainstream socket.",
+    specs: {
+      segment: "Core i3", socket: "LGA1155", architecture: "Ivy Bridge", codename: "Ivy Bridge",
+      processNodeNm: 22, totalCores: 2, threads: 4, baseClockGhz: 3.3, boostClockGhz: 3.3,
+      l2CacheMb: 0.5, l3CacheMb: 3, tdpWatts: 55, integratedGraphics: "Intel HD Graphics 2500",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1600, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i5-3470", slug: "intel-core-i5-3470", name: "Intel Core i5-3470",
+    brand: "Intel", series: "Core 3rd Gen", category: "cpu", msrp: 184,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2012-05-31",
+    summary: "Locked Ivy Bridge quad. Extremely common in second-hand office machines, and a frequent starting point for budget builds.",
+    specs: {
+      segment: "Core i5", socket: "LGA1155", architecture: "Ivy Bridge", codename: "Ivy Bridge",
+      processNodeNm: 22, totalCores: 4, threads: 4, baseClockGhz: 3.2, boostClockGhz: 3.6,
+      l2CacheMb: 1, l3CacheMb: 6, tdpWatts: 77, integratedGraphics: "Intel HD Graphics 2500",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1600, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i7-3770k", slug: "intel-core-i7-3770k", name: "Intel Core i7-3770K",
+    brand: "Intel", series: "Core 3rd Gen", category: "cpu", msrp: 332,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2012-04-29",
+    summary: "Ivy Bridge flagship. Ran hotter than its Sandy Bridge predecessor when overclocked, because Intel switched from solder to paste under the lid.",
+    specs: {
+      segment: "Core i7", socket: "LGA1155", architecture: "Ivy Bridge", codename: "Ivy Bridge",
+      processNodeNm: 22, totalCores: 4, threads: 8, baseClockGhz: 3.5, boostClockGhz: 3.9,
+      l2CacheMb: 1, l3CacheMb: 8, tdpWatts: 77, integratedGraphics: "Intel HD Graphics 4000",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1600, unlocked: true, coolerIncluded: true,
+    },
+  },
+  /* ----------------------------------- 4th Gen · Haswell · LGA1150 · 2013 */
+  {
+    id: "intel-pentium-g3258", slug: "intel-pentium-g3258", name: "Intel Pentium G3258",
+    brand: "Intel", series: "Pentium", category: "cpu", msrp: 72,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2014-06-02",
+    summary: "The 'Anniversary Edition' — an unlocked Pentium released for Intel's 20th x86 anniversary. Cheap and overclockable, but only two threads.",
+    specs: {
+      segment: "Pentium", socket: "LGA1150", architecture: "Haswell", codename: "Haswell",
+      processNodeNm: 22, totalCores: 2, threads: 2, baseClockGhz: 3.2, boostClockGhz: 3.2,
+      l2CacheMb: 0.5, l3CacheMb: 3, tdpWatts: 53, integratedGraphics: "Intel HD Graphics",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1333, unlocked: true, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i5-4590", slug: "intel-core-i5-4590", name: "Intel Core i5-4590",
+    brand: "Intel", series: "Core 4th Gen", category: "cpu", msrp: 192,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2014-05-11",
+    summary: "Haswell quad-core, for years the reference minimum specification for desktop VR headsets.",
+    specs: {
+      segment: "Core i5", socket: "LGA1150", architecture: "Haswell", codename: "Haswell",
+      processNodeNm: 22, totalCores: 4, threads: 4, baseClockGhz: 3.3, boostClockGhz: 3.7,
+      l2CacheMb: 1, l3CacheMb: 6, tdpWatts: 84, integratedGraphics: "Intel HD Graphics 4600",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1600, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i7-4790k", slug: "intel-core-i7-4790k", name: "Intel Core i7-4790K",
+    brand: "Intel", series: "Core 4th Gen", category: "cpu", msrp: 339,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2014-06-02",
+    summary: "'Devil's Canyon' — the first mainstream Intel desktop chip to ship at 4 GHz base, and the high point of the quad-core era.",
+    specs: {
+      segment: "Core i7", socket: "LGA1150", architecture: "Haswell", codename: "Devil's Canyon",
+      processNodeNm: 22, totalCores: 4, threads: 8, baseClockGhz: 4.0, boostClockGhz: 4.4,
+      l2CacheMb: 1, l3CacheMb: 8, tdpWatts: 88, integratedGraphics: "Intel HD Graphics 4600",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR3", memoryChannels: 2,
+      maxMemorySpeedMts: 1600, unlocked: true, coolerIncluded: true,
+    },
+  },
+
+  /* ---------------------------- 6th/7th Gen · Skylake, Kaby Lake · LGA1151 */
+  {
+    id: "intel-core-i5-6600k", slug: "intel-core-i5-6600k", name: "Intel Core i5-6600K",
+    brand: "Intel", series: "Core 6th Gen", category: "cpu", msrp: 242,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2015-08-05",
+    summary: "Skylake introduced DDR4 to the mainstream desktop. Still four cores and four threads, which aged poorly once games began using more.",
+    specs: {
+      segment: "Core i5", socket: "LGA1151", architecture: "Skylake", codename: "Skylake",
+      processNodeNm: 14, totalCores: 4, threads: 4, baseClockGhz: 3.5, boostClockGhz: 3.9,
+      l2CacheMb: 1, l3CacheMb: 6, tdpWatts: 91, integratedGraphics: "Intel HD Graphics 530",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2133, unlocked: true,
+    },
+  },
+  {
+    id: "intel-core-i7-6700k", slug: "intel-core-i7-6700k", name: "Intel Core i7-6700K",
+    brand: "Intel", series: "Core 6th Gen", category: "cpu", msrp: 350,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2015-08-05",
+    summary: "Skylake flagship — the last of five consecutive generations of four-core Intel flagships before AMD forced the core count up.",
+    specs: {
+      segment: "Core i7", socket: "LGA1151", architecture: "Skylake", codename: "Skylake",
+      processNodeNm: 14, totalCores: 4, threads: 8, baseClockGhz: 4.0, boostClockGhz: 4.2,
+      l2CacheMb: 1, l3CacheMb: 8, tdpWatts: 91, integratedGraphics: "Intel HD Graphics 530",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2133, unlocked: true,
+    },
+  },
+  {
+    id: "intel-pentium-g4560", slug: "intel-pentium-g4560", name: "Intel Pentium G4560",
+    brand: "Intel", series: "Pentium", category: "cpu", msrp: 64,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2017-01-03",
+    summary: "A minor legend: Intel enabled hyper-threading on a Pentium, producing i3-class performance for a third of the price. Quietly withdrawn afterwards.",
+    specs: {
+      segment: "Pentium", socket: "LGA1151", architecture: "Kaby Lake", codename: "Kaby Lake",
+      processNodeNm: 14, totalCores: 2, threads: 4, baseClockGhz: 3.5, boostClockGhz: 3.5,
+      l2CacheMb: 0.5, l3CacheMb: 3, tdpWatts: 54, integratedGraphics: "Intel HD Graphics 610",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2400, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i7-7700k", slug: "intel-core-i7-7700k", name: "Intel Core i7-7700K",
+    brand: "Intel", series: "Core 7th Gen", category: "cpu", msrp: 339,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2017-01-03",
+    summary: "Kaby Lake flagship, released months before Ryzen 1000 made four-core flagships untenable.",
+    specs: {
+      segment: "Core i7", socket: "LGA1151", architecture: "Kaby Lake", codename: "Kaby Lake",
+      processNodeNm: 14, totalCores: 4, threads: 8, baseClockGhz: 4.2, boostClockGhz: 4.5,
+      l2CacheMb: 1, l3CacheMb: 8, tdpWatts: 91, integratedGraphics: "Intel HD Graphics 630",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2400, unlocked: true,
+    },
+  },
+
+  /* --------------------- 8th/9th Gen · Coffee Lake · LGA1151v2 · 2017-2018 */
+  {
+    id: "intel-core-i3-8100", slug: "intel-core-i3-8100", name: "Intel Core i3-8100",
+    brand: "Intel", series: "Core 8th Gen", category: "cpu", msrp: 117,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2017-10-05",
+    summary: "The generation where competitive pressure showed: the i3 became a true quad-core, matching the i5 of two generations earlier.",
+    specs: {
+      segment: "Core i3", socket: "LGA1151", architecture: "Coffee Lake", codename: "Coffee Lake",
+      processNodeNm: 14, totalCores: 4, threads: 4, baseClockGhz: 3.6, boostClockGhz: 3.6,
+      l2CacheMb: 1, l3CacheMb: 6, tdpWatts: 65, integratedGraphics: "Intel UHD Graphics 630",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2400, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i5-8400", slug: "intel-core-i5-8400", name: "Intel Core i5-8400",
+    brand: "Intel", series: "Core 8th Gen", category: "cpu", msrp: 182,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2017-10-05",
+    summary: "Six cores at a mainstream price for the first time, and a widely recommended gaming chip for years afterwards.",
+    specs: {
+      segment: "Core i5", socket: "LGA1151", architecture: "Coffee Lake", codename: "Coffee Lake",
+      processNodeNm: 14, totalCores: 6, threads: 6, baseClockGhz: 2.8, boostClockGhz: 4.0,
+      l2CacheMb: 1.5, l3CacheMb: 9, tdpWatts: 65, integratedGraphics: "Intel UHD Graphics 630",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2666, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i7-8700k", slug: "intel-core-i7-8700k", name: "Intel Core i7-8700K",
+    brand: "Intel", series: "Core 8th Gen", category: "cpu", msrp: 359,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2017-10-05",
+    summary: "Intel's answer to Ryzen: six cores and twelve threads at 4.7 GHz, and the fastest gaming processor of its generation.",
+    specs: {
+      segment: "Core i7", socket: "LGA1151", architecture: "Coffee Lake", codename: "Coffee Lake",
+      processNodeNm: 14, totalCores: 6, threads: 12, baseClockGhz: 3.7, boostClockGhz: 4.7,
+      l2CacheMb: 1.5, l3CacheMb: 12, tdpWatts: 95, integratedGraphics: "Intel UHD Graphics 630",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2666, unlocked: true,
+    },
+  },
+  {
+    id: "intel-core-i5-9400f", slug: "intel-core-i5-9400f", name: "Intel Core i5-9400F",
+    brand: "Intel", series: "Core 9th Gen", category: "cpu", msrp: 157,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2019-01-07",
+    summary: "The F suffix means the integrated graphics are fused off — cheaper, but useless without a discrete card. Enormously popular in budget Indian builds.",
+    specs: {
+      segment: "Core i5", socket: "LGA1151", architecture: "Coffee Lake", codename: "Coffee Lake Refresh",
+      processNodeNm: 14, totalCores: 6, threads: 6, baseClockGhz: 2.9, boostClockGhz: 4.1,
+      l2CacheMb: 1.5, l3CacheMb: 9, tdpWatts: 65,
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2666, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i9-9900k", slug: "intel-core-i9-9900k", name: "Intel Core i9-9900K",
+    brand: "Intel", series: "Core 9th Gen", category: "cpu", msrp: 488,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2018-10-19",
+    summary: "The first mainstream i9, and the first Intel desktop part to reach 5.0 GHz out of the box. Eight cores, sixteen threads, and a return to soldered heat transfer.",
+    specs: {
+      segment: "Core i9", socket: "LGA1151", architecture: "Coffee Lake", codename: "Coffee Lake Refresh",
+      processNodeNm: 14, totalCores: 8, threads: 16, baseClockGhz: 3.6, boostClockGhz: 5.0,
+      l2CacheMb: 2, l3CacheMb: 16, tdpWatts: 95, integratedGraphics: "Intel UHD Graphics 630",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2666, unlocked: true,
+    },
+  },
+  /* --------------------------- 10th Gen · Comet Lake · LGA1200 · 2020 */
+  {
+    id: "intel-core-i3-10100", slug: "intel-core-i3-10100", name: "Intel Core i3-10100",
+    brand: "Intel", series: "Core 10th Gen", category: "cpu", msrp: 122,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2020-04-30",
+    summary: "Hyper-threading returned to the i3 line, making this a four-core eight-thread chip — effectively an i7-7700 for a fraction of the price.",
+    specs: {
+      segment: "Core i3", socket: "LGA1200", architecture: "Comet Lake", codename: "Comet Lake",
+      processNodeNm: 14, totalCores: 4, threads: 8, baseClockGhz: 3.6, boostClockGhz: 4.3,
+      l2CacheMb: 1, l3CacheMb: 6, tdpWatts: 65, integratedGraphics: "Intel UHD Graphics 630",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2666, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i5-10400f", slug: "intel-core-i5-10400f", name: "Intel Core i5-10400F",
+    brand: "Intel", series: "Core 10th Gen", category: "cpu", msrp: 157,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2020-04-30",
+    summary: "Six cores and twelve threads without graphics. For two years this was the default budget gaming recommendation in India.",
+    specs: {
+      segment: "Core i5", socket: "LGA1200", architecture: "Comet Lake", codename: "Comet Lake",
+      processNodeNm: 14, totalCores: 6, threads: 12, baseClockGhz: 2.9, boostClockGhz: 4.3,
+      l2CacheMb: 1.5, l3CacheMb: 12, tdpWatts: 65,
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2666, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i9-10900k", slug: "intel-core-i9-10900k", name: "Intel Core i9-10900K",
+    brand: "Intel", series: "Core 10th Gen", category: "cpu", msrp: 488,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2020-04-30",
+    summary: "Ten cores at 5.3 GHz, and the end of the line for Skylake-derived architecture after five years of refinement on the same 14 nm process.",
+    specs: {
+      segment: "Core i9", socket: "LGA1200", architecture: "Comet Lake", codename: "Comet Lake",
+      processNodeNm: 14, totalCores: 10, threads: 20, baseClockGhz: 3.7, boostClockGhz: 5.3,
+      l2CacheMb: 2.5, l3CacheMb: 20, tdpWatts: 125, pl2Watts: 250,
+      integratedGraphics: "Intel UHD Graphics 630",
+      pcieVersion: "PCIe 3.0", pcieLanes: 16, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 2933, unlocked: true,
+    },
+  },
+
+  /* -------------------------- 11th Gen · Rocket Lake · LGA1200 · 2021 */
+  {
+    id: "intel-core-i5-11400f", slug: "intel-core-i5-11400f", name: "Intel Core i5-11400F",
+    brand: "Intel", series: "Core 11th Gen", category: "cpu", msrp: 157,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2021-03-30",
+    summary: "Rocket Lake's one clear success — a large per-clock gain over the 10400F at the same price, and the first mainstream Intel part with PCIe 4.0.",
+    specs: {
+      segment: "Core i5", socket: "LGA1200", architecture: "Rocket Lake", codename: "Rocket Lake",
+      processNodeNm: 14, totalCores: 6, threads: 12, baseClockGhz: 2.6, boostClockGhz: 4.4,
+      l2CacheMb: 3, l3CacheMb: 12, tdpWatts: 65, pl2Watts: 154,
+      pcieVersion: "PCIe 4.0", pcieLanes: 20, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 3200, coolerIncluded: true,
+    },
+  },
+  {
+    id: "intel-core-i9-11900k", slug: "intel-core-i9-11900k", name: "Intel Core i9-11900K",
+    brand: "Intel", series: "Core 11th Gen", category: "cpu", msrp: 539,
+    inrPrice: null, priceConfidence: "low", availability: "discontinued",
+    releaseDate: "2021-03-30",
+    summary: "Backported from a 10 nm design to 14 nm, which cost it two cores against its own predecessor — a rare case of a flagship regressing generation to generation.",
+    specs: {
+      segment: "Core i9", socket: "LGA1200", architecture: "Rocket Lake", codename: "Rocket Lake",
+      processNodeNm: 14, totalCores: 8, threads: 16, baseClockGhz: 3.5, boostClockGhz: 5.3,
+      l2CacheMb: 4, l3CacheMb: 16, tdpWatts: 125, pl2Watts: 251,
+      integratedGraphics: "Intel UHD Graphics 750",
+      pcieVersion: "PCIe 4.0", pcieLanes: 20, memoryType: "DDR4", memoryChannels: 2,
+      maxMemorySpeedMts: 3200, unlocked: true,
+    },
+  },
+];

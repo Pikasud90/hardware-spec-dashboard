@@ -156,21 +156,72 @@ export function calcDwpd(
  * CPU model; changing a value here changes every downstream score coherently.
  */
 export const CPU_ARCHITECTURE_IPC: Record<string, { pCore: number; eCore: number }> = {
+  /* AMD */
+  Piledriver: { pCore: 0.42, eCore: 0 },
+  Zen: { pCore: 0.7, eCore: 0 },
+  "Zen+": { pCore: 0.73, eCore: 0 },
   "Zen 2": { pCore: 0.8, eCore: 0 },
   "Zen 3": { pCore: 0.9, eCore: 0 },
   "Zen 4": { pCore: 1.0, eCore: 0 },
   "Zen 5": { pCore: 1.11, eCore: 0 },
-  "Comet Lake": { pCore: 0.72, eCore: 0 },
+
+  /* Intel */
+  "Sandy Bridge": { pCore: 0.62, eCore: 0 },
+  "Ivy Bridge": { pCore: 0.65, eCore: 0 },
+  Haswell: { pCore: 0.7, eCore: 0 },
+  Skylake: { pCore: 0.74, eCore: 0 },
+  "Kaby Lake": { pCore: 0.74, eCore: 0 },
+  "Coffee Lake": { pCore: 0.75, eCore: 0 },
+  "Comet Lake": { pCore: 0.75, eCore: 0 },
   "Rocket Lake": { pCore: 0.83, eCore: 0 },
   "Alder Lake": { pCore: 0.96, eCore: 0.62 },
   "Raptor Lake": { pCore: 0.99, eCore: 0.64 },
   "Arrow Lake": { pCore: 1.09, eCore: 0.8 },
+  "Sapphire Rapids": { pCore: 0.97, eCore: 0 },
+
+  /**
+   * Apple silicon — cross-ISA estimates, and the least certain numbers here.
+   *
+   * Apple's cores are much wider than contemporary x86 and run at markedly
+   * lower clocks, so a per-clock figure is the only way to place them on the
+   * same axis at all. These are calibrated so single-thread standing lands
+   * where measured cross-platform suites generally put it, but comparing ARM
+   * and x86 per-clock is an approximation in a way that comparing two x86
+   * designs is not. Treat Apple indices as indicative of tier, not precise.
+   *
+   * Apple's efficiency cores are also far stronger relative to their
+   * performance cores than Intel's, which the higher eCore figures reflect.
+   */
+  Firestorm: { pCore: 1.38, eCore: 0.55 },
+  Avalanche: { pCore: 1.4, eCore: 0.58 },
+  Everest: { pCore: 1.42, eCore: 0.6 },
+  "M4 (Donan)": { pCore: 1.45, eCore: 0.62 },
 };
 
 /** Throughput uplift contributed by a second thread on an SMT-capable core. */
 export const SMT_SCALING_GAIN = 0.28;
-/** Sustained all-core clock as a fraction of single-core boost. */
-export const ALL_CORE_CLOCK_RATIO = 0.92;
+/**
+ * Sustained all-core clock as a fraction of peak single-core boost.
+ *
+ * This is not a constant, because it physically cannot be: a package has a
+ * fixed power budget, so the more cores share it the lower the frequency each
+ * can hold. A six-core part sustains most of its boost across all cores; a
+ * 96-core workstation part sustains far less.
+ *
+ *   ratio = clamp(0.70, 0.95, 1.00 - 0.05 x ln(cores))
+ *
+ * Treating this as fixed at 0.92 — as this model originally did — inflated
+ * high-core-count parts substantially, because it credited a 96-core chip with
+ * nearly its full single-core boost on every core at once.
+ */
+export const ALL_CORE_CLOCK_BASE = 1.0;
+export const ALL_CORE_CLOCK_DECAY = 0.05;
+
+export function allCoreClockRatio(cores: number): number {
+  if (!positive(cores)) return 0.92;
+  const ratio = ALL_CORE_CLOCK_BASE - ALL_CORE_CLOCK_DECAY * Math.log(cores);
+  return Math.min(0.95, Math.max(0.7, ratio));
+}
 /** E-core clock as a fraction of P-core boost on hybrid parts. */
 export const E_CORE_CLOCK_RATIO = 0.78;
 /** Weight of the logarithmic last-level-cache term in the gaming model. */
@@ -217,7 +268,12 @@ export function calcCpuMultiThreadRaw(specs: CpuSpecs): number | null {
     physicalE * ratio * E_CORE_CLOCK_RATIO;
 
   if (!positive(effectiveCores)) return null;
-  return pCore * specs.boostClockGhz * ALL_CORE_CLOCK_RATIO * effectiveCores;
+  return (
+    pCore *
+    specs.boostClockGhz *
+    allCoreClockRatio(specs.totalCores) *
+    effectiveCores
+  );
 }
 
 /**
@@ -438,6 +494,8 @@ export const METRIC_POLARITY_MAP: Record<string, MetricPolarity> = {
   memoryChannels: "HIGHER_BETTER",
   maxMemorySpeedMts: "HIGHER_BETTER",
   systemMemoryBandwidthGbs: "HIGHER_BETTER",
+  gpuCores: "HIGHER_BETTER",
+  neuralEngineCores: "HIGHER_BETTER",
   singleThreadIndex: "HIGHER_BETTER",
   multiThreadIndex: "HIGHER_BETTER",
   gamingIndex: "HIGHER_BETTER",

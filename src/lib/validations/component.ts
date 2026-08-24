@@ -38,11 +38,38 @@ const IsoDate = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/, "releaseDate must be an ISO YYYY-MM-DD string");
 
-const MemoryGeneration = z.enum(["DDR4", "DDR5"]);
+/** Generations a memory kit or motherboard slot can be. */
+const MemoryGeneration = z.enum(["DDR3", "DDR4", "DDR5"]);
+
+/**
+ * What a processor's memory controller accepts.
+ *
+ * Wider than `MemoryGeneration` because it has to describe parts that take no
+ * DIMMs at all: Apple's M-series solders LPDDR onto the package as unified
+ * memory shared with the GPU, which is exactly why those chips cannot appear
+ * in a build.
+ */
+const CpuMemorySupport = z.enum([
+  "DDR3",
+  "DDR4",
+  "DDR5",
+  "LPDDR4X",
+  "LPDDR5",
+  "LPDDR5X",
+  "Unified",
+]);
 
 /* ------------------------------------------------------------------- CPU */
 
-export const CpuSpecsSchema = z.object({
+export const CpuSpecsSchema = z
+  .object({
+  /**
+   * How the processor attaches. `soc` parts are soldered to the board they
+   * ship on and cannot be bought and fitted, which the build planner honours.
+   */
+  platform: z.enum(["socketed", "soc"]).default("socketed"),
+  /** Market tier, used for grouping and filtering across a decade of parts. */
+  segment: z.string(),
   socket: z.string(),
   architecture: z.string(),
   codename: z.string(),
@@ -59,14 +86,40 @@ export const CpuSpecsSchema = z.object({
   pl2Watts: z.number().positive().nullable().default(null),
   integratedGraphics: z.string().nullable().default(null),
   pcieVersion: z.string(),
-  pcieLanes: z.number().int().positive(),
-  memoryType: MemoryGeneration,
+  /** Null on SoCs, which expose no user-accessible expansion lanes at all. */
+  pcieLanes: z.number().int().positive().nullable().default(null),
+  memoryType: CpuMemorySupport,
   memoryChannels: z.number().int().positive(),
   maxMemorySpeedMts: z.number().positive(),
   unlocked: z.boolean().default(false),
   stackedCache: z.boolean().default(false),
   coolerIncluded: z.boolean().default(false),
-});
+  /** Integrated GPU cores — meaningful on Apple silicon and Intel Arc iGPUs. */
+  gpuCores: z.number().int().positive().nullable().default(null),
+  /** On-package NPU cores, where the vendor publishes a count. */
+  neuralEngineCores: z.number().int().positive().nullable().default(null),
+  })
+  /**
+   * Internal consistency checks. These catch the kind of data-entry error that
+   * would otherwise silently produce a wrong performance index — a part with
+   * more cores than threads, or a boost clock below its own base clock.
+   */
+  .refine((s) => s.threads >= s.totalCores, {
+    message: "threads cannot be fewer than physical cores",
+    path: ["threads"],
+  })
+  .refine((s) => s.boostClockGhz >= s.baseClockGhz, {
+    message: "boost clock cannot be below base clock",
+    path: ["boostClockGhz"],
+  })
+  .refine((s) => s.pCores === 0 || s.pCores + s.eCores === s.totalCores, {
+    message: "pCores + eCores must equal totalCores when the split is declared",
+    path: ["totalCores"],
+  })
+  .refine((s) => s.pl2Watts === null || s.pl2Watts >= s.tdpWatts, {
+    message: "max turbo power cannot be below base TDP",
+    path: ["pl2Watts"],
+  });
 export type CpuSpecs = z.infer<typeof CpuSpecsSchema>;
 
 /* ------------------------------------------------------------------- GPU */

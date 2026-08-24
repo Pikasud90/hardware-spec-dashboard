@@ -4,7 +4,7 @@ import { AlertTriangle, FunctionSquare, Ruler, Search, Scale } from "lucide-reac
 import {
   CPU_ARCHITECTURE_IPC,
   GPU_ARCHITECTURE_EFFICIENCY,
-  ALL_CORE_CLOCK_RATIO,
+  ALL_CORE_CLOCK_DECAY,
   CACHE_GAMING_WEIGHT,
   CACHE_REFERENCE_MB,
   E_CORE_CLOCK_RATIO,
@@ -254,10 +254,15 @@ GAME  = ST × (1 + ${CACHE_GAMING_WEIGHT} × ln(1 + L3_MB / ${CACHE_REFERENCE_MB
         </pre>
         <p className="text-sm leading-relaxed text-ink-secondary">
           The {SMT_SCALING_GAIN * 100}% figure is the throughput a second thread adds on an
-          SMT-capable core; {ALL_CORE_CLOCK_RATIO} is sustained all-core clock as a
-          fraction of peak single-core boost; {E_CORE_CLOCK_RATIO} is the efficiency-core
-          clock ratio on hybrid parts. SMT is inferred from the thread count exceeding the
-          core count, so a part with SMT disabled scores as its physical cores alone.
+          SMT-capable core, and {E_CORE_CLOCK_RATIO} is the efficiency-core clock ratio on
+          hybrid parts. SMT is inferred from the thread count exceeding the core count, so
+          a part with SMT disabled scores as its physical cores alone.
+          <br />
+          <br />
+          The all-core term is not a constant, because it physically cannot be: a package
+          has a fixed power budget, so the more cores share it the lower the frequency each
+          can hold. A six-core part sustains about 91% of its peak boost across all cores;
+          a 96-core workstation part sustains closer to 77%.
         </p>
         <p className="text-sm leading-relaxed text-ink-secondary">
           The logarithm in the gaming term encodes diminishing returns on cache: going
@@ -461,6 +466,23 @@ recommended PSU = draw × 1.4, rounded up to 50 W`}
             first. Concretely, the model places the RTX 4090 at roughly 66% of the RTX
             5090; measured raster results generally put it nearer 75–78%. Treat gaps
             between top-end cards as upper bounds on the real difference.
+          </li>
+          <li>
+            <strong className="text-ink">Very-high-core workstation parts are still
+            over-estimated.</strong>{" "}
+            Even with the core-count-dependent clock term, the model places the 96-core
+            Threadripper PRO 7995WX at roughly 4.3x a 16-core Ryzen 9 9950X, where measured
+            rendering suites put the gap nearer 3.5x. Real chips of that size are limited by
+            memory bandwidth and scheduling in ways core count and clock do not capture.
+            Treat comparisons between mainstream and HEDT parts as an upper bound.
+          </li>
+          <li>
+            <strong className="text-ink">Apple indices are cross-ISA estimates.</strong>{" "}
+            Apple's cores are much wider than contemporary x86 and run at lower clocks, so
+            placing them on a shared per-clock axis is an approximation in a way that
+            comparing two x86 designs is not. The tier is meaningful; the precise number is
+            less so. Apple parts are also soldered SoCs, so they never appear in the build
+            planner.
           </li>
           <li>
             <strong className="text-ink">The multi-thread index ignores cache entirely.</strong>{" "}

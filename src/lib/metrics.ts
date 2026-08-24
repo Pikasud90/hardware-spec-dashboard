@@ -121,6 +121,25 @@ const CPU_METRICS: MetricDef[] = [
   USD_MSRP,
   RELEASE_YEAR,
   {
+    key: "segment",
+    label: "Market tier",
+    short: "Tier",
+    kind: "text",
+    group: "Overview",
+    headline: true,
+    description:
+      "Where the part sits in its vendor's range. Comparable across generations — a Core i5 from 2012 and one from 2025 occupied the same position in the line-up even though they share almost nothing technically.",
+  },
+  {
+    key: "platform",
+    label: "Attachment",
+    short: "Platform",
+    kind: "text",
+    group: "Overview",
+    description:
+      "Whether the processor is socketed and can be fitted to a motherboard, or soldered as part of a system-on-chip. Soldered parts cannot appear in a build.",
+  },
+  {
     key: "socket",
     label: "Socket",
     short: "Socket",
@@ -128,6 +147,27 @@ const CPU_METRICS: MetricDef[] = [
     group: "Overview",
     headline: true,
     description: "Physical package interface, which determines motherboard compatibility.",
+  },
+  {
+    key: "gpuCores",
+    label: "Integrated GPU cores",
+    short: "iGPU cores",
+    kind: "number",
+    group: "Compute",
+    decimals: 0,
+    analytic: true,
+    description:
+      "Graphics cores on the same package. Meaningful on Apple silicon and on AMD's G-series APUs, where integrated graphics are capable enough to replace a discrete card.",
+  },
+  {
+    key: "neuralEngineCores",
+    label: "Neural engine cores",
+    short: "NPU cores",
+    kind: "number",
+    group: "Compute",
+    decimals: 0,
+    description:
+      "On-package accelerator cores for machine-learning workloads, where the vendor publishes a count.",
   },
   {
     key: "architecture",
@@ -328,7 +368,7 @@ const CPU_METRICS: MetricDef[] = [
     headline: true,
     description:
       "Modelled all-core throughput, accounting for SMT scaling and reduced E-core contribution. Normalised to 100. Not a measured benchmark.",
-    formula: "IPC x boost x 0.92 x (P x (1 + 0.28 x SMT) + E x IPC_ratio x 0.78)",
+    formula: "IPC x boost x allCoreRatio(cores) x (P x (1 + 0.28 x SMT) + E x IPC_ratio x 0.78)",
   },
   {
     key: "gamingIndex",

@@ -112,10 +112,12 @@ console.log("\n-- Indian pricing --");
 {
   const priced = ALL_COMPONENTS.filter((c) => c.inrPrice !== null);
   const unpriced = ALL_COMPONENTS.filter((c) => c.inrPrice === null);
+  // "available" must be costed. "limited" may legitimately have no price when
+  // no Indian listing exists — that is more honest than inventing one.
   check(
-    "every component still sold in India carries a price",
-    ALL_COMPONENTS.every((c) => c.availability === "discontinued" || c.inrPrice !== null),
-    ALL_COMPONENTS.filter((c) => c.availability !== "discontinued" && c.inrPrice === null)
+    "every readily available component carries a price",
+    ALL_COMPONENTS.every((c) => c.availability !== "available" || c.inrPrice !== null),
+    ALL_COMPONENTS.filter((c) => c.availability === "available" && c.inrPrice === null)
       .map((c) => c.slug)
       .join(", "),
   );
@@ -202,16 +204,41 @@ console.log("\n-- build compatibility --");
   const modestPower = estimatePower(modest);
   check("mid-range build estimates under 300 W", modestPower.totalWatts < 300, `${Math.round(modestPower.totalWatts)} W`);
 
+  // Soldered SoCs must never be offered as a build slot candidate.
+  const cpuOptions = filterCompatible(COMPONENTS_BY_CATEGORY.cpu, "cpu", {});
+  check(
+    "Apple SoCs are excluded from the build planner",
+    !cpuOptions.compatible.some((c) => c.values.platform === "soc"),
+    `${cpuOptions.rejected.length} rejected`,
+  );
+  check(
+    "...and every Apple chip is in the rejected list with a reason",
+    COMPONENTS_BY_CATEGORY.cpu
+      .filter((c) => c.values.platform === "soc")
+      .every((c) => cpuOptions.rejected.some((r) => r.component.id === c.id && r.reason.length > 0)),
+  );
+  const socAudit = auditBuild({ cpu: g("apple-m4-max") });
+  check(
+    "selecting an SoC raises a blocker explaining why",
+    socAudit.some((i) => i.level === "blocker" && /cannot be built with/.test(i.title)),
+  );
+  const trAudit = auditBuild({ cpu: g("amd-threadripper-7970x") });
+  check(
+    "Threadripper warns that no compatible board is stocked",
+    trAudit.some((i) => /No sTR5 motherboards/.test(i.title)),
+  );
+
   // Directional dependency: the processor is the root and must never be
   // constrained by a part chosen after it, or switching platform is impossible.
   const amdBuild = { cpu: cpu9800, motherboard: g("gigabyte-b650-aorus-elite-ax"), ram: g("gskill-flare-x5-32gb-6000c30") };
   const cpuChoices = filterCompatible(
     COMPONENTS_BY_CATEGORY.cpu, "cpu", upstreamOf("cpu", amdBuild),
   );
+  const socketedCpus = COMPONENTS_BY_CATEGORY.cpu.filter((c) => c.values.platform !== "soc");
   check(
     "CPU choice is not constrained by an already-selected board",
-    cpuChoices.compatible.length === COMPONENTS_BY_CATEGORY.cpu.length,
-    `${cpuChoices.compatible.length} of ${COMPONENTS_BY_CATEGORY.cpu.length} offered`,
+    cpuChoices.compatible.length === socketedCpus.length,
+    `${cpuChoices.compatible.length} offered of ${socketedCpus.length} socketed (${COMPONENTS_BY_CATEGORY.cpu.length} total)`,
   );
   check(
     "an Intel CPU remains selectable from an AMD build",

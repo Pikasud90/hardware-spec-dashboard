@@ -24,6 +24,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Sixteen Zen 5 cores with second-generation stacked cache placed beneath the compute die, which lifts the clock ceiling that constrained the previous X3D generation.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 9",
       socket: "AM5",
       architecture: "Zen 5",
       codename: "Granite Ridge",
@@ -64,6 +66,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Twelve-core X3D part splitting duties across one cache-stacked die and one frequency-optimised die.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 9",
       socket: "AM5",
       architecture: "Zen 5",
       codename: "Granite Ridge",
@@ -104,6 +108,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "The single-die gaming reference point: 96 MB of L3 with an unlocked multiplier, because the cache now sits under the cores rather than on top of them.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 7",
       socket: "AM5",
       architecture: "Zen 5",
       codename: "Granite Ridge",
@@ -144,6 +150,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Flagship non-X3D Zen 5, aimed at sustained all-core throughput with a 230 W package power ceiling.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 9",
       socket: "AM5",
       architecture: "Zen 5",
       codename: "Granite Ridge",
@@ -184,6 +192,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Twelve Zen 5 cores at a 120 W default, trading peak throughput for markedly better efficiency than the 9950X.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 9",
       socket: "AM5",
       architecture: "Zen 5",
       codename: "Granite Ridge",
@@ -224,6 +234,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Eight Zen 5 cores inside a 65 W envelope — the efficiency standout of the stack rather than the performance one.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 7",
       socket: "AM5",
       architecture: "Zen 5",
       codename: "Granite Ridge",
@@ -264,6 +276,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Six-core Zen 5 entry point with the full 5.4 GHz boost, well suited to a mid-range gaming build.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 5",
       socket: "AM5",
       architecture: "Zen 5",
       codename: "Granite Ridge",
@@ -306,6 +320,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "First-generation dual-die X3D: one cache-stacked CCD for games, one high-clock CCD for everything else, arbitrated in the driver.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 9",
       socket: "AM5",
       architecture: "Zen 4",
       codename: "Raphael",
@@ -346,6 +362,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "The part that made stacked cache mainstream — a locked 5.0 GHz ceiling offset by 96 MB of L3 and a modest 120 W package.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 7",
       socket: "AM5",
       architecture: "Zen 4",
       codename: "Raphael",
@@ -386,6 +404,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Zen 4 flagship that introduced the AM5 platform, running to 230 W package power under all-core load.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 9",
       socket: "AM5",
       architecture: "Zen 4",
       codename: "Raphael",
@@ -425,6 +445,8 @@ export const CPUS: ComponentInput[] = [
     releaseDate: "2022-09-27",
     summary: "Twelve Zen 4 cores at the same 170 W class rating as the 7950X.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 9",
       socket: "AM5",
       architecture: "Zen 4",
       codename: "Raphael",
@@ -465,6 +487,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Eight-core Zen 4 at 105 W — the direct clock-for-clock counterpart to the 7800X3D without the cache stack.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 7",
       socket: "AM5",
       architecture: "Zen 4",
       codename: "Raphael",
@@ -504,6 +528,8 @@ export const CPUS: ComponentInput[] = [
     releaseDate: "2022-09-27",
     summary: "Six-core Zen 4 with a 5.3 GHz boost and a 105 W class rating.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 5",
       socket: "AM5",
       architecture: "Zen 4",
       codename: "Raphael",
@@ -544,6 +570,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "The 65 W six-core, shipped with a Wraith Stealth cooler and within roughly 5% of the 7600X in most workloads.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 5",
       socket: "AM5",
       architecture: "Zen 4",
       codename: "Raphael",
@@ -586,6 +614,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "The first stacked-cache desktop part, and the reason AM4 stayed relevant years past its replacement.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 7",
       socket: "AM4",
       architecture: "Zen 3",
       codename: "Vermeer",
@@ -626,6 +656,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "A late, cheaper stacked-cache AM4 part — lower clocks than the 5800X3D but the same 96 MB of L3.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 7",
       socket: "AM4",
       architecture: "Zen 3",
       codename: "Vermeer",
@@ -666,6 +698,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Sixteen Zen 3 cores inside 105 W — for its generation, an unusually efficient throughput part.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 9",
       socket: "AM4",
       architecture: "Zen 3",
       codename: "Vermeer",
@@ -705,6 +739,8 @@ export const CPUS: ComponentInput[] = [
     releaseDate: "2020-11-05",
     summary: "Twelve Zen 3 cores across two CCDs at a 105 W rating.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 9",
       socket: "AM4",
       architecture: "Zen 3",
       codename: "Vermeer",
@@ -745,6 +781,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "The mainstream Zen 3 six-core, bundled with a Wraith Stealth and still a common budget-build target.",
     specs: {
+      platform: "socketed",
+      segment: "Ryzen 5",
       socket: "AM4",
       architecture: "Zen 3",
       codename: "Vermeer",
@@ -787,6 +825,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Arrow Lake flagship: 24 cores, no hyper-threading, and a tile-based package built on TSMC N3B.",
     specs: {
+      platform: "socketed",
+      segment: "Core Ultra 9",
       socket: "LGA1851",
       architecture: "Arrow Lake",
       codename: "Arrow Lake-S",
@@ -826,6 +866,8 @@ export const CPUS: ComponentInput[] = [
     releaseDate: "2024-10-24",
     summary: "Twenty Arrow Lake cores with the same 250 W turbo ceiling as the 285K.",
     specs: {
+      platform: "socketed",
+      segment: "Core Ultra 7",
       socket: "LGA1851",
       architecture: "Arrow Lake",
       codename: "Arrow Lake-S",
@@ -865,6 +907,8 @@ export const CPUS: ComponentInput[] = [
     releaseDate: "2024-10-24",
     summary: "Fourteen-core Arrow Lake entry point at a 159 W turbo ceiling.",
     specs: {
+      platform: "socketed",
+      segment: "Core Ultra 5",
       socket: "LGA1851",
       architecture: "Arrow Lake",
       codename: "Arrow Lake-S",
@@ -907,6 +951,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "The highest-clocked desktop part shipped on LGA1700, reaching 6.2 GHz on a favoured core.",
     specs: {
+      platform: "socketed",
+      segment: "Core i9",
       socket: "LGA1700",
       architecture: "Raptor Lake",
       codename: "Raptor Lake Refresh",
@@ -947,6 +993,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Twenty-four hybrid cores with a 6.0 GHz peak, at the cost of a 253 W sustained turbo budget.",
     specs: {
+      platform: "socketed",
+      segment: "Core i9",
       socket: "LGA1700",
       architecture: "Raptor Lake",
       codename: "Raptor Lake Refresh",
@@ -987,6 +1035,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "The refresh's one genuine change: four extra E-cores over the 13700K for the same money.",
     specs: {
+      platform: "socketed",
+      segment: "Core i7",
       socket: "LGA1700",
       architecture: "Raptor Lake",
       codename: "Raptor Lake Refresh",
@@ -1026,6 +1076,8 @@ export const CPUS: ComponentInput[] = [
     releaseDate: "2023-10-17",
     summary: "Fourteen cores at a 181 W ceiling — the volume gaming chip of the generation.",
     specs: {
+      platform: "socketed",
+      segment: "Core i5",
       socket: "LGA1700",
       architecture: "Raptor Lake",
       codename: "Raptor Lake Refresh",
@@ -1066,6 +1118,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "Raptor Lake's launch flagship, doubling Alder Lake's E-core count and enlarging L2 substantially.",
     specs: {
+      platform: "socketed",
+      segment: "Core i9",
       socket: "LGA1700",
       architecture: "Raptor Lake",
       codename: "Raptor Lake",
@@ -1105,6 +1159,8 @@ export const CPUS: ComponentInput[] = [
     releaseDate: "2022-10-20",
     summary: "Sixteen cores and 24 threads, a common price-performance pick for mixed workloads.",
     specs: {
+      platform: "socketed",
+      segment: "Core i7",
       socket: "LGA1700",
       architecture: "Raptor Lake",
       codename: "Raptor Lake",
@@ -1144,6 +1200,8 @@ export const CPUS: ComponentInput[] = [
     releaseDate: "2022-10-20",
     summary: "Fourteen cores at $319 — widely regarded as the value high point of the 13th generation.",
     specs: {
+      platform: "socketed",
+      segment: "Core i5",
       socket: "LGA1700",
       architecture: "Raptor Lake",
       codename: "Raptor Lake",
@@ -1184,6 +1242,8 @@ export const CPUS: ComponentInput[] = [
     summary:
       "The first hybrid desktop x86 design, introducing the P-core/E-core split and the Thread Director scheduler.",
     specs: {
+      platform: "socketed",
+      segment: "Core i9",
       socket: "LGA1700",
       architecture: "Alder Lake",
       codename: "Alder Lake-S",
@@ -1223,6 +1283,8 @@ export const CPUS: ComponentInput[] = [
     releaseDate: "2021-11-04",
     summary: "Ten hybrid cores that reset mid-range expectations when Alder Lake launched.",
     specs: {
+      platform: "socketed",
+      segment: "Core i5",
       socket: "LGA1700",
       architecture: "Alder Lake",
       codename: "Alder Lake-S",
