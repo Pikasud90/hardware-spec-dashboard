@@ -15,6 +15,7 @@ import { numericValue, type ResolvedComponent } from "@/lib/catalog";
 import { headlineMetricsFor, formatMetricValue, type ResolvedMetric } from "@/lib/metrics";
 import { useCompare } from "@/components/compare/compare-provider";
 import { Tooltip } from "@/components/ui/tooltip";
+import { PriceConfidenceBadge } from "@/components/ui/price-badge";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/lib/validations/component";
 
@@ -119,8 +120,12 @@ export function ComponentTable({
         </Tooltip>
       ),
       cell: ({ row }) => (
-        <span className={cn(metric.kind === "number" && "tnum")}>
+        <span className={cn("inline-flex items-center gap-1.5", metric.kind === "number" && "tnum")}>
           {formatMetricValue(metric, row.original.values[metric.key])}
+          {/* Confidence travels with the price, never separated from it. */}
+          {metric.key === "inrPrice" && row.original.priceConfidence !== "high" && (
+            <PriceConfidenceBadge component={row.original} showAvailability={false} />
+          )}
         </span>
       ),
       sortingFn: (rowA, rowB) => {

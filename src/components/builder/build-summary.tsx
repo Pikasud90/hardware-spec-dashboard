@@ -245,6 +245,16 @@ export function BuildSummary({
                   <p className="mt-1 pl-5 text-[11px] leading-relaxed text-ink-muted">
                     {insight.detail}
                   </p>
+                  {insight.priceUncertain && (
+                    <p className="mt-1.5 flex gap-1.5 pl-5 text-[11px] leading-relaxed text-warning">
+                      <TriangleAlert className="mt-0.5 size-3 shrink-0" aria-hidden />
+                      <span>
+                        The rupee figure here rests on a price marked volatile, so treat the
+                        saving as indicative. Check both parts at a retailer before acting on
+                        it.
+                      </span>
+                    </p>
+                  )}
                   {insight.suggestion && (
                     <div className="mt-2 pl-5">
                       <Button

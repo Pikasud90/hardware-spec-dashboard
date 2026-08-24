@@ -577,6 +577,13 @@ export interface BuildInsight {
   deltaInr: number | null;
   /** The part being suggested, when the insight is a swap. */
   suggestion?: ResolvedComponent;
+  /**
+   * True when the rupee figure rests on a price we do not trust — either part
+   * is marked volatile. A saving computed from an unreliable price is not a
+   * saving, and saying so is the difference between a useful suggestion and a
+   * confidently wrong one.
+   */
+  priceUncertain?: boolean;
 }
 
 /** Cheapest compatible candidate that satisfies `predicate`. */
@@ -607,7 +614,8 @@ export function generateInsights(
   build: BuildSelection,
   catalogue: Record<Category, ResolvedComponent[]>,
 ): BuildInsight[] {
-  const insights: BuildInsight[] = [];
+  const raw: BuildInsight[] = [];
+  const insights = raw;
   const { cpu, motherboard, ram, gpu, storage, psu } = build;
   const power = estimatePower(build);
 
@@ -806,5 +814,11 @@ export function generateInsights(
     }
   }
 
-  return insights;
+  // Flag any insight whose rupee delta depends on a price marked volatile.
+  return raw.map((insight) => {
+    const current = build[insight.slot];
+    const uncertain =
+      current?.priceConfidence === "low" || insight.suggestion?.priceConfidence === "low";
+    return uncertain ? { ...insight, priceUncertain: true } : insight;
+  });
 }

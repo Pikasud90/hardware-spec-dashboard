@@ -17,6 +17,7 @@ import {
 } from "@/lib/hardware-math";
 import { allDerivedMetrics } from "@/lib/metrics";
 import { CATALOGUE_STATS } from "@/lib/catalog";
+import { PRICE_CAPTURED_ON } from "@/lib/pricing";
 import { CATEGORY_SHORT_LABELS } from "@/lib/validations/component";
 import { SIMILARITY_THRESHOLD } from "@/lib/search";
 import { formatNumber } from "@/lib/format";
@@ -87,9 +88,38 @@ export default function MethodologyPage() {
           <div>
             <dt className="font-medium text-ink">Prices</dt>
             <dd>
-              Launch recommended price in USD. These are a fixed historical reference so
-              value charts stay reproducible; they are <em>not</em> live retail pricing and
-              in several cases bear no resemblance to current street prices.
+              Researched Indian street prices in rupees, captured {PRICE_CAPTURED_ON} from
+              Indian retailers and price aggregators. They were researched rather than
+              converted from US MSRP, because Indian pricing diverges from a currency
+              conversion by a wide and category-dependent margin once import duty, GST,
+              channel structure and local demand are applied.
+              <br />
+              <br />
+              They are a <strong className="text-ink">snapshot, not a feed</strong>. Nothing
+              here fetches prices at runtime, by design — the application has to work
+              offline. Every price therefore carries a confidence level:{" "}
+              <em>verified</em> where a current listing was found,{" "}
+              <em>approximate</em> where listings disagree materially or the closest match
+              was a sibling variant, and <em>volatile</em> where the category is repricing
+              fast. DDR5 is the clearest case: through the 2026 memory shortage, listings
+              for nominally identical kits differ by up to four times, so every DDR5 kit
+              here is marked volatile and the build planner lets you override any price
+              with a real quote.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-ink">GST</dt>
+            <dd>
+              Indian retail prices are quoted inclusive of 18% GST, so the build planner
+              extracts the tax from the total rather than adding it on top.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-ink">Availability</dt>
+            <dd>
+              Parts no longer sold new in India are marked and carry no price rather than a
+              fabricated one. They remain in the catalogue so you can compare against
+              hardware you already own, or judge a second-hand asking price.
             </dd>
           </div>
           <div>
@@ -358,6 +388,39 @@ RASTER  = (TFLOPS × arch_efficiency)^${GPU_COMPUTE_EXPONENT} × BW_eff^${GPU_BA
             </tbody>
           </table>
         </div>
+      </section>
+
+      {/* Build planner */}
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold tracking-tight text-ink">
+          The build planner
+        </h2>
+        <p className="text-sm leading-relaxed text-ink-secondary">
+          Compatibility is treated as <strong className="text-ink">directional</strong>. The
+          processor sits at the root of the dependency tree — it fixes the socket, which
+          fixes the chipset family, which fixes the memory generation — so each slot is
+          constrained only by the slots before it. That is why the processor picker is never
+          narrowed by a board you already chose: switching platform has to remain possible,
+          and the board is re-validated (and cleared, visibly) once the change lands.
+        </p>
+        <p className="text-sm leading-relaxed text-ink-secondary">
+          Power is estimated from sustained turbo power rather than base TDP, because base
+          TDP understates a modern processor under load by a wide margin:
+        </p>
+        <pre className="overflow-x-auto rounded-lg border border-edge bg-surface-1 p-4 font-mono text-xs text-accent">
+{`draw = CPU PL2/PPT + GPU TGP
+     + 40 W board + 3 W per memory module
+     + 8 W per NVMe drive (3 W SATA)
+     + 30 W fans and peripherals
+
+recommended PSU = draw × 1.4, rounded up to 50 W`}
+        </pre>
+        <p className="text-sm leading-relaxed text-ink-secondary">
+          The 1.4× factor covers the very short power spikes modern graphics cards produce
+          well above rated board power, and keeps the unit near 50–70% load where efficiency
+          peaks and the fan stays slow. Cabinets, coolers and peripherals are not modelled,
+          so budget for them separately.
+        </p>
       </section>
 
       {/* Search */}

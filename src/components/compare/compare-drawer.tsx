@@ -36,9 +36,9 @@ export function CompareDrawer() {
   } = useCompare();
   const pathname = usePathname();
 
-  // The comparison page manages its own selection; a duplicate tray there
-  // would just occupy screen space.
-  const suppressed = pathname.startsWith("/compare");
+  // The comparison page manages its own selection, and the build planner is a
+  // different workflow whose summary rail the tray would collide with.
+  const suppressed = pathname.startsWith("/compare") || pathname.startsWith("/build");
   const visible = hydrated && items.length > 0 && !suppressed;
 
   const href =

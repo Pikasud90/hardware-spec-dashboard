@@ -1,8 +1,9 @@
 # Hardware Spec Dashboard
 
-An offline-first specification and comparison dashboard for PC hardware — processors,
-graphics cards, memory, storage and motherboards — with polarity-aware diffing, derived
-engineering metrics, and a quantitative visualisation suite.
+An offline-first build planner and comparison dashboard for PC hardware — processors,
+graphics cards, memory, storage, motherboards and power supplies — with **Indian market
+pricing**, compatibility checking, polarity-aware diffing and a quantitative
+visualisation suite.
 
 **[▶ Live demo](https://pikasud90.github.io/hardware-spec-dashboard/)** ·
 [Download desktop app](https://github.com/Pikasud90/hardware-spec-dashboard/releases) ·
@@ -20,6 +21,21 @@ a native desktop application on macOS and Windows.
 
 ## What it does
 
+**A build planner that only offers parts that work.** Pick a processor and every later
+slot filters itself — socket, memory generation, slot count, connectors and power headroom
+are all checked as you go. Incompatible parts are hidden rather than greyed out, with a
+toggle to inspect them and the exact reason each was excluded. Compatibility is
+*directional*: the processor is the root of the dependency tree, so choosing a board never
+prevents you from switching platform later.
+
+**Costed insights, not platitudes.** "Faster memory helps" is useless. "G.Skill Flare X5
+cuts true latency 18% for ₹1,400 more" is actionable — and so is "a PCIe 4.0 drive saves
+₹11,000 with no difference you will notice outside a benchmark."
+
+**Indian pricing throughout.** Street prices in rupees researched from Indian retailers,
+with Indian digit grouping (₹1,77,500), GST extracted from the inclusive total, and a
+running-cost metric for power supplies at a ₹8/kWh tariff.
+
 **Polarity-aware comparison.** Every numeric metric declares whether higher or lower is
 better, in one shared table. The lowest TDP wins for the same reason the highest core
 count wins — and an exact tie is marked neutral rather than arbitrarily awarded to
@@ -27,8 +43,8 @@ whichever column happens to be first.
 
 **Derived engineering metrics.** True memory latency, theoretical FP32 throughput,
 effective memory bandwidth, interface utilisation, drive writes per day, VRM total
-current, cache per core, and modelled performance indices — all computed with
-zero-division guards that return "unknown" rather than `NaN`.
+current, 12 V rail capacity, cache per core, and modelled performance indices — all
+computed with zero-division guards that return "unknown" rather than `NaN`.
 
 **A real analysis layer.** Efficient (Pareto) frontiers, Pearson correlation matrices,
 parallel coordinates, category distributions with polarity-aware percentiles, and
@@ -51,6 +67,7 @@ resolve correctly, in about 1.2 ms across the full catalogue.
 | Distribution strips | Is this number remarkable for its category |
 | Generational timeline | How fast is this metric improving, and who beat their generation |
 | Radial gauges | Where does this value sit in the category range |
+| Power breakdown | Where does this build's draw actually go |
 
 Every chart ships with a legend, a plain-language caveat, and a **Data** toggle that
 reveals the underlying numbers as a table — so nothing is ever encoded by colour alone.
@@ -79,6 +96,12 @@ Download the installer for your platform from the
 > a free project. macOS will refuse the first launch: right-click the app and choose
 > **Open**, then confirm. Windows SmartScreen will show "More info → Run anyway".
 
+### Themes
+
+Light by default with a selected dark mode and a system option. Both palettes were
+stepped for their own surface and validated separately — dark is not an inversion of
+light.
+
 ### As a static site
 
 ```bash
@@ -106,7 +129,9 @@ npm run dev       # http://localhost:3000
 src/
   lib/
     validations/component.ts   Zod discriminated unions — one schema per category
-    data/                      The catalogue: 124 components as typed literals
+    data/                      The catalogue: 148 components as typed literals
+    compatibility.ts           Build rules, power estimation, costed insights
+    pricing.ts                 Indian price provenance, confidence, GST
     catalog.ts                 Validates, derives, normalises, indexes for search
     hardware-math.ts           Derived formulas + modelling constants + polarity map
     stats.ts                   Normalisation, percentiles, Pearson, Pareto, histograms
@@ -114,6 +139,7 @@ src/
     metrics.ts                 The metric registry — single source of truth for the UI
   components/
     charts/                    Nine chart forms over one shared frame
+    builder/                   Slot picker, compatibility filtering, build summary
     compare/                   Matrix, tray, category isolation, slot swapping
     catalog/                   TanStack grid and filters
 electron/                      Main process + preload for the desktop builds
@@ -152,6 +178,13 @@ Specifications are manufacturer-published figures. **Performance indices are mod
 from those specifications — they are not measured benchmark results.** No software was
 run and nothing was timed.
 
+**Prices are a researched snapshot, not a live feed.** The app works offline by design, so
+nothing is fetched at runtime. Every price carries a confidence level — *verified* where a
+current Indian listing was found, *approximate* where retailers disagree, *volatile* where
+the category is repricing fast. DDR5 is the clearest case: through the 2026 memory
+shortage, listings for identical kits differ by up to four times, so all DDR5 is marked
+volatile. Parts no longer sold new in India carry no price rather than a fabricated one.
+
 The [methodology page](https://pikasud90.github.io/hardware-spec-dashboard/methodology/)
 states every formula, lists every calibration constant, and includes a limitations
 section that names specific known inaccuracies — for example, the graphics model places
@@ -159,8 +192,8 @@ the RTX 4090 at roughly 66% of the RTX 5090 where measured raster results genera
 it nearer 75–78%, because the model assumes performance scales with compute and
 bandwidth indefinitely.
 
-Prices are launch MSRP in USD, used as a stable reference axis for value charts. They
-are not live retail pricing.
+USD launch MSRP is retained purely as generational context and never feeds a value ratio,
+because a US launch price says nothing about what a part costs in India today.
 
 ---
 
@@ -198,10 +231,11 @@ three; the remainder folds into a neutral "Other".
 
 ## Contributing
 
-Corrections to specifications are especially welcome — each category lives in its own
-file under `src/lib/data/`, and every record is schema-validated at build time, so a bad
-edit fails loudly rather than silently rendering wrong. Run `npm run verify` before
-opening a pull request.
+Corrections to specifications and **price updates** are especially welcome — each category
+lives in its own file under `src/lib/data/`, and every record is schema-validated at build
+time, so a bad edit fails loudly rather than silently rendering wrong. Compatibility rules
+live in `src/lib/compatibility.ts` and are covered by regression tests. Run
+`npm run verify` before opening a pull request.
 
 ## License
 

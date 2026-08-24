@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { parseAsArrayOf, parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
-import { Filter, RotateCcw, Search, X } from "lucide-react";
+import { Filter, RotateCcw, Search, TriangleAlert, X } from "lucide-react";
 import {
   COMPONENTS_BY_CATEGORY,
   brandsIn,
@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CATEGORIES, CATEGORY_LABELS, type Category } from "@/lib/validations/component";
 import { cn, plural } from "@/lib/utils";
+import { VOLATILE_CATEGORY_NOTES } from "@/lib/pricing";
 
 /**
  * Catalogue browser.
@@ -211,6 +212,16 @@ export function CatalogView() {
             </p>
           )}
         </div>
+
+        {VOLATILE_CATEGORY_NOTES[category] && (
+          <p className="flex items-start gap-2 rounded-lg border border-warning/40 bg-warning/10 px-4 py-2.5 text-xs leading-relaxed text-warning">
+            <TriangleAlert className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+            <span>
+              <span className="font-medium">Prices here are unusually volatile. </span>
+              {VOLATILE_CATEGORY_NOTES[category]}
+            </span>
+          </p>
+        )}
 
         {rows.length === 0 ? (
           <EmptyState
