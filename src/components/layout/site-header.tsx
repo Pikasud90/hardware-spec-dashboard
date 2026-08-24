@@ -39,11 +39,13 @@ export function SiteHeader() {
         <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-3 px-4 sm:px-6">
           <Link
             href="/"
-            className="flex shrink-0 items-center gap-2.5 text-sm font-semibold tracking-tight text-ink"
+            aria-label="Hardware Spec Dashboard — go to the catalogue"
+            title="Go to the catalogue"
+            className="group flex shrink-0 items-center gap-2.5 rounded-md text-sm font-semibold tracking-tight text-ink transition-colors hover:text-accent"
           >
             <span
               aria-hidden
-              className="grid size-7 place-items-center rounded-md border border-accent/40 bg-accent/12 text-accent-strong"
+              className="grid size-7 place-items-center rounded-md border border-accent/40 bg-accent/12 text-accent transition-colors group-hover:border-accent group-hover:bg-accent/20"
             >
               <Cpu className="size-4" />
             </span>

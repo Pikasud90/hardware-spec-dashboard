@@ -42,6 +42,23 @@ export function ComponentTable({
   category: Category;
   rows: ResolvedComponent[];
 }) {
+  /**
+   * Per-metric min/max across the currently visible rows, used to draw a faint
+   * magnitude bar behind each numeric cell. Recomputed from the filtered rows
+   * so the bars describe what is on screen rather than the whole catalogue.
+   */
+  const ranges = React.useMemo(() => {
+    const result = new Map<string, { min: number; max: number }>();
+    for (const metric of headlineMetricsFor(category)) {
+      if (metric.kind !== "number") continue;
+      const values = rows
+        .map((row) => numericValue(row, metric.key))
+        .filter((value): value is number => value !== null);
+      if (values.length < 2) continue;
+      result.set(metric.key, { min: Math.min(...values), max: Math.max(...values) });
+    }
+    return result;
+  }, [category, rows]);
   const { isSelected, toggle, hasCapacity, category: trayCategory } = useCompare();
   const metrics = React.useMemo(() => headlineMetricsFor(category), [category]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -119,15 +136,40 @@ export function ComponentTable({
           </span>
         </Tooltip>
       ),
-      cell: ({ row }) => (
-        <span className={cn("inline-flex items-center gap-1.5", metric.kind === "number" && "tnum")}>
-          {formatMetricValue(metric, row.original.values[metric.key])}
-          {/* Confidence travels with the price, never separated from it. */}
-          {metric.key === "inrPrice" && row.original.priceConfidence !== "high" && (
-            <PriceConfidenceBadge component={row.original} showAvailability={false} />
-          )}
-        </span>
-      ),
+      cell: ({ row }) => {
+        const range = ranges.get(metric.key);
+        const raw = numericValue(row.original, metric.key);
+        // Polarity-aware fill: longer always means better, matching the
+        // heatmap and every other magnitude cue in the application.
+        let fill: number | null = null;
+        if (range && raw !== null && range.max > range.min) {
+          const unit = (raw - range.min) / (range.max - range.min);
+          fill = metric.polarity === "LOWER_BETTER" ? 1 - unit : unit;
+        }
+        return (
+          <span className="relative flex items-center justify-end gap-1.5">
+            {fill !== null && (
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-y-1 right-0 rounded-[2px] bg-accent/10"
+                style={{ width: `${Math.max(2, fill * 100)}%` }}
+              />
+            )}
+            <span
+              className={cn(
+                "relative inline-flex items-center gap-1.5",
+                metric.kind === "number" && "tnum",
+              )}
+            >
+              {formatMetricValue(metric, row.original.values[metric.key])}
+              {/* Confidence travels with the price, never separated from it. */}
+              {metric.key === "inrPrice" && row.original.priceConfidence !== "high" && (
+                <PriceConfidenceBadge component={row.original} showAvailability={false} />
+              )}
+            </span>
+          </span>
+        );
+      },
       sortingFn: (rowA, rowB) => {
         if (metric.kind === "number") {
           const a = numericValue(rowA.original, metric.key);
@@ -149,7 +191,7 @@ export function ComponentTable({
     }));
 
     return [selectColumn, nameColumn, ...metricColumns];
-  }, [metrics, isSelected, toggle, hasCapacity, trayCategory]);
+  }, [metrics, isSelected, toggle, hasCapacity, trayCategory, ranges]);
 
   const table = useReactTable({
     data: rows,

@@ -55,6 +55,12 @@ const DEFAULTS: Record<
     rank: "costPerWatt",
     trend: "efficiencyPct",
   },
+  laptop: {
+    x: "inrPrice",
+    y: "estimatedBatteryHours",
+    rank: "batteryHoursPerKg",
+    trend: "pixelsPerInch",
+  },
 };
 
 export function AnalyticsView() {

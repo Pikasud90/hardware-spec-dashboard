@@ -1,6 +1,7 @@
 import type {
   ComponentEntity,
   CpuSpecs,
+  LaptopSpecs,
   GpuSpecs,
   MotherboardSpecs,
   PsuSpecs,
@@ -408,6 +409,50 @@ export function calcMotherboardExpansionScore(specs: MotherboardSpecs): number |
   return Number.isFinite(score) ? score : null;
 }
 
+/* ------------------------------------------------------------------ Laptop */
+
+/**
+ * Assumed average system draw for a battery-life estimate, by class.
+ *
+ * These are light-use figures — browsing, documents, video — not load. A
+ * gaming laptop under load draws several times this and lasts about an hour,
+ * which no single number can usefully summarise, so the estimate deliberately
+ * describes the case people actually care about when unplugged.
+ */
+export const LAPTOP_IDLE_DRAW_W: Record<string, number> = {
+  Ultrabook: 8,
+  Business: 9,
+  Budget: 10,
+  Mainstream: 11,
+  Creator: 14,
+  "Mobile workstation": 18,
+  Gaming: 22,
+};
+
+/** Estimated hours of light use on a full charge. */
+export function calcBatteryHours(specs: LaptopSpecs): number | null {
+  const draw = LAPTOP_IDLE_DRAW_W[specs.laptopClass];
+  return safeDivide(specs.batteryWh, draw);
+}
+
+/**
+ * Display pixel density in pixels per inch.
+ *
+ *   PPI = sqrt(width^2 + height^2) / diagonal inches
+ *
+ * Above roughly 200 PPI, individual pixels stop being resolvable at normal
+ * viewing distance — which is why a 14-inch 2880x1800 panel looks sharp and a
+ * 15.6-inch 1920x1080 one does not.
+ */
+export function calcPixelsPerInch(specs: LaptopSpecs): number | null {
+  const match = specs.displayResolution.match(/^(\d+)\s*x\s*(\d+)$/);
+  if (!match) return null;
+  const width = Number(match[1]);
+  const height = Number(match[2]);
+  if (!positive(width) || !positive(height) || !positive(specs.displaySizeIn)) return null;
+  return Math.hypot(width, height) / specs.displaySizeIn;
+}
+
 /* ------------------------------------------------------------- PSU / SMPS */
 
 /**
@@ -558,6 +603,25 @@ export const METRIC_POLARITY_MAP: Record<string, MetricPolarity> = {
   sataConnectors: "HIGHER_BETTER",
   fanSizeMm: "HIGHER_BETTER",
 
+  /* laptop */
+  cpuCores: "HIGHER_BETTER",
+  cpuThreads: "HIGHER_BETTER",
+  cpuBoostGhz: "HIGHER_BETTER",
+  gpuVramGb: "HIGHER_BETTER",
+  gpuTgpWatts: "HIGHER_BETTER",
+  ramGb: "HIGHER_BETTER",
+  storageGb: "HIGHER_BETTER",
+  displaySizeIn: "NEUTRAL",
+  displayRefreshHz: "HIGHER_BETTER",
+  displayNits: "HIGHER_BETTER",
+  pixelsPerInch: "HIGHER_BETTER",
+  batteryWh: "HIGHER_BETTER",
+  estimatedBatteryHours: "HIGHER_BETTER",
+  batteryHoursPerKg: "HIGHER_BETTER",
+  weightKg: "LOWER_BETTER",
+  thicknessMm: "LOWER_BETTER",
+  chargeWatts: "NEUTRAL",
+
   /* motherboard */
   memorySlots: "HIGHER_BETTER",
   maxMemoryGb: "HIGHER_BETTER",
@@ -665,6 +729,8 @@ export function deriveMetrics(component: ComponentEntity): DerivedValues {
       return { ...base, ...deriveMotherboard(component.specs, price) };
     case "psu":
       return { ...base, ...derivePsu(component.specs, price) };
+    case "laptop":
+      return { ...base, ...deriveLaptop(component.specs, price) };
   }
 }
 
@@ -720,6 +786,20 @@ function deriveStorage(specs: StorageSpecs, price: number | null): DerivedValues
     costPerTb: safeDivide(price, specs.capacityGb / 1000),
     costPerGb: safeDivide(price, specs.capacityGb),
     perfPerRupeeRaw: safeDivide(specs.seqReadMb, price),
+  };
+}
+
+function deriveLaptop(specs: LaptopSpecs, price: number | null): DerivedValues {
+  const hours = calcBatteryHours(specs);
+  return {
+    pixelsPerInch: calcPixelsPerInch(specs),
+    estimatedBatteryHours: hours,
+    // Hours of light use per kilogram carried — the clearest single number for
+    // "how good is this to actually travel with".
+    batteryHoursPerKg: safeDivide(hours, specs.weightKg),
+    // Throughput proxy: laptops span too many architectures to reuse the
+    // desktop IPC table, so this stays deliberately coarse.
+    perfPerRupeeRaw: safeDivide(specs.cpuCores * specs.cpuBoostGhz, price),
   };
 }
 

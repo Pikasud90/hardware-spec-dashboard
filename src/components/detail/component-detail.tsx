@@ -38,6 +38,7 @@ const HERO_METRICS: Record<Category, string[]> = {
   storage: ["seqReadMb", "interfaceUtilisationPct", "dwpd", "costPerTb"],
   motherboard: ["expansionScore", "vrmTotalCurrentA", "m2Slots", "maxMemorySpeedMts"],
   psu: ["wattage", "efficiencyPct", "total12vWatts", "annualRunningCostInr"],
+  laptop: ["estimatedBatteryHours", "weightKg", "pixelsPerInch", "gpuTgpWatts"],
 };
 
 export function ComponentDetail({ component }: { component: ResolvedComponent }) {

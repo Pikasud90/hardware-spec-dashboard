@@ -1670,6 +1670,155 @@ const PSU_METRICS: MetricDef[] = [
   },
 ];
 
+/* ------------------------------------------------------------------ Laptop */
+
+const LAPTOP_METRICS: MetricDef[] = [
+  INR_PRICE,
+  USD_MSRP,
+  RELEASE_YEAR,
+  {
+    key: "laptopClass", label: "Class", short: "Class", kind: "text", group: "Overview",
+    headline: true,
+    description:
+      "The design envelope, which constrains everything else. The same processor in an ultrabook and a gaming chassis performs very differently, because sustained speed is limited by how much heat the body can shed.",
+  },
+  {
+    key: "cpuModel", label: "Processor", short: "CPU", kind: "text", group: "Compute",
+    headline: true, description: "The processor fitted. Not user-replaceable on any modern laptop.",
+  },
+  {
+    key: "cpuCores", label: "CPU cores", short: "Cores", kind: "number", group: "Compute",
+    decimals: 0, analytic: true, description: "Physical processor cores, including efficiency cores on hybrid designs.",
+  },
+  {
+    key: "cpuThreads", label: "CPU threads", short: "Threads", kind: "number", group: "Compute",
+    decimals: 0, analytic: true, description: "Simultaneously schedulable hardware threads.",
+  },
+  {
+    key: "cpuBoostGhz", label: "CPU boost clock", short: "Boost", unit: "GHz", kind: "number",
+    group: "Compute", decimals: 1, analytic: true,
+    description: "Peak single-core frequency. Sustained clocks in a thin chassis are well below this.",
+  },
+  {
+    key: "gpuModel", label: "Graphics", short: "GPU", kind: "text", group: "Compute",
+    headline: true,
+    description:
+      "Discrete or integrated graphics. A laptop GPU of a given name is not equivalent to the desktop card — check the power figure below.",
+  },
+  {
+    key: "gpuTgpWatts", label: "Graphics power", short: "GPU TGP", unit: "W", kind: "number",
+    group: "Power", decimals: 0, analytic: true, headline: true,
+    description:
+      "The single most predictive laptop graphics number. The same RTX 5070 runs anywhere from 65 W to 140 W depending on chassis — a performance spread of roughly 30% between machines carrying the identical model name.",
+  },
+  {
+    key: "gpuVramGb", label: "Graphics memory", short: "VRAM", kind: "number", group: "Memory",
+    format: (value) => `${formatTrimmed(value)} GB`, analytic: true,
+    description: "Dedicated graphics memory. Null when graphics are integrated and share system memory.",
+  },
+  {
+    key: "ramGb", label: "Memory", short: "RAM", kind: "number", group: "Memory",
+    format: (value) => `${formatTrimmed(value)} GB`, analytic: true, headline: true,
+    description: "Installed system memory.",
+  },
+  {
+    key: "ramType", label: "Memory type", short: "RAM type", kind: "text", group: "Memory",
+    description: "Generation and whether it sits in a socket or is soldered to the board.",
+  },
+  {
+    key: "ramUpgradable", label: "Memory upgradable", short: "RAM slots", kind: "boolean",
+    group: "Memory",
+    description:
+      "Whether memory can be increased later. Soldered memory fixes the capacity for the machine's entire life, which is the most consequential irreversible decision in a laptop purchase.",
+  },
+  {
+    key: "storageGb", label: "Storage", short: "Storage", kind: "number", group: "Overview",
+    format: formatCapacityGb, analytic: true, headline: true, description: "Installed drive capacity.",
+  },
+  {
+    key: "storageType", label: "Storage type", short: "Drive", kind: "text", group: "Overview",
+    description: "Drive interface and generation.",
+  },
+  {
+    key: "displaySizeIn", label: "Display size", short: "Screen", unit: "in", kind: "number",
+    group: "Physical", decimals: 1, analytic: true, headline: true, description: "Diagonal panel size.",
+  },
+  {
+    key: "displayResolution", label: "Resolution", short: "Resolution", kind: "text",
+    group: "Physical", description: "Native panel resolution in pixels.",
+  },
+  {
+    key: "pixelsPerInch", label: "Pixel density", short: "PPI", unit: "PPI", kind: "number",
+    group: "Physical", decimals: 0, derived: true, analytic: true,
+    description:
+      "Pixels per inch. Above roughly 200 PPI individual pixels stop being resolvable at normal viewing distance, which is why a 14-inch 2880x1800 panel looks sharp and a 15.6-inch 1080p one does not.",
+    formula: "sqrt(width² + height²) / diagonal inches",
+  },
+  {
+    key: "displayPanel", label: "Panel type", short: "Panel", kind: "text", group: "Physical",
+    description:
+      "OLED gives perfect blacks and vivid colour; IPS is consistent and cheaper; mini-LED reaches far higher brightness; TN is the budget floor and should be avoided.",
+  },
+  {
+    key: "displayRefreshHz", label: "Refresh rate", short: "Refresh", unit: "Hz", kind: "number",
+    group: "Physical", decimals: 0, analytic: true,
+    description: "Panel refresh rate. Above 60 Hz makes scrolling and motion visibly smoother, and matters most for gaming.",
+  },
+  {
+    key: "displayNits", label: "Brightness", short: "Nits", unit: "nits", kind: "number",
+    group: "Physical", decimals: 0, analytic: true,
+    description: "Peak brightness. Below 300 nits is difficult to use in daylight; 400 and above is comfortable indoors and out.",
+  },
+  {
+    key: "batteryWh", label: "Battery capacity", short: "Battery", unit: "Wh", kind: "number",
+    group: "Power", decimals: 0, analytic: true,
+    description: "Battery capacity in watt-hours. Airlines generally cap carry-on at 100 Wh, which is why so many laptops sit at 99.9.",
+  },
+  {
+    key: "estimatedBatteryHours", label: "Est. battery life", short: "Battery hrs", unit: "hr",
+    kind: "number", group: "Power", decimals: 1, derived: true, analytic: true, headline: true,
+    description:
+      "Estimated hours of light use — browsing, documents, video — from capacity and a class-typical draw. Under load, expect a fraction of this; a gaming laptop unplugged lasts closer to an hour.",
+    formula: "battery Wh / class-typical draw",
+  },
+  {
+    key: "batteryHoursPerKg", label: "Battery hours per kg", short: "Hrs/kg", kind: "number",
+    group: "Value", decimals: 1, derived: true, analytic: true,
+    description: "Estimated battery life divided by weight — the clearest single measure of how good a machine is to actually travel with.",
+    formula: "estimated hours / weight kg",
+  },
+  {
+    key: "weightKg", label: "Weight", short: "Weight", unit: "kg", kind: "number",
+    group: "Physical", decimals: 2, analytic: true, headline: true,
+    description: "Weight without the charger, which adds 200–800 g depending on wattage.",
+  },
+  {
+    key: "thicknessMm", label: "Thickness", short: "Thickness", unit: "mm", kind: "number",
+    group: "Physical", decimals: 1, analytic: true,
+    description: "Maximum thickness. Thinner generally means less cooling capacity and lower sustained performance.",
+  },
+  {
+    key: "chargeWatts", label: "Charger", short: "Charger", unit: "W", kind: "number",
+    group: "Power", decimals: 0,
+    description: "Supplied charger wattage. Units at 100 W or below can usually be replaced with a generic USB-C charger.",
+  },
+  {
+    key: "ports", label: "Ports", short: "Ports", kind: "text", group: "Connectivity",
+    description: "Physical connectivity. Fixed at purchase, so count what you actually plug in.",
+  },
+  {
+    key: "os", label: "Operating system", short: "OS", kind: "text", group: "Overview",
+    description: "Shipped operating system. Pro editions add domain join, BitLocker and remote desktop hosting.",
+  },
+  {
+    key: "perfPerRupee", label: "Compute per rupee", short: "Perf/₹", kind: "number",
+    group: "Value", decimals: 1, derived: true, analytic: true,
+    description:
+      "A deliberately coarse throughput proxy (cores × boost) per rupee, indexed to 100. Laptops span too many architectures for the desktop IPC model to apply.",
+    formula: "(cores × boost) / ₹price, indexed to best",
+  },
+];
+
 /* ----------------------------------------------------------- public API */
 
 const REGISTRY: Record<Category, MetricDef[]> = {
@@ -1679,6 +1828,7 @@ const REGISTRY: Record<Category, MetricDef[]> = {
   storage: STORAGE_METRICS,
   motherboard: MOTHERBOARD_METRICS,
   psu: PSU_METRICS,
+  laptop: LAPTOP_METRICS,
 };
 
 function withPolarity(definition: MetricDef): ResolvedMetric {

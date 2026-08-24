@@ -8,6 +8,7 @@ import { GPUS } from "@/lib/data/gpus";
 import { MEMORY } from "@/lib/data/memory";
 import { MOTHERBOARDS } from "@/lib/data/motherboards";
 import { PSUS } from "@/lib/data/psus";
+import { LAPTOPS } from "@/lib/data/laptops";
 import { STORAGE } from "@/lib/data/storage";
 import { STORAGE_HDD } from "@/lib/data/storage-hdd";
 import { deriveMetrics } from "@/lib/hardware-math";
@@ -156,6 +157,7 @@ export const ALL_COMPONENTS: ResolvedComponent[] = assemble({
   storage: [...STORAGE, ...STORAGE_HDD],
   motherboard: MOTHERBOARDS,
   psu: PSUS,
+  laptop: LAPTOPS,
 });
 
 export const COMPONENTS_BY_CATEGORY: Record<Category, ResolvedComponent[]> =
@@ -183,6 +185,20 @@ export function brandsIn(category: Category): string[] {
     ...new Set(COMPONENTS_BY_CATEGORY[category].map((component) => component.brand)),
   ].sort((a, b) => a.localeCompare(b));
 }
+
+/**
+ * Icon name per category, resolved to a Lucide component at the call site.
+ * Kept as a string here so this module stays free of React imports.
+ */
+export const CATEGORY_ICONS: Record<Category, string> = {
+  cpu: "Cpu",
+  gpu: "Gpu",
+  ram: "MemoryStick",
+  storage: "HardDrive",
+  motherboard: "CircuitBoard",
+  psu: "Plug",
+  laptop: "Laptop",
+};
 
 export interface Grouping {
   key: string;
@@ -222,6 +238,11 @@ export function groupingsFor(category: Category): Grouping[] {
       return [
         { key: "efficiencyRating", label: "80 PLUS tier" },
         { key: "formFactor", label: "Form factor" },
+      ];
+    case "laptop":
+      return [
+        { key: "laptopClass", label: "Class" },
+        { key: "os", label: "Operating system" },
       ];
   }
 }

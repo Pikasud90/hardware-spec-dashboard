@@ -13,7 +13,7 @@ import { z } from "zod";
  * boundary intact; a string does, and is trivially widened where needed.
  */
 
-export const CATEGORIES = ["cpu", "gpu", "ram", "storage", "motherboard", "psu"] as const;
+export const CATEGORIES = ["cpu", "gpu", "ram", "storage", "motherboard", "psu", "laptop"] as const;
 export type Category = (typeof CATEGORIES)[number];
 
 export const CATEGORY_LABELS: Record<Category, string> = {
@@ -23,6 +23,7 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   storage: "Storage",
   motherboard: "Motherboards",
   psu: "Power Supplies",
+  laptop: "Laptops",
 };
 
 export const CATEGORY_SHORT_LABELS: Record<Category, string> = {
@@ -32,6 +33,7 @@ export const CATEGORY_SHORT_LABELS: Record<Category, string> = {
   storage: "SSD",
   motherboard: "Mobo",
   psu: "PSU",
+  laptop: "Laptop",
 };
 
 const IsoDate = z
@@ -252,6 +254,69 @@ export const PsuSpecsSchema = z.object({
 });
 export type PsuSpecs = z.infer<typeof PsuSpecsSchema>;
 
+/* ----------------------------------------------------------------- Laptop */
+
+/**
+ * Laptop classes.
+ *
+ * The class matters more than any single specification, because it sets the
+ * whole envelope: a 1.1 kg ultrabook and a 2.8 kg gaming machine with the same
+ * processor will perform very differently, since sustained performance is
+ * bounded by how much heat the chassis can shed.
+ */
+export const LaptopClass = z.enum([
+  "Ultrabook",
+  "Business",
+  "Budget",
+  "Mainstream",
+  "Creator",
+  "Gaming",
+  "Mobile workstation",
+]);
+export type LaptopClassName = z.infer<typeof LaptopClass>;
+
+export const LaptopSpecsSchema = z.object({
+  laptopClass: LaptopClass,
+  /* --- compute --- */
+  cpuModel: z.string(),
+  cpuCores: z.number().int().positive(),
+  cpuThreads: z.number().int().positive(),
+  cpuBoostGhz: z.number().positive(),
+  gpuModel: z.string(),
+  /** Null when graphics are integrated and share system memory. */
+  gpuVramGb: z.number().positive().nullable().default(null),
+  /**
+   * Sustained graphics power. The single most predictive laptop GPU number —
+   * the same RTX 5070 runs anywhere from 65 W to 140 W depending on chassis,
+   * which is a performance range of roughly 30%.
+   */
+  gpuTgpWatts: z.number().positive().nullable().default(null),
+
+  /* --- memory and storage --- */
+  ramGb: z.number().positive(),
+  ramType: z.string(),
+  /** False when memory is soldered, which fixes capacity for the machine's life. */
+  ramUpgradable: z.boolean(),
+  storageGb: z.number().positive(),
+  storageType: z.string(),
+
+  /* --- display --- */
+  displaySizeIn: z.number().positive(),
+  displayResolution: z.string(),
+  displayPanel: z.string(),
+  displayRefreshHz: z.number().positive(),
+  displayNits: z.number().positive(),
+
+  /* --- portability --- */
+  batteryWh: z.number().positive(),
+  weightKg: z.number().positive(),
+  thicknessMm: z.number().positive(),
+  chargeWatts: z.number().positive(),
+  ports: z.string(),
+  os: z.string(),
+});
+export type LaptopSpecs = z.infer<typeof LaptopSpecsSchema>;
+
 /* ---------------------------------------------------------- Discriminated */
 
 /**
@@ -301,6 +366,7 @@ export const ComponentSchema = z.discriminatedUnion("category", [
     specs: MotherboardSpecsSchema,
   }),
   z.object({ ...BaseFields, category: z.literal("psu"), specs: PsuSpecsSchema }),
+  z.object({ ...BaseFields, category: z.literal("laptop"), specs: LaptopSpecsSchema }),
 ]);
 
 export type ComponentEntity = z.infer<typeof ComponentSchema>;
@@ -313,6 +379,7 @@ export type RamEntity = Extract<ComponentEntity, { category: "ram" }>;
 export type StorageEntity = Extract<ComponentEntity, { category: "storage" }>;
 export type MotherboardEntity = Extract<ComponentEntity, { category: "motherboard" }>;
 export type PsuEntity = Extract<ComponentEntity, { category: "psu" }>;
+export type LaptopEntity = Extract<ComponentEntity, { category: "laptop" }>;
 
 export const ComponentListSchema = z.array(ComponentSchema);
 

@@ -13,6 +13,7 @@ import { SEARCH_INDEX } from "@/lib/catalog";
 import { search } from "@/lib/search";
 import { ComponentTable } from "@/components/catalog/component-table";
 import { CategoryPrimer } from "@/components/catalog/category-primer";
+import { CategoryIcon } from "@/components/catalog/category-icon";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -158,6 +159,7 @@ export function CatalogView() {
                     : "text-ink-secondary hover:bg-surface-2 hover:text-ink",
                 )}
               >
+                <CategoryIcon category={entry} />
                 {CATEGORY_LABELS[entry]}
                 <span
                   className={cn(

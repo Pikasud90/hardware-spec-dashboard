@@ -839,7 +839,167 @@ const PSU_PRIMER: Primer = {
   ],
 };
 
+const LAPTOP_PRIMER: Primer = {
+  title: "Understanding laptops",
+  tagline:
+    "A laptop is a set of decisions already made for you. The class fixes the envelope; almost everything else follows from it.",
+  intro: [
+    "The most consequential thing about a laptop is not its processor — it is its class. A 1.2 kg ultrabook and a 2.7 kg gaming machine can carry the same chip and perform very differently, because sustained speed is limited by how much heat the chassis can shed, not by the silicon. A thin body throttles; a thick one with three fans does not.",
+    "The second most consequential thing is what cannot be changed later. Memory is soldered on most thin machines, which fixes capacity for the life of the device. Storage is usually replaceable, the battery sometimes, the processor and graphics never. Buy the memory you will need in three years, because you will not be able to add it.",
+    "Everything else — display, ports, keyboard, weight — is a matter of how the machine will actually be used. A brilliant specification behind a 250-nit screen you cannot read near a window is a bad purchase, and no benchmark will tell you that.",
+  ],
+  concepts: [
+    {
+      term: "Laptop classes",
+      short: "Ultrabook, business, mainstream, creator, gaming, mobile workstation.",
+      detail:
+        "Ultrabooks prioritise weight and battery over sustained speed. Business machines add serviceability, security features and long support cycles. Mainstream is the volume consumer middle. Creator machines pair good displays with modest discrete graphics. Gaming machines trade weight and noise for cooling. Mobile workstations are gaming hardware with certified drivers for CAD and simulation, which is most of what the price premium buys.",
+    },
+    {
+      term: "Processor suffixes: U, H, HX",
+      short: "The letter sets the power budget, which matters more than the model number.",
+      detail:
+        "U-series run at roughly 15–28 W and suit thin machines with long battery life. H-series run at 45 W and up, for creator and gaming chassis. HX-series are desktop silicon in a laptop package, 55 W and far beyond — the fastest and the least portable. An i7-1355U and an i7-13700HX share a tier name and are entirely different classes of processor.",
+    },
+    {
+      term: "Laptop GPU power (TGP)",
+      short: "The same GPU name can differ 30% between machines. Check the wattage.",
+      detail:
+        "NVIDIA allows manufacturers wide latitude in how much power a laptop GPU may draw. An RTX 5070 might run at 65 W in a thin chassis or 140 W in a thick one, and the difference in frame rate is roughly 30%. Two laptops advertising the identical GPU can be very different machines, and the wattage is frequently buried in a footnote. It is the single most important laptop graphics specification.",
+    },
+    {
+      term: "Business laptop tiers",
+      short: "Each vendor runs three tiers: premium, mainstream and entry.",
+      detail:
+        "Lenovo: ThinkPad X1 (premium ultraportable), T-series (mainstream workhorse, more serviceable), E-series (entry, plastic). Dell: Latitude 7000 (premium), 5000 (mainstream volume), 3000 (entry). HP: EliteBook (premium), ProBook (mainstream), Essential (entry). Within a tier the three vendors are closer than enthusiasts suggest — the real differences are keyboard feel, trackpad quality and how good the local service network is.",
+    },
+    {
+      term: "Soldered vs socketed memory",
+      short: "Most thin laptops solder memory. It cannot be upgraded, ever.",
+      detail:
+        "Soldered LPDDR is lower power and allows a thinner body, at the cost of being permanent. SODIMM slots let you add memory later but cost thickness and battery. This is the decision most likely to be regretted: 8 GB soldered is a machine with a fixed expiry date, while 8 GB socketed is a machine with a ₹4,000 fix.",
+    },
+    {
+      term: "Display panels",
+      short: "OLED, mini-LED, IPS, TN — in descending order of quality.",
+      detail:
+        "OLED gives perfect blacks and excellent colour, with some risk of burn-in on static interface elements over years. Mini-LED reaches far higher brightness and is better in daylight. IPS is the consistent, affordable default. TN is the budget floor — poor viewing angles and washed-out colour — and is worth actively avoiding. Brightness matters as much as panel type: below 300 nits is hard to use near a window.",
+    },
+    {
+      term: "Battery capacity and real life",
+      short: "Watt-hours, capped near 100 Wh by airline rules.",
+      detail:
+        "Capacity is measured in watt-hours; most airlines cap carry-on lithium batteries at 100 Wh, which is why so many laptops sit at 99.9. Actual runtime is capacity divided by draw, and draw varies enormously — the same machine might last twelve hours reading documents and ninety minutes compiling. Manufacturer claims are measured under conditions you will never reproduce.",
+    },
+    {
+      term: "Thunderbolt and USB-C",
+      short: "All Thunderbolt ports are USB-C. Very few USB-C ports are Thunderbolt.",
+      detail:
+        "Thunderbolt 4 carries 40 Gbps, drives multiple displays and supports external graphics enclosures. A plain USB-C port may do none of that. If you intend to use a single-cable dock, verify the port is actually Thunderbolt — this is a common and expensive misunderstanding. AMD laptops often use USB4 instead, which is similar but not identical.",
+    },
+    {
+      term: "vPro and business features",
+      short: "Remote management for corporate IT. Irrelevant to individuals.",
+      detail:
+        "Intel vPro adds hardware-level remote management, letting IT departments patch and repair machines that will not boot. It carries a real price premium and does nothing for a personal buyer. Its presence on a specification sheet is a signal that the machine is aimed at fleet deployment.",
+    },
+    {
+      term: "The refurbished market",
+      short: "Business laptops depreciate hard and are built to last. Often the best value.",
+      detail:
+        "Corporate fleets are replaced on three-year cycles regardless of condition, which floods the Indian market with ThinkPads, Latitudes and EliteBooks at a fraction of new pricing. These were built for serviceability and spares are plentiful. A ₹20,000 refurbished EliteBook frequently outperforms a ₹35,000 new budget machine — better keyboard, better build, better screen. Check the battery, which is the one part that always degrades.",
+    },
+  ],
+  tables: [
+    {
+      title: "Laptop classes at a glance",
+      caption:
+        "Weight and battery figures are typical rather than absolute. The pattern is the point: cooling, weight and battery trade against sustained performance.",
+      columns: ["Class", "Weight", "Battery", "Sustained speed", "Best for"],
+      rows: [
+        ["Ultrabook", "1.0–1.4 kg", "Excellent", "Modest", "Travel, writing, meetings"],
+        ["Business", "1.1–1.8 kg", "Very good", "Modest", "Corporate use, long service life"],
+        ["Budget", "1.7–2.0 kg", "Fair", "Low", "Study, browsing, documents"],
+        ["Mainstream", "1.4–1.8 kg", "Good", "Moderate", "General home and office use"],
+        ["Creator", "1.6–2.0 kg", "Good", "High", "Photo, video, design"],
+        ["Gaming", "2.2–3.6 kg", "Poor", "Very high", "Games, rendering, desktop replacement"],
+        ["Mobile workstation", "1.8–2.5 kg", "Fair", "Very high", "CAD, simulation, certified software"],
+      ],
+    },
+    {
+      title: "Business line tiers by vendor",
+      caption:
+        "Roughly equivalent tiers across the three major business vendors. Within a tier, service network quality in your city often matters more than the specification differences.",
+      columns: ["Tier", "Lenovo", "Dell", "HP"],
+      rows: [
+        ["Premium ultraportable", "ThinkPad X1 Carbon / X1 Nano", "Latitude 7000", "EliteBook 800/1000"],
+        ["Mainstream workhorse", "ThinkPad T-series", "Latitude 5000", "EliteBook 600 / ProBook"],
+        ["Entry business", "ThinkPad E-series", "Latitude 3000", "ProBook 400"],
+        ["Mobile workstation", "ThinkPad P-series", "Precision", "ZBook"],
+        ["Consumer premium", "Yoga / Slim", "XPS", "Spectre / Envy"],
+        ["Consumer gaming", "Legion / LOQ", "Alienware / G-series", "Omen / Victus"],
+      ],
+    },
+    {
+      title: "Processor suffixes",
+      caption: "The letter tells you the power budget, and the power budget tells you the class of machine.",
+      columns: ["Suffix", "Power", "Typical use"],
+      rows: [
+        ["U", "15–28 W", "Ultrabooks and business thin-and-lights"],
+        ["P", "28–45 W", "Performance thin-and-lights"],
+        ["H", "45–65 W", "Creator and mainstream gaming"],
+        ["HX", "55–157 W", "Desktop silicon; high-end gaming and workstations"],
+        ["Apple M / M Pro / M Max", "20–80 W", "Tiering by memory bandwidth and GPU cores"],
+      ],
+    },
+    {
+      title: "Memory: what to buy",
+      caption:
+        "The rule is harsher than for a desktop, because on most machines you cannot change your mind later.",
+      columns: ["Use", "Minimum", "Comfortable"],
+      rows: [
+        ["Browsing, documents, video", "8 GB", "16 GB"],
+        ["Study, light multitasking", "16 GB", "16 GB"],
+        ["Development, many browser tabs", "16 GB", "32 GB"],
+        ["Video editing, virtual machines", "32 GB", "64 GB"],
+        ["Local AI models", "32 GB", "64 GB+ unified"],
+      ],
+    },
+  ],
+  guidance: [
+    {
+      heading: "Decide the class before anything else",
+      body: "Work out how the machine will be carried and used — daily commute, desk-bound, occasional travel — and pick the class that fits. Only then compare specifications within that class. Comparing an ultrabook to a gaming laptop on processor benchmarks answers a question nobody asked.",
+    },
+    {
+      heading: "Buy memory for three years from now",
+      body: "If memory is soldered, it is permanent. 16 GB is the sensible floor for a machine you intend to keep, and 8 GB soldered should be treated as a short-term purchase regardless of how good the rest of the specification looks.",
+    },
+    {
+      heading: "Check the GPU wattage, not just the name",
+      body: "Two laptops advertising the same RTX 5070 can differ by 30% in frame rate. The wattage figure — where the manufacturer publishes it — tells you which one you are buying.",
+    },
+    {
+      heading: "Consider refurbished business machines",
+      body: "A three-year-old ThinkPad or EliteBook at ₹20,000–35,000 frequently beats a new budget laptop on build, keyboard and display. Verify battery health and that the warranty position is clear before buying.",
+    },
+    {
+      heading: "Do not ignore the display",
+      body: "It is the part you look at for every second of use. A 250-nit TN panel undermines an otherwise good machine, and no amount of processor performance compensates.",
+    },
+  ],
+  pitfalls: [
+    "Buying 8 GB of soldered memory. It cannot be upgraded, and it is the constraint you will hit first.",
+    "Assuming a laptop GPU matches its desktop namesake. It does not, and the gap widens the thinner the chassis.",
+    "Comparing machines across classes on processor benchmarks alone. A gaming laptop wins and is useless to carry; that was never the question.",
+    "Assuming every USB-C port is Thunderbolt. Many are not, and a dock bought on that assumption will disappoint.",
+    "Trusting manufacturer battery claims. They are measured at low brightness on light workloads; halve them for realistic use.",
+    "Overlooking the charger. A 240 W gaming brick weighs nearly a kilogram, which changes what 'portable' means.",
+  ],
+};
+
 export const PRIMERS: Partial<Record<Category, Primer>> = {
+  laptop: LAPTOP_PRIMER,
   cpu: CPU_PRIMER,
   gpu: GPU_PRIMER,
   ram: RAM_PRIMER,
