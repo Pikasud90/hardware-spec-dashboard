@@ -11,6 +11,7 @@ import { search } from "@/lib/search";
 import { getMetricHighlight } from "@/lib/hardware-math";
 import { formatMetricValue, metricFor } from "@/lib/metrics";
 import { formatInr, formatInrCompact } from "@/lib/format";
+import { auditBuild, buildTotal, estimatePower, filterCompatible, generateInsights } from "@/lib/compatibility";
 
 let failures = 0;
 function check(label: string, condition: boolean, detail = "") {
@@ -152,6 +153,68 @@ console.log("\n-- unit normalisation --");
     formatMetricValue(clockMetric, 2520) === "2.52 GHz",
     formatMetricValue(clockMetric, 2520),
   );
+}
+
+console.log("\n-- build compatibility --");
+{
+  const cpu9800 = g("amd-ryzen-7-9800x3d");        // AM5, DDR5
+  const cpu14900 = g("intel-core-i9-14900k");      // LGA1700, DDR5
+  const cpu5800 = g("amd-ryzen-7-5800x3d");        // AM4, DDR4
+
+  // Picking an AM5 processor must leave only AM5 boards selectable.
+  const boards = filterCompatible(COMPONENTS_BY_CATEGORY.motherboard, "motherboard", { cpu: cpu9800 });
+  check(
+    "AM5 CPU leaves only AM5 boards",
+    boards.compatible.every((b) => b.values.socket === "AM5") && boards.compatible.length > 0,
+    `${boards.compatible.length} compatible, ${boards.rejected.length} filtered out`,
+  );
+  check("LGA1700 boards are filtered out for an AM5 CPU",
+    boards.rejected.some((r) => r.component.values.socket === "LGA1700"));
+
+  // Memory generation must cascade from the processor.
+  const ddr5Kits = filterCompatible(COMPONENTS_BY_CATEGORY.ram, "ram", { cpu: cpu9800 });
+  check("AM5 CPU leaves only DDR5 kits",
+    ddr5Kits.compatible.every((k) => k.values.generation === "DDR5"),
+    `${ddr5Kits.compatible.length} DDR5 kits`);
+  const ddr4Kits = filterCompatible(COMPONENTS_BY_CATEGORY.ram, "ram", { cpu: cpu5800 });
+  check("AM4 Zen 3 CPU leaves only DDR4 kits",
+    ddr4Kits.compatible.every((k) => k.values.generation === "DDR4"),
+    `${ddr4Kits.compatible.length} DDR4 kits`);
+
+  // Socket mismatch must be a blocker, not a warning.
+  const badSocket = auditBuild({ cpu: cpu14900, motherboard: g("asus-rog-crosshair-x870e-hero") });
+  check("socket mismatch is a blocker",
+    badSocket.some((i) => i.level === "blocker" && i.title === "Socket mismatch"));
+
+  // Power: a 5090 build must not be offered an undersized unit.
+  const heavy = { cpu: g("amd-ryzen-9-9950x3d"), gpu: g("nvidia-geforce-rtx-5090"), ram: g("gskill-trident-z5-neo-32gb-6000c30"), motherboard: g("asus-rog-crosshair-x870e-hero"), storage: g("samsung-990-pro-2tb") };
+  const heavyPower = estimatePower(heavy);
+  check("RTX 5090 + 9950X3D estimated above 800 W",
+    heavyPower.totalWatts > 800, `${Math.round(heavyPower.totalWatts)} W`);
+  const psus = filterCompatible(COMPONENTS_BY_CATEGORY.psu, "psu", heavy);
+  check("undersized PSUs are filtered out of a 5090 build",
+    psus.compatible.every((u) => (u.values.wattage as number) >= heavyPower.totalWatts),
+    `${psus.compatible.length} of ${COMPONENTS_BY_CATEGORY.psu.length} units qualify`);
+  console.log(`    recommended PSU: ${heavyPower.recommendedPsuWatts} W`);
+
+  // A modest build should still have plenty of choice.
+  const modest = { cpu: g("amd-ryzen-5-9600x"), gpu: g("nvidia-geforce-rtx-4060") };
+  const modestPower = estimatePower(modest);
+  check("mid-range build estimates under 300 W", modestPower.totalWatts < 300, `${Math.round(modestPower.totalWatts)} W`);
+
+  // Insights must produce concrete, costed suggestions.
+  const built = { ...heavy, psu: g("msi-meg-ai1300p") };
+  const ideas = generateInsights(built, COMPONENTS_BY_CATEGORY);
+  check("insights are generated for a full build", ideas.length > 0, `${ideas.length} insights`);
+  check("every insight names a slot and a title",
+    ideas.every((i) => i.slot && i.title.length > 0));
+  for (const i of ideas.slice(0, 4)) {
+    console.log(`    [${i.kind}] ${i.slot}: ${i.title}`);
+  }
+
+  const totals = buildTotal(built);
+  check("build total sums the priced parts", totals.total > 0, formatInr(totals.total));
+  console.log(`    example build total: ${formatInr(totals.total)} across ${totals.filled} parts`);
 }
 
 console.log("\n-- trigram search --");
