@@ -13,7 +13,7 @@ import { z } from "zod";
  * boundary intact; a string does, and is trivially widened where needed.
  */
 
-export const CATEGORIES = ["cpu", "gpu", "ram", "storage", "motherboard"] as const;
+export const CATEGORIES = ["cpu", "gpu", "ram", "storage", "motherboard", "psu"] as const;
 export type Category = (typeof CATEGORIES)[number];
 
 export const CATEGORY_LABELS: Record<Category, string> = {
@@ -22,6 +22,7 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   ram: "Memory",
   storage: "Storage",
   motherboard: "Motherboards",
+  psu: "Power Supplies",
 };
 
 export const CATEGORY_SHORT_LABELS: Record<Category, string> = {
@@ -30,6 +31,7 @@ export const CATEGORY_SHORT_LABELS: Record<Category, string> = {
   ram: "RAM",
   storage: "SSD",
   motherboard: "Mobo",
+  psu: "PSU",
 };
 
 const IsoDate = z
@@ -152,6 +154,42 @@ export const MotherboardSpecsSchema = z.object({
 });
 export type MotherboardSpecs = z.infer<typeof MotherboardSpecsSchema>;
 
+/* --------------------------------------------------------------- PSU/SMPS */
+
+export const PsuSpecsSchema = z.object({
+  wattage: z.number().positive(),
+  /** 80 PLUS tier. Determines heat, noise and running cost, not capability. */
+  efficiencyRating: z.enum([
+    "80+ White",
+    "80+ Bronze",
+    "80+ Silver",
+    "80+ Gold",
+    "80+ Platinum",
+    "80+ Titanium",
+  ]),
+  modularity: z.enum(["Non-modular", "Semi-modular", "Fully modular"]),
+  formFactor: z.enum(["ATX", "SFX", "SFX-L"]),
+  /** Sustained current on the 12V rail — the rail everything demanding uses. */
+  rail12vAmps: z.number().positive(),
+  /** 8-pin (6+2) PCIe connectors for graphics cards. */
+  pcie8PinConnectors: z.number().int().nonnegative(),
+  /** 12V-2x6 / 12VHPWR connectors, required natively by recent NVIDIA cards. */
+  pcie12vhpwrConnectors: z.number().int().nonnegative().default(0),
+  /** EPS 8-pin connectors for CPU power. High-end boards want two. */
+  eps8PinConnectors: z.number().int().positive(),
+  sataConnectors: z.number().int().nonnegative(),
+  /**
+   * ATX 3.x compliance. Matters because modern GPUs draw very short power
+   * spikes far above their rated board power; a compliant unit is specified to
+   * ride them out instead of tripping protection.
+   */
+  atx3Compliant: z.boolean().default(false),
+  fanSizeMm: z.number().positive(),
+  lengthMm: z.number().positive(),
+  warrantyYears: z.number().positive(),
+});
+export type PsuSpecs = z.infer<typeof PsuSpecsSchema>;
+
 /* ---------------------------------------------------------- Discriminated */
 
 /**
@@ -200,6 +238,7 @@ export const ComponentSchema = z.discriminatedUnion("category", [
     category: z.literal("motherboard"),
     specs: MotherboardSpecsSchema,
   }),
+  z.object({ ...BaseFields, category: z.literal("psu"), specs: PsuSpecsSchema }),
 ]);
 
 export type ComponentEntity = z.infer<typeof ComponentSchema>;
@@ -211,6 +250,7 @@ export type GpuEntity = Extract<ComponentEntity, { category: "gpu" }>;
 export type RamEntity = Extract<ComponentEntity, { category: "ram" }>;
 export type StorageEntity = Extract<ComponentEntity, { category: "storage" }>;
 export type MotherboardEntity = Extract<ComponentEntity, { category: "motherboard" }>;
+export type PsuEntity = Extract<ComponentEntity, { category: "psu" }>;
 
 export const ComponentListSchema = z.array(ComponentSchema);
 

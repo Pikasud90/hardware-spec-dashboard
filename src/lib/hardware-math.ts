@@ -3,6 +3,7 @@ import type {
   CpuSpecs,
   GpuSpecs,
   MotherboardSpecs,
+  PsuSpecs,
   RamSpecs,
   StorageSpecs,
 } from "@/lib/validations/component";
@@ -351,6 +352,56 @@ export function calcMotherboardExpansionScore(specs: MotherboardSpecs): number |
   return Number.isFinite(score) ? score : null;
 }
 
+/* ------------------------------------------------------------- PSU / SMPS */
+
+/**
+ * Typical efficiency at 50% load for each 80 PLUS tier, at 230 V.
+ * India runs on 230 V, where every tier certifies about two points higher than
+ * the 115 V figures usually quoted in US reviews.
+ */
+export const PSU_EFFICIENCY_BY_TIER: Record<string, number> = {
+  "80+ White": 0.85,
+  "80+ Bronze": 0.88,
+  "80+ Silver": 0.9,
+  "80+ Gold": 0.92,
+  "80+ Platinum": 0.94,
+  "80+ Titanium": 0.96,
+};
+
+/** Representative Indian domestic electricity tariff, rupees per kWh. */
+export const INDIA_TARIFF_INR_PER_KWH = 8;
+/** Assumed average system draw at the wall-facing side of the PSU, in watts. */
+export const ASSUMED_AVERAGE_LOAD_W = 350;
+/** Assumed daily hours of use for the running-cost estimate. */
+export const ASSUMED_HOURS_PER_DAY = 6;
+
+/**
+ * Estimated yearly electricity cost attributable to PSU inefficiency plus load.
+ *
+ *   kWh/year = (load / efficiency) x hours x 365 / 1000
+ *   cost     = kWh/year x tariff
+ *
+ * This is what makes efficiency tiers concrete: the gap between Bronze and
+ * Titanium on a typical Indian tariff is a few hundred rupees a year, which
+ * rarely repays a several-thousand-rupee price difference.
+ */
+export function calcAnnualRunningCostInr(specs: PsuSpecs): number | null {
+  const efficiency = PSU_EFFICIENCY_BY_TIER[specs.efficiencyRating];
+  if (!positive(efficiency)) return null;
+  const kwhPerYear =
+    ((ASSUMED_AVERAGE_LOAD_W / efficiency) * ASSUMED_HOURS_PER_DAY * 365) / 1000;
+  return kwhPerYear * INDIA_TARIFF_INR_PER_KWH;
+}
+
+/**
+ * Graphics power the unit can actually deliver, counted in 8-pin equivalents.
+ * A 12V-2x6 connector carries up to 600 W, roughly three 8-pin cables.
+ */
+export function calcGpuConnectorCapacity(specs: PsuSpecs): number | null {
+  const total = specs.pcie8PinConnectors + specs.pcie12vhpwrConnectors * 3;
+  return Number.isFinite(total) ? total : null;
+}
+
 /* ------------------------------------------------------ polarity handling */
 
 export type MetricPolarity = "HIGHER_BETTER" | "LOWER_BETTER" | "NEUTRAL";
@@ -432,6 +483,21 @@ export const METRIC_POLARITY_MAP: Record<string, MetricPolarity> = {
   dwpd: "HIGHER_BETTER",
   interfaceUtilisationPct: "HIGHER_BETTER",
   costPerTb: "LOWER_BETTER",
+
+  /* psu */
+  wattage: "HIGHER_BETTER",
+  rail12vAmps: "HIGHER_BETTER",
+  total12vWatts: "HIGHER_BETTER",
+  rail12vSharePct: "HIGHER_BETTER",
+  efficiencyPct: "HIGHER_BETTER",
+  annualRunningCostInr: "LOWER_BETTER",
+  costPerWatt: "LOWER_BETTER",
+  pcie8PinConnectors: "HIGHER_BETTER",
+  pcie12vhpwrConnectors: "HIGHER_BETTER",
+  gpuConnectorCapacity: "HIGHER_BETTER",
+  eps8PinConnectors: "HIGHER_BETTER",
+  sataConnectors: "HIGHER_BETTER",
+  fanSizeMm: "HIGHER_BETTER",
 
   /* motherboard */
   memorySlots: "HIGHER_BETTER",
@@ -538,6 +604,8 @@ export function deriveMetrics(component: ComponentEntity): DerivedValues {
       return { ...base, ...deriveStorage(component.specs, price) };
     case "motherboard":
       return { ...base, ...deriveMotherboard(component.specs, price) };
+    case "psu":
+      return { ...base, ...derivePsu(component.specs, price) };
   }
 }
 
@@ -593,6 +661,20 @@ function deriveStorage(specs: StorageSpecs, price: number | null): DerivedValues
     costPerTb: safeDivide(price, specs.capacityGb / 1000),
     costPerGb: safeDivide(price, specs.capacityGb),
     perfPerRupeeRaw: safeDivide(specs.seqReadMb, price),
+  };
+}
+
+function derivePsu(specs: PsuSpecs, price: number | null): DerivedValues {
+  const total12v = specs.rail12vAmps * 12;
+  const efficiency = PSU_EFFICIENCY_BY_TIER[specs.efficiencyRating] ?? null;
+  return {
+    total12vWatts: total12v,
+    rail12vSharePct: safeDivide(total12v * 100, specs.wattage),
+    efficiencyPct: efficiency === null ? null : efficiency * 100,
+    annualRunningCostInr: calcAnnualRunningCostInr(specs),
+    gpuConnectorCapacity: calcGpuConnectorCapacity(specs),
+    costPerWatt: safeDivide(price, specs.wattage),
+    perfPerRupeeRaw: safeDivide(specs.wattage, price),
   };
 }
 

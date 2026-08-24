@@ -30,24 +30,30 @@ const DEFAULTS: Record<
   { x: string; y: string; rank: string; trend: string }
 > = {
   cpu: {
-    x: "msrp",
+    x: "inrPrice",
     y: "multiThreadIndex",
     rank: "multiThreadIndex",
     trend: "multiThreadIndex",
   },
-  gpu: { x: "msrp", y: "rasterIndex", rank: "rasterIndex", trend: "theoreticalTflops" },
+  gpu: { x: "inrPrice", y: "rasterIndex", rank: "rasterIndex", trend: "theoreticalTflops" },
   ram: {
-    x: "msrp",
+    x: "inrPrice",
     y: "ramEfficiencyScore",
     rank: "trueLatencyNs",
     trend: "speedMts",
   },
   storage: { x: "costPerTb", y: "seqReadMb", rank: "seqReadMb", trend: "seqReadMb" },
   motherboard: {
-    x: "msrp",
+    x: "inrPrice",
     y: "expansionScore",
     rank: "expansionScore",
     trend: "vrmTotalCurrentA",
+  },
+  psu: {
+    x: "inrPrice",
+    y: "wattage",
+    rank: "costPerWatt",
+    trend: "efficiencyPct",
   },
 };
 

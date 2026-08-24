@@ -2,6 +2,7 @@ import { CPUS } from "@/lib/data/cpus";
 import { GPUS } from "@/lib/data/gpus";
 import { MEMORY } from "@/lib/data/memory";
 import { MOTHERBOARDS } from "@/lib/data/motherboards";
+import { PSUS } from "@/lib/data/psus";
 import { STORAGE } from "@/lib/data/storage";
 import { deriveMetrics } from "@/lib/hardware-math";
 import { indexAgainstBest } from "@/lib/stats";
@@ -139,6 +140,7 @@ export const ALL_COMPONENTS: ResolvedComponent[] = assemble({
   ram: MEMORY,
   storage: STORAGE,
   motherboard: MOTHERBOARDS,
+  psu: PSUS,
 });
 
 export const COMPONENTS_BY_CATEGORY: Record<Category, ResolvedComponent[]> =
@@ -183,6 +185,8 @@ export function groupingKeyFor(category: Category): { key: string; label: string
       return { key: "interface", label: "Interface" };
     case "gpu":
       return { key: "architecture", label: "Architecture" };
+    case "psu":
+      return { key: "efficiencyRating", label: "80 PLUS tier" };
   }
 }
 
