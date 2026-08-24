@@ -51,7 +51,7 @@ jobs:
           echo "Exported $(find out -name '*.html' | wc -l) HTML pages"
 
       - name: Upload static site
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: static-site
           path: out/
